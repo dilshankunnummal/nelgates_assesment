@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading || state is HomeInitial) {
-              return const SafeArea(child: HomeContentSkeleton());
+              return const SafeArea(bottom: false, child: HomeContentSkeleton());
             }
 
             if (state is HomeError) {
@@ -143,27 +143,33 @@ class _HomePageState extends State<HomePage> {
                             }
 
                             return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Hello, $userName 👋',
-                                      style: AppTypography.titleLarge.copyWith(
-                                        fontWeight: FontWeight.w800,
-                                        color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Hello, $userName 👋',
+                                        style: AppTypography.titleLarge.copyWith(
+                                          fontWeight: FontWeight.w800,
+                                          color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ),
-                                    AppSpacing.gapH4,
-                                    Text(
-                                      'Find your tranquil escape',
-                                      style: AppTypography.bodySmall.copyWith(
-                                        color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
+                                      AppSpacing.gapH4,
+                                      Text(
+                                        'Find your tranquil escape',
+                                        style: AppTypography.bodySmall.copyWith(
+                                          color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
+                                const SizedBox(width: 12),
                                 AppImage(
                                   imageUrl: avatar,
                                   width: 44,
@@ -295,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                             // Search Glass Button
                             GlassButton(
                               onPressed: _onSearch,
-                              label: 'Search Luxury Stays',
+                              label: 'Search Hotels',
                               icon: const Icon(Icons.search_rounded, size: 20, color: Colors.white),
                               isPrimary: true,
                               width: double.infinity,
@@ -325,10 +331,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(
-                        height: 255,
+                        // 240 card + 4 top padding + 12 bottom padding + 16 shadow clearance
+                        height: 272,
                         child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
                           physics: const BouncingScrollPhysics(),
+                          clipBehavior: Clip.none,
                           scrollDirection: Axis.horizontal,
                           itemCount: homeData.destinations.length,
                           separatorBuilder: (context, _) => AppSpacing.gapW16,

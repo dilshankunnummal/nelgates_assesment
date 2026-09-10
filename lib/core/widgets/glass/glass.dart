@@ -21,6 +21,7 @@ export 'glass_panel.dart';
 export 'glass_popup_menu.dart';
 export 'glass_room_selector.dart';
 export 'glass_search_bar.dart';
+export 'glass_segmented_tabs.dart';
 export 'glass_snackbar.dart';
 export 'glass_sort_sheet.dart';
 export 'glass_surface.dart';

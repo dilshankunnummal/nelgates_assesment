@@ -13,8 +13,8 @@ import '../features/hotels/presentation/cubits/hotel_details_cubit.dart';
 import '../features/hotels/presentation/cubits/hotel_search_cubit.dart';
 import '../features/wishlist/presentation/cubit/wishlist_cubit.dart';
 
-class LuxeStayApp extends StatelessWidget {
-  const LuxeStayApp({super.key});
+class BookingApp extends StatelessWidget {
+  const BookingApp({super.key});
 
   @override
   Widget build(BuildContext context) {

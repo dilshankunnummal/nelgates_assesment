@@ -50,7 +50,7 @@ class AppImage extends StatelessWidget {
                   if (height == null || height! >= 60) ...[
                     const SizedBox(height: 4),
                     Text(
-                      'LuxeStay',
+                      'Booking.com',
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,

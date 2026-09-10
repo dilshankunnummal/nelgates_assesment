@@ -41,7 +41,7 @@ class DioApiClient implements ApiClient {
       : _dio = dio ??
             Dio(
               BaseOptions(
-                baseUrl: 'https://api.luxestay.hotel/v1',
+                baseUrl: 'https://api.booking.com/v1',
                 connectTimeout: const Duration(seconds: 15),
                 receiveTimeout: const Duration(seconds: 15),
                 sendTimeout: const Duration(seconds: 15),

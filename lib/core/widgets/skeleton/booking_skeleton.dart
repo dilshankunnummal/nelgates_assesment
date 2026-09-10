@@ -10,111 +10,114 @@ class BookingSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      child: AppGlassCard(
-        padding: const EdgeInsets.all(16),
-        borderRadius: AppRadius.brLg,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with status chip and booking id
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ShimmerContainer(
-                  width: 110,
-                  height: 14,
-                  borderRadius: AppRadius.brSm,
-                ),
-                ShimmerContainer(
-                  width: 75,
-                  height: 22,
-                  borderRadius: AppRadius.brFull,
-                ),
-              ],
-            ),
-            AppSpacing.gapH12,
-            const Divider(height: 1),
-            AppSpacing.gapH12,
+    return AppGlassCard(
+      padding: const EdgeInsets.all(16),
+      borderRadius: AppRadius.brXl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header: Booking ID and Status Badge Shimmer
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ShimmerContainer(
+                width: 100,
+                height: 14,
+                borderRadius: AppRadius.brSm,
+              ),
+              ShimmerContainer(
+                width: 75,
+                height: 24,
+                borderRadius: AppRadius.brFull,
+              ),
+            ],
+          ),
+          const Divider(height: 20),
 
-            // Hotel info row
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: AppRadius.brMd,
-                  child: const ShimmerContainer(
-                    width: 75,
-                    height: 75,
-                  ),
+          // Hotel & Room Info Row Shimmer
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: AppRadius.brMd,
+                child: const ShimmerContainer(
+                  width: 72,
+                  height: 72,
                 ),
-                AppSpacing.gapW14,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ShimmerContainer(
-                        width: 170,
-                        height: 16,
-                        borderRadius: AppRadius.brSm,
-                      ),
-                      AppSpacing.gapH8,
-                      ShimmerContainer(
-                        width: 120,
-                        height: 12,
-                        borderRadius: AppRadius.brSm,
-                      ),
-                      AppSpacing.gapH8,
-                      ShimmerContainer(
-                        width: 90,
-                        height: 12,
-                        borderRadius: AppRadius.brSm,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            AppSpacing.gapH14,
-            const Divider(height: 1),
-            AppSpacing.gapH12,
-
-            // Total amount & actions
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+              ),
+              AppSpacing.gapW12,
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ShimmerContainer(
-                      width: 50,
-                      height: 10,
+                      width: 160,
+                      height: 16,
                       borderRadius: AppRadius.brSm,
                     ),
                     AppSpacing.gapH4,
                     ShimmerContainer(
-                      width: 90,
-                      height: 16,
+                      width: 120,
+                      height: 12,
                       borderRadius: AppRadius.brSm,
+                    ),
+                    AppSpacing.gapH4,
+                    Row(
+                      children: [
+                        ShimmerContainer(
+                          width: 12,
+                          height: 12,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                        const SizedBox(width: 4),
+                        ShimmerContainer(
+                          width: 130,
+                          height: 11,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                ShimmerContainer(
-                  width: 95,
-                  height: 32,
-                  borderRadius: AppRadius.brMd,
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          const Divider(height: 20),
+
+          // Footer: Total & Actions Shimmer
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerContainer(
+                    width: 55,
+                    height: 10,
+                    borderRadius: AppRadius.brSm,
+                  ),
+                  AppSpacing.gapH4,
+                  ShimmerContainer(
+                    width: 95,
+                    height: 18,
+                    borderRadius: AppRadius.brSm,
+                  ),
+                ],
+              ),
+              ShimmerContainer(
+                width: 95,
+                height: 36,
+                borderRadius: AppRadius.brLg,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-/// List of booking skeletons
+/// List of booking skeletons matching the list layout on [BookingsPage].
 class BookingListSkeleton extends StatelessWidget {
   final int itemCount;
 
@@ -125,10 +128,11 @@ class BookingListSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 90),
       physics: const NeverScrollableScrollPhysics(),
       itemCount: itemCount,
+      separatorBuilder: (context, index) => AppSpacing.gapH12,
       itemBuilder: (context, index) => const BookingSkeleton(),
     );
   }

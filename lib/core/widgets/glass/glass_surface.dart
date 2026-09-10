@@ -3,15 +3,6 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/glass_tokens.dart';
 
-/// True Liquid Glass surface implementing the physical 6-layer optical model.
-///
-/// Features:
-/// - Real [BackdropFilter] blur (depth-hierarchy driven)
-/// - Pure semi-transparent neutral tint (NO gradients)
-/// - Crisp hairline translucent border
-/// - Specular top edge highlight for light refraction
-/// - Natural soft ambient drop shadow
-/// - Smooth interactive press feedback (micro-scale & subtle elevation change)
 class GlassSurface extends StatefulWidget {
   final Widget child;
   final GlassDepthLevel depthLevel;

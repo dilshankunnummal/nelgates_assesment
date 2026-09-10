@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/routing/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/widgets/common/app_empty_view.dart';
 import '../../../../core/widgets/common/app_error_view.dart';
 import '../../../../core/widgets/glass/glass_alert_dialog.dart';
+import '../../../../core/widgets/glass/glass_segmented_tabs.dart';
 import '../../../../core/widgets/glass/glass_snackbar.dart';
 import '../../../../core/widgets/glass/liquid_glass_background.dart';
 import '../../../../core/widgets/skeleton/booking_skeleton.dart';
@@ -72,24 +72,41 @@ class _BookingsPageState extends State<BookingsPage> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primary = isDark ? AppColors.primaryLight : AppColors.primary;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Bookings'),
         automaticallyImplyLeading: false,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: primary,
-          labelColor: primary,
-          unselectedLabelColor: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
-          labelStyle: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w700),
-          tabs: const [
-            Tab(text: 'Upcoming'),
-            Tab(text: 'Completed'),
-            Tab(text: 'Cancelled'),
-          ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: BlocBuilder<BookingsCubit, BookingsState>(
+            builder: (context, state) {
+              return GlassSegmentedTabs(
+                controller: _tabController,
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                height: 48,
+                tabs: [
+                  GlassTabItem(
+                    label: 'Upcoming',
+                    icon: Icons.flight_takeoff_outlined,
+                    activeIcon: Icons.flight_takeoff_rounded,
+                    count: state.upcomingBookings.isNotEmpty ? state.upcomingBookings.length : null,
+                  ),
+                  GlassTabItem(
+                    label: 'Completed',
+                    icon: Icons.task_alt_outlined,
+                    activeIcon: Icons.task_alt_rounded,
+                    count: state.completedBookings.isNotEmpty ? state.completedBookings.length : null,
+                  ),
+                  GlassTabItem(
+                    label: 'Cancelled',
+                    icon: Icons.cancel_outlined,
+                    activeIcon: Icons.cancel_rounded,
+                    count: state.cancelledBookings.isNotEmpty ? state.cancelledBookings.length : null,
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
       body: LiquidGlassBackground(

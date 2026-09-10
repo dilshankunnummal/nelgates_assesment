@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
     final confirmed = await showGlassAlertDialog(
       context: context,
       title: 'Sign Out',
-      message: 'Are you sure you want to sign out of LuxeStay?',
+      message: 'Are you sure you want to sign out of Booking.com?',
       cancelLabel: 'Cancel',
       confirmLabel: 'Sign Out',
       isDestructive: true,

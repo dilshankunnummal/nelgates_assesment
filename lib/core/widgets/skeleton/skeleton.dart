@@ -1,5 +1,6 @@
 export 'shimmer_container.dart';
 export 'image_skeleton.dart';
+export 'destination_card_skeleton.dart';
 export 'hotel_card_skeleton.dart';
 export 'hotel_list_skeleton.dart';
 export 'room_card_skeleton.dart';

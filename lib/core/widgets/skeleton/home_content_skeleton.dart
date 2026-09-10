@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_radius.dart';
 import '../../theme/app_spacing.dart';
+import '../../theme/glass_tokens.dart';
 import '../glass/app_glass_card.dart';
+import '../glass/glass_surface.dart';
+import 'destination_card_skeleton.dart';
 import 'hotel_card_skeleton.dart';
 import 'shimmer_container.dart';
 
@@ -13,102 +16,277 @@ class HomeContentSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Destination Section Title
-          ShimmerContainer(
-            width: 160,
-            height: 20,
-            borderRadius: AppRadius.brSm,
+          // Top Greeting & App Header Shimmer (matches HomePage line 135)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ShimmerContainer(
+                      width: 165,
+                      height: 24,
+                      borderRadius: AppRadius.brSm,
+                    ),
+                    AppSpacing.gapH4,
+                    ShimmerContainer(
+                      width: 145,
+                      height: 14,
+                      borderRadius: AppRadius.brSm,
+                    ),
+                  ],
+                ),
+                const ShimmerContainer(
+                  width: 44,
+                  height: 44,
+                  shape: BoxShape.circle,
+                ),
+              ],
+            ),
           ),
-          AppSpacing.gapH12,
 
-          // Destinations Horizontal Carousel Shimmer
-          SizedBox(
-            height: 120,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 4,
-              separatorBuilder: (context, index) => AppSpacing.gapW12,
-              itemBuilder: (context, index) => SizedBox(
-                width: 140,
-                child: AppGlassCard(
-                  padding: EdgeInsets.zero,
-                  borderRadius: AppRadius.brLg,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          // Liquid Glass Search Card Shimmer (matches HomePage line 183)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: AppGlassCard(
+              padding: const EdgeInsets.all(18),
+              borderRadius: AppRadius.brXl,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Destination Label Shimmer
+                  ShimmerContainer(
+                    width: 75,
+                    height: 12,
+                    borderRadius: AppRadius.brSm,
+                  ),
+                  AppSpacing.gapH6,
+
+                  // Destination Glass Dropdown Shimmer Surface
+                  GlassSurface(
+                    depthLevel: GlassDepthLevel.control,
+                    borderRadius: AppRadius.brMd,
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                    child: Row(
+                      children: [
+                        ShimmerContainer(
+                          width: 16,
+                          height: 16,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: ShimmerContainer(
+                            height: 14,
+                            borderRadius: AppRadius.brSm,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        ShimmerContainer(
+                          width: 16,
+                          height: 16,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                      ],
+                    ),
+                  ),
+                  AppSpacing.gapH12,
+
+                  // Dates and Guests in 2 Columns Shimmer
+                  Row(
                     children: [
-                      const Expanded(
-                        child: ShimmerContainer(
-                          width: double.infinity,
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      // Dates Glass Surface
+                      Expanded(
+                        child: GlassSurface(
+                          depthLevel: GlassDepthLevel.control,
+                          padding: const EdgeInsets.all(12),
+                          borderRadius: AppRadius.brMd,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShimmerContainer(
+                                width: 35,
+                                height: 11,
+                                borderRadius: AppRadius.brSm,
+                              ),
+                              AppSpacing.gapH4,
+                              Row(
+                                children: [
+                                  ShimmerContainer(
+                                    width: 14,
+                                    height: 14,
+                                    borderRadius: AppRadius.brSm,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                    child: ShimmerContainer(
+                                      height: 12,
+                                      borderRadius: AppRadius.brSm,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ShimmerContainer(
-                          width: 80,
-                          height: 12,
-                          borderRadius: AppRadius.brSm,
+                      AppSpacing.gapW12,
+
+                      // Guests & Rooms Glass Surface
+                      Expanded(
+                        child: GlassSurface(
+                          depthLevel: GlassDepthLevel.control,
+                          padding: const EdgeInsets.all(12),
+                          borderRadius: AppRadius.brMd,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShimmerContainer(
+                                width: 80,
+                                height: 11,
+                                borderRadius: AppRadius.brSm,
+                              ),
+                              AppSpacing.gapH4,
+                              Row(
+                                children: [
+                                  ShimmerContainer(
+                                    width: 14,
+                                    height: 14,
+                                    borderRadius: AppRadius.brSm,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                    child: ShimmerContainer(
+                                      height: 12,
+                                      borderRadius: AppRadius.brSm,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
+                  AppSpacing.gapH16,
+
+                  // Search Glass Button Shimmer
+                  ShimmerContainer(
+                    width: double.infinity,
+                    height: 50,
+                    borderRadius: AppRadius.brLg,
+                  ),
+                ],
               ),
             ),
           ),
-          AppSpacing.gapH24,
 
-          // Search Filter Pill Row Shimmer
-          Row(
-            children: [
-              ShimmerContainer(
-                width: 80,
-                height: 32,
-                borderRadius: AppRadius.brFull,
-              ),
-              AppSpacing.gapW8,
-              ShimmerContainer(
-                width: 90,
-                height: 32,
-                borderRadius: AppRadius.brFull,
-              ),
-              AppSpacing.gapW8,
-              ShimmerContainer(
-                width: 110,
-                height: 32,
-                borderRadius: AppRadius.brFull,
-              ),
-            ],
+          // Popular Destinations Section Header Shimmer (matches SectionHeader)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerContainer(
+                        width: 160,
+                        height: 18,
+                        borderRadius: AppRadius.brSm,
+                      ),
+                      const SizedBox(height: 2),
+                      ShimmerContainer(
+                        width: 220,
+                        height: 12,
+                        borderRadius: AppRadius.brSm,
+                      ),
+                    ],
+                  ),
+                ),
+                ShimmerContainer(
+                  width: 50,
+                  height: 14,
+                  borderRadius: AppRadius.brSm,
+                ),
+              ],
+            ),
           ),
-          AppSpacing.gapH24,
 
-          // Recommended Stays Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ShimmerContainer(
-                width: 180,
-                height: 20,
-                borderRadius: AppRadius.brSm,
-              ),
-              ShimmerContainer(
-                width: 60,
-                height: 14,
-                borderRadius: AppRadius.brSm,
-              ),
-            ],
+          // Destinations Horizontal Carousel Shimmer (height 272, matching home_page.dart)
+          SizedBox(
+            height: 272,
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 3,
+              separatorBuilder: (context, index) => AppSpacing.gapW16,
+              itemBuilder: (context, index) => const DestinationCardSkeleton(),
+            ),
           ),
-          AppSpacing.gapH14,
 
-          // Hotel Card Skeletons
-          const HotelCardSkeleton(),
-          AppSpacing.gapH12,
-          const HotelCardSkeleton(),
+          // Recommended Stays Header Shimmer (matches SectionHeader)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerContainer(
+                        width: 180,
+                        height: 18,
+                        borderRadius: AppRadius.brSm,
+                      ),
+                      const SizedBox(height: 2),
+                      ShimmerContainer(
+                        width: 260,
+                        height: 12,
+                        borderRadius: AppRadius.brSm,
+                      ),
+                    ],
+                  ),
+                ),
+                ShimmerContainer(
+                  width: 55,
+                  height: 14,
+                  borderRadius: AppRadius.brSm,
+                ),
+              ],
+            ),
+          ),
+
+          // Recommended Stays Hotel Cards List Shimmer (matches SliverPadding 20)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: HotelCardSkeleton(),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: HotelCardSkeleton(),
+                ),
+              ],
+            ),
+          ),
+
+          // Bottom Spacing for Floating Navigation Bar
+          const SizedBox(height: 80),
         ],
       ),
     );

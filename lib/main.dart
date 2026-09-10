@@ -24,5 +24,5 @@ void main() async {
   // Initialize dependencies (Hive, ApiClient, Repositories, Cubits)
   await initDependencies();
 
-  runApp(const LuxeStayApp());
+  runApp(const BookingApp());
 }

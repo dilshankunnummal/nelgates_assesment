@@ -3,7 +3,7 @@ import 'package:nelegate_assessment/core/constants/app_constants.dart';
 
 void main() {
   test('AppConstants smoke test', () {
-    expect(AppConstants.appName, 'LuxeStay');
+    expect(AppConstants.appName, 'Booking.com');
     expect(AppConstants.hrEmail, 'hr@hotel.com');
     expect(AppConstants.employeeEmail, 'employee@hotel.com');
   });

@@ -10,7 +10,7 @@ class HotelListSkeleton extends StatelessWidget {
   const HotelListSkeleton({
     super.key,
     this.itemCount = 4,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.fromLTRB(16, 12, 16, 90),
   });
 
   @override
@@ -20,7 +20,7 @@ class HotelListSkeleton extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: itemCount,
-      separatorBuilder: (context, index) => AppSpacing.gapH12,
+      separatorBuilder: (context, index) => AppSpacing.gapH16,
       itemBuilder: (context, index) => const HotelCardSkeleton(),
     );
   }

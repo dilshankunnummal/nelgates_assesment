@@ -12,34 +12,42 @@ class SearchResultSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Filter status row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ShimmerContainer(
-                width: 130,
-                height: 16,
-                borderRadius: AppRadius.brSm,
-              ),
-              ShimmerContainer(
-                width: 70,
-                height: 28,
-                borderRadius: AppRadius.brFull,
-              ),
-            ],
+          // Results count and sort button header
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ShimmerContainer(
+                  width: 130,
+                  height: 14,
+                  borderRadius: AppRadius.brSm,
+                ),
+                ShimmerContainer(
+                  width: 50,
+                  height: 14,
+                  borderRadius: AppRadius.brSm,
+                ),
+              ],
+            ),
           ),
-          AppSpacing.gapH14,
 
-          // Hotel Card Skeletons
-          const HotelCardSkeleton(),
-          AppSpacing.gapH12,
-          const HotelCardSkeleton(),
-          AppSpacing.gapH12,
-          const HotelCardSkeleton(),
+          // Hotel Card Skeletons List
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            child: Column(
+              children: const [
+                HotelCardSkeleton(),
+                AppSpacing.gapH16,
+                HotelCardSkeleton(),
+                AppSpacing.gapH16,
+                HotelCardSkeleton(),
+              ],
+            ),
+          ),
         ],
       ),
     );

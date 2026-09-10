@@ -10,83 +10,139 @@ class RoomCardSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      child: AppGlassCard(
-        padding: const EdgeInsets.all(14),
-        borderRadius: AppRadius.brLg,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image and title row
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: AppRadius.brMd,
-                  child: const ShimmerContainer(
-                    width: 90,
-                    height: 80,
+    return AppGlassCard(
+      padding: const EdgeInsets.all(16),
+      borderRadius: AppRadius.brXl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image and specs row
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Room Thumbnail Shimmer
+              ClipRRect(
+                borderRadius: AppRadius.brMd,
+                child: const ShimmerContainer(
+                  width: 90,
+                  height: 90,
+                ),
+              ),
+              AppSpacing.gapW16,
+
+              // Room Title & Specs Shimmer
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ShimmerContainer(
+                      width: 140,
+                      height: 16,
+                      borderRadius: AppRadius.brSm,
+                    ),
+                    AppSpacing.gapH6,
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      children: [
+                        ShimmerContainer(
+                          width: 55,
+                          height: 12,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                        ShimmerContainer(
+                          width: 60,
+                          height: 12,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                        ShimmerContainer(
+                          width: 50,
+                          height: 12,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              // Selection Radio Indicator Placeholder
+              const ShimmerContainer(
+                width: 24,
+                height: 24,
+                shape: BoxShape.circle,
+              ),
+            ],
+          ),
+          AppSpacing.gapH12,
+
+          // Room Description Shimmer (2 lines)
+          const ShimmerContainer(
+            width: double.infinity,
+            height: 12,
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+          ),
+          AppSpacing.gapH4,
+          ShimmerContainer(
+            width: 220,
+            height: 12,
+            borderRadius: AppRadius.brSm,
+          ),
+          AppSpacing.gapH12,
+
+          // Amenities Glass Chips Shimmer
+          Row(
+            children: [
+              ShimmerContainer(
+                width: 70,
+                height: 22,
+                borderRadius: AppRadius.brFull,
+              ),
+              AppSpacing.gapW8,
+              ShimmerContainer(
+                width: 65,
+                height: 22,
+                borderRadius: AppRadius.brFull,
+              ),
+              AppSpacing.gapW8,
+              ShimmerContainer(
+                width: 60,
+                height: 22,
+                borderRadius: AppRadius.brFull,
+              ),
+            ],
+          ),
+          AppSpacing.gapH12,
+
+          // Pricing & Select Button Row Shimmer
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerContainer(
+                    width: 80,
+                    height: 18,
+                    borderRadius: AppRadius.brSm,
                   ),
-                ),
-                AppSpacing.gapW14,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ShimmerContainer(
-                        width: 150,
-                        height: 16,
-                        borderRadius: AppRadius.brSm,
-                      ),
-                      AppSpacing.gapH8,
-                      ShimmerContainer(
-                        width: 100,
-                        height: 12,
-                        borderRadius: AppRadius.brSm,
-                      ),
-                      AppSpacing.gapH8,
-                      Row(
-                        children: [
-                          ShimmerContainer(
-                            width: 60,
-                            height: 14,
-                            borderRadius: AppRadius.brSm,
-                          ),
-                          AppSpacing.gapW10,
-                          ShimmerContainer(
-                            width: 60,
-                            height: 14,
-                            borderRadius: AppRadius.brSm,
-                          ),
-                        ],
-                      ),
-                    ],
+                  AppSpacing.gapH2,
+                  ShimmerContainer(
+                    width: 45,
+                    height: 10,
+                    borderRadius: AppRadius.brSm,
                   ),
-                ),
-              ],
-            ),
-            AppSpacing.gapH14,
-            const Divider(height: 1),
-            AppSpacing.gapH10,
-            // Price & selection action
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ShimmerContainer(
-                  width: 100,
-                  height: 20,
-                  borderRadius: AppRadius.brSm,
-                ),
-                ShimmerContainer(
-                  width: 85,
-                  height: 32,
-                  borderRadius: AppRadius.brMd,
-                ),
-              ],
-            ),
-          ],
-        ),
+                ],
+              ),
+              ShimmerContainer(
+                width: 105,
+                height: 38,
+                borderRadius: AppRadius.brLg,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

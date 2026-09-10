@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_radius.dart';
 import '../../theme/app_spacing.dart';
+import '../../theme/glass_tokens.dart';
 import '../glass/app_glass_card.dart';
+import '../glass/glass_surface.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder precisely matching the dimensions and layout of [HotelCard].
+/// Skeleton placeholder precisely matching the dimensions, glass card, and layout of [HotelCard].
 class HotelCardSkeleton extends StatelessWidget {
   final double? width;
   final double imageHeight;
@@ -12,97 +14,144 @@ class HotelCardSkeleton extends StatelessWidget {
   const HotelCardSkeleton({
     super.key,
     this.width,
-    this.imageHeight = 175,
+    this.imageHeight = 180,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AppGlassCard(
       width: width,
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      child: AppGlassCard(
-        padding: EdgeInsets.zero,
-        borderRadius: AppRadius.brLg,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Image shimmer with rounded top
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              child: ShimmerContainer(
-                width: double.infinity,
-                height: imageHeight,
+      padding: EdgeInsets.zero,
+      borderRadius: AppRadius.brXl,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Image Shimmer with Wishlist & Rating Placeholders
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
+                child: ShimmerContainer(
+                  width: double.infinity,
+                  height: imageHeight,
+                ),
               ),
-            ),
-            // Info Area
-            Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              // Wishlist Heart Glass Button Placeholder
+              const Positioned(
+                top: 12,
+                right: 12,
+                child: ShimmerContainer(
+                  width: 38,
+                  height: 38,
+                  shape: BoxShape.circle,
+                ),
+              ),
+
+              // Floating Rating Badge Placeholder
+              Positioned(
+                bottom: 12,
+                left: 12,
+                child: GlassSurface(
+                  depthLevel: GlassDepthLevel.floating,
+                  borderRadius: AppRadius.brFull,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Title shimmer
-                      const Expanded(
-                        child: ShimmerContainer(
-                          height: 18,
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      // Rating pill shimmer
                       ShimmerContainer(
-                        width: 48,
-                        height: 22,
+                        width: 12,
+                        height: 12,
                         borderRadius: AppRadius.brFull,
                       ),
-                    ],
-                  ),
-                  AppSpacing.gapH8,
-                  // Location line shimmer
-                  ShimmerContainer(
-                    width: 140,
-                    height: 14,
-                    borderRadius: AppRadius.brSm,
-                  ),
-                  AppSpacing.gapH12,
-                  // Divider
-                  const Divider(height: 1),
-                  AppSpacing.gapH10,
-                  // Price and CTA row shimmer
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShimmerContainer(
-                            width: 60,
-                            height: 10,
-                            borderRadius: AppRadius.brSm,
-                          ),
-                          AppSpacing.gapH4,
-                          ShimmerContainer(
-                            width: 90,
-                            height: 18,
-                            borderRadius: AppRadius.brSm,
-                          ),
-                        ],
-                      ),
+                      const SizedBox(width: 5),
                       ShimmerContainer(
-                        width: 75,
-                        height: 32,
-                        borderRadius: AppRadius.brMd,
+                        width: 22,
+                        height: 12,
+                        borderRadius: AppRadius.brSm,
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
+            ],
+          ),
+
+          // Details Section
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Location row & Star Rating Shimmer
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        ShimmerContainer(
+                          width: 12,
+                          height: 12,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                        const SizedBox(width: 4),
+                        ShimmerContainer(
+                          width: 110,
+                          height: 12,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                      ],
+                    ),
+                    ShimmerContainer(
+                      width: 55,
+                      height: 12,
+                      borderRadius: AppRadius.brSm,
+                    ),
+                  ],
+                ),
+                AppSpacing.gapH4,
+
+                // Hotel Name Shimmer
+                ShimmerContainer(
+                  width: 200,
+                  height: 18,
+                  borderRadius: AppRadius.brSm,
+                ),
+                AppSpacing.gapH8,
+
+                // Pricing and Reviews Row Shimmer
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ShimmerContainer(
+                          width: 85,
+                          height: 18,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                        AppSpacing.gapH2,
+                        ShimmerContainer(
+                          width: 45,
+                          height: 10,
+                          borderRadius: AppRadius.brSm,
+                        ),
+                      ],
+                    ),
+                    ShimmerContainer(
+                      width: 65,
+                      height: 12,
+                      borderRadius: AppRadius.brSm,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

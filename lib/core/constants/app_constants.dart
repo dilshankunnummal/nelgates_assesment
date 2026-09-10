@@ -1,6 +1,6 @@
 class AppConstants {
-  static const String appName = 'LuxeStay';
-  static const String appTagline = 'Liquid Glass Luxury Stays';
+  static const String appName = 'Booking.com';
+  static const String appTagline = 'Find Your Perfect Stay';
   static const String appVersion = '1.0.0';
 
   // Tax and fees rates
