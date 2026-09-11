@@ -1,3 +1,4 @@
+import '../../../../core/config/app_environment.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../models/booking_model.dart';
@@ -18,7 +19,19 @@ class BookingRepositoryImpl implements BookingRepository {
   @override
   Future<({Failure? failure, List<Booking>? bookings})> getBookings() async {
     try {
-      // Local storage is primary source of truth for user bookings
+      try {
+        // 1. Fetch live bookings from Firestore
+        final remoteBookings = await remoteDataSource.getBookings();
+        if (remoteBookings.isNotEmpty) {
+          for (final b in remoteBookings) {
+            await localDataSource.saveBooking(b);
+          }
+          return (failure: null, bookings: remoteBookings);
+        }
+      } catch (e) {
+        // Fallback to local cache if network/Firestore error
+      }
+
       final localBookings = await localDataSource.getBookings();
       return (failure: null, bookings: localBookings);
     } on CacheException catch (e) {
@@ -33,15 +46,19 @@ class BookingRepositoryImpl implements BookingRepository {
     try {
       final bookingModel = booking is BookingModel ? booking : BookingModel.fromEntity(booking);
 
-      // Save locally first for guaranteed offline preservation
-      await localDataSource.saveBooking(bookingModel);
-
-      // Also dispatch to mock remote API
-      try {
-        await remoteDataSource.createBooking(bookingModel);
-      } catch (_) {
-        // Local persistence still succeeded
+      // 1. Save directly to Cloud Firestore
+      if (AppEnvironment.isFirebase) {
+        try {
+          await remoteDataSource.createBooking(bookingModel);
+        } on ServerException catch (e) {
+          return (failure: ServerFailure(e.message), booking: null);
+        } catch (e) {
+          return (failure: UnknownFailure(e.toString()), booking: null);
+        }
       }
+
+      // 2. Save locally for instant offline access and cache
+      await localDataSource.saveBooking(bookingModel);
 
       return (failure: null, booking: bookingModel);
     } on CacheException catch (e) {
@@ -57,26 +74,30 @@ class BookingRepositoryImpl implements BookingRepository {
     required String reason,
   }) async {
     try {
+      // 1. Cancel in Cloud Firestore
+      if (AppEnvironment.isFirebase) {
+        try {
+          await remoteDataSource.cancelBooking(bookingId, reason);
+        } on ServerException catch (e) {
+          return (failure: ServerFailure(e.message), booking: null);
+        } catch (e) {
+          return (failure: UnknownFailure(e.toString()), booking: null);
+        }
+      }
+
+      // 2. Update in local cache
       final existing = await localDataSource.getBookingById(bookingId);
-      if (existing == null) {
-        return (failure: const CacheFailure('Booking not found'), booking: null);
+      if (existing != null) {
+        final updated = existing.copyWith(
+          status: 'cancelled',
+          cancellationReason: reason,
+        );
+        final updatedModel = BookingModel.fromEntity(updated);
+        await localDataSource.saveBooking(updatedModel);
+        return (failure: null, booking: updatedModel);
       }
 
-      final updated = existing.copyWith(
-        status: 'cancelled',
-        cancellationReason: reason,
-      );
-
-      final updatedModel = BookingModel.fromEntity(updated);
-      await localDataSource.updateBooking(updatedModel);
-
-      try {
-        await remoteDataSource.cancelBooking(bookingId, reason);
-      } catch (_) {
-        // Local update succeeded
-      }
-
-      return (failure: null, booking: updatedModel);
+      return (failure: null, booking: null);
     } on CacheException catch (e) {
       return (failure: CacheFailure(e.message), booking: null);
     } catch (e) {

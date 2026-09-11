@@ -121,7 +121,7 @@ class SafeParser {
     return {};
   }
 
-  /// Safely parses a DateTime from dynamic (DateTime, int timestamp, String ISO).
+  /// Safely parses a DateTime from dynamic (DateTime, int timestamp, String ISO, Firestore Timestamp).
   static DateTime? toDateTime(dynamic value) {
     if (value == null) return null;
     if (value is DateTime) return value;
@@ -135,6 +135,13 @@ class SafeParser {
         return null;
       }
     }
+    // Handle Firestore Timestamp or objects with .toDate()
+    try {
+      final dyn = value as dynamic;
+      if (dyn.toDate != null) {
+        return dyn.toDate() as DateTime;
+      }
+    } catch (_) {}
     return null;
   }
 }

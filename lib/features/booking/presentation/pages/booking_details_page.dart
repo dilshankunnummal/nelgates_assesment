@@ -12,6 +12,7 @@ import '../../../../core/widgets/common/status_badge.dart';
 import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_alert_dialog.dart';
 import '../../../../core/widgets/glass/glass_button.dart';
+import '../../../../core/widgets/glass/glass_loading_dialog.dart';
 import '../../../../core/widgets/glass/glass_snackbar.dart';
 import '../../../../core/widgets/glass/liquid_glass_background.dart';
 import '../../domain/entities/booking.dart';
@@ -36,6 +37,37 @@ class BookingDetailsPage extends StatefulWidget {
 class _BookingDetailsPageState extends State<BookingDetailsPage> {
   bool _isCancelling = false;
 
+  Future<void> _handleCancelReservation(Booking booking) async {
+    final confirmed = await showGlassAlertDialog(
+      context: context,
+      title: 'Cancel Reservation?',
+      message: 'Are you sure you want to cancel this reservation? The status will be updated to Cancelled.',
+      confirmLabel: 'Confirm Cancel',
+      cancelLabel: 'Keep',
+      isDestructive: true,
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    setState(() => _isCancelling = true);
+    showGlassLoadingDialog(context, message: 'Cancelling reservation...');
+
+    final bookingsCubit = context.read<BookingsCubit>();
+    final success = await bookingsCubit.cancelBooking(booking.id);
+
+    if (!mounted) return;
+    hideGlassLoadingDialog(context);
+    setState(() => _isCancelling = false);
+
+    showGlassSnackBar(
+      context,
+      message: success
+          ? 'Reservation successfully marked as cancelled.'
+          : 'Failed to cancel reservation. Please try again.',
+      type: success ? GlassSnackBarType.success : GlassSnackBarType.error,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -52,11 +84,12 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
       body: LiquidGlassBackground(
         child: BlocBuilder<BookingsCubit, BookingsState>(
           builder: (context, state) {
-            // Find matching booking from cubit state if available, or use initialBooking
-            final booking = state.allBookings.firstWhere(
-              (b) => b.id == widget.bookingId,
-              orElse: () => widget.initialBooking ?? _fallbackBooking(widget.bookingId),
-            );
+            // Find matching booking from cubit state if available, or use initialBooking / fallback
+            final Booking booking = state.allBookings
+                    .where((b) => b.id == widget.bookingId)
+                    .firstOrNull ??
+                widget.initialBooking ??
+                _fallbackBooking(widget.bookingId);
 
             return SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
@@ -217,39 +250,15 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                   // Cancel Button if upcoming
                   if (booking.isUpcoming)
                     GlassButton(
-                      onPressed: _isCancelling
-                          ? null
-                          : () async {
-                              final bookingsCubit = context.read<BookingsCubit>();
-                              final messenger = ScaffoldMessenger.of(context);
-                              final confirmed = await showGlassAlertDialog(
-                                context: context,
-                                title: 'Cancel Reservation?',
-                                message: 'Are you sure you want to cancel this reservation? The status will be updated to Cancelled.',
-                                confirmLabel: 'Confirm Cancel',
-                                cancelLabel: 'Keep',
-                                isDestructive: true,
-                              );
-
-                              if (confirmed == true && mounted) {
-                                setState(() => _isCancelling = true);
-                                final success = await bookingsCubit.cancelBooking(booking.id);
-                                if (mounted) {
-                                  setState(() => _isCancelling = false);
-                                  showGlassSnackBar(
-                                    context,
-                                    message: success
-                                        ? 'Reservation successfully marked as cancelled.'
-                                        : 'Failed to cancel reservation. Please try again.',
-                                    type: success ? GlassSnackBarType.success : GlassSnackBarType.error,
-                                  );
-                                }
-                              }
-                            },
+                      onPressed: _isCancelling ? null : () => _handleCancelReservation(booking),
                       label: _isCancelling ? 'Cancelling...' : 'Cancel Reservation',
                       isLoading: _isCancelling,
                       width: double.infinity,
                       height: 48,
+                      isPrimary: false,
+                      borderColor: AppColors.error.withValues(alpha: 0.35),
+                      textColor: AppColors.error,
+                      icon: const Icon(Icons.cancel_outlined, size: 18, color: AppColors.error),
                     ),
                 ],
               ),

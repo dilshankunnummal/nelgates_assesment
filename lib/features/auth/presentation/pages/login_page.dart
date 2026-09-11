@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/routing/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -61,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is Authenticated) {
-          context.go('/hotels');
+          context.go(RouteNames.home);
         } else if (state is AuthError) {
           showGlassSnackBar(
             context,
@@ -223,10 +224,36 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ],
                                 ),
+                                AppSpacing.gapH16,
+
+                                // Register link
+                                Center(
+                                  child: TextButton(
+                                    onPressed: () => context.push('/register'),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: "Don't have an account? ",
+                                        style: AppTypography.bodySmall.copyWith(
+                                          color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: 'Sign Up',
+                                            style: AppTypography.bodySmall.copyWith(
+                                              color: isDark ? AppColors.primaryLight : AppColors.primary,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ),
+
                       ],
                     ),
                   ),

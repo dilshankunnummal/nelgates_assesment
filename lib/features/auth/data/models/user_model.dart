@@ -13,11 +13,18 @@ class UserModel extends User {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: SafeParser.toStr(json['id'], fallback: 'USR-001'),
+      id: SafeParser.toStr(json['id'] ?? json['uid'], fallback: 'USR-001'),
       email: SafeParser.toStr(json['email'], fallback: 'user@hotel.com'),
-      name: SafeParser.toStr(json['name'], fallback: 'Guest User'),
+      name: SafeParser.toStr(json['name'] ?? json['displayName'], fallback: 'Guest User'),
       role: SafeParser.toStr(json['role'], fallback: 'employee'),
-      avatar: SafeParser.toImageUrl(json['avatar'] ?? json['image']),
+      avatar: SafeParser.toImageUrl(
+        json['avatar'] ??
+            json['profileImageUrl'] ??
+            json['profile_image_url'] ??
+            json['photoURL'] ??
+            json['photoUrl'] ??
+            json['image'],
+      ),
       phone: json['phone'] != null ? SafeParser.toStr(json['phone']) : null,
     );
   }
@@ -29,6 +36,7 @@ class UserModel extends User {
       'name': name,
       'role': role,
       'avatar': avatar,
+      'profileImageUrl': avatar,
       'phone': phone,
     };
   }

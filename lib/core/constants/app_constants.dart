@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String appName = 'Booking.com';
+  static const String appName = 'Booking.com by Dilshan';
   static const String appTagline = 'Find Your Perfect Stay';
   static const String appVersion = '1.0.0';
 

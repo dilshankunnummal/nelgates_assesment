@@ -5,6 +5,8 @@ import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_local_data_source.dart';
 import '../datasources/auth_remote_data_source.dart';
 
+import '../models/user_model.dart';
+
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final AuthLocalDataSource localDataSource;
@@ -35,6 +37,42 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       return (failure: UnknownFailure(e.toString()), session: null);
     }
+  }
+
+  @override
+
+  Future<({Failure? failure, AuthSession? session})> register({
+    required String name,
+    required String email,
+    required String password,
+    String? phone,
+    String? profileImageUrl,
+    String role = 'employee',
+  }) async {
+    try {
+      final sessionModel = AuthSession(
+        user: UserModel(
+          id: 'USR-${DateTime.now().millisecondsSinceEpoch}',
+          email: email,
+          name: name,
+          role: role,
+          avatar: profileImageUrl ?? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80',
+          phone: phone,
+        ),
+        token: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
+        expiresAt: DateTime.now().add(const Duration(days: 30)),
+      );
+      return (failure: null, session: sessionModel);
+    } catch (e) {
+      return (failure: UnknownFailure(e.toString()), session: null);
+    }
+  }
+
+  @override
+  Future<({Failure? failure, bool success})> forgotPassword({
+    required String email,
+  }) async {
+    return (failure: null, success: true);
   }
 
   @override

@@ -31,3 +31,38 @@ class LogoutUseCase {
     return _repository.logout();
   }
 }
+
+class RegisterUseCase {
+  final AuthRepository _repository;
+  const RegisterUseCase(this._repository);
+
+  Future<({Failure? failure, AuthSession? session})> call({
+    required String name,
+    required String email,
+    required String password,
+    String? phone,
+    String? profileImageUrl,
+    String role = 'employee',
+  }) {
+    return _repository.register(
+      name: name,
+      email: email,
+      password: password,
+      phone: phone,
+      profileImageUrl: profileImageUrl,
+      role: role,
+    );
+  }
+}
+
+class ForgotPasswordUseCase {
+  final AuthRepository _repository;
+  const ForgotPasswordUseCase(this._repository);
+
+  Future<({Failure? failure, bool success})> call({
+    required String email,
+  }) {
+    return _repository.forgotPassword(email: email);
+  }
+}
+

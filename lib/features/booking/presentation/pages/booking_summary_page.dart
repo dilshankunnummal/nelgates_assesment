@@ -14,6 +14,8 @@ import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_button.dart';
 import '../../../../core/widgets/glass/glass_snackbar.dart';
 import '../../../../core/widgets/glass/liquid_glass_background.dart';
+import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../../../features/auth/presentation/cubit/auth_state.dart';
 import '../cubits/booking_cubit.dart';
 import '../widgets/booking_price_breakdown.dart';
 
@@ -233,7 +235,11 @@ class BookingSummaryPage extends StatelessWidget {
                             child: GlassButton(
                               onPressed: isLoading
                                   ? null
-                                  : () => context.read<BookingCubit>().confirmBooking(),
+                                  : () {
+                                      final authState = context.read<AuthCubit>().state;
+                                      final userId = authState is Authenticated ? authState.session.user.id : null;
+                                      context.read<BookingCubit>().confirmBooking(userId: userId);
+                                    },
                               label: 'Confirm Booking',
                               isPrimary: true,
                               isLoading: isLoading,

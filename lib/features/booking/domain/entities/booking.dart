@@ -4,6 +4,7 @@ import 'guest.dart';
 
 class Booking extends Equatable {
   final String id; // e.g. "HTL-2026-X8K1L9"
+  final String? userId;
   final String hotelId;
   final String hotelName;
   final String hotelImage;
@@ -27,6 +28,7 @@ class Booking extends Equatable {
 
   const Booking({
     required this.id,
+    this.userId,
     required this.hotelId,
     required this.hotelName,
     required this.hotelImage,
@@ -54,11 +56,13 @@ class Booking extends Equatable {
   bool get isCancelled => status.toLowerCase() == 'cancelled';
 
   Booking copyWith({
+    String? userId,
     String? status,
     String? cancellationReason,
   }) {
     return Booking(
       id: id,
+      userId: userId ?? this.userId,
       hotelId: hotelId,
       hotelName: hotelName,
       hotelImage: hotelImage,
@@ -85,6 +89,7 @@ class Booking extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        userId,
         hotelId,
         hotelName,
         hotelImage,

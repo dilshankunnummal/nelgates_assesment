@@ -171,7 +171,7 @@ class BookingCubit extends Cubit<BookingState> {
     }
   }
 
-  Future<void> confirmBooking() async {
+  Future<void> confirmBooking({String? userId}) async {
     final draft = state.draft;
     if (draft == null || draft.guest == null) {
       if (draft != null) {
@@ -185,6 +185,7 @@ class BookingCubit extends Cubit<BookingState> {
     final breakdown = draft.priceBreakdown;
     final booking = Booking(
       id: BookingIdGenerator.generate(),
+      userId: userId,
       hotelId: draft.hotel.id,
       hotelName: draft.hotel.name,
       hotelImage: draft.hotel.mainImage,

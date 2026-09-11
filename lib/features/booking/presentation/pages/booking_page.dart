@@ -15,6 +15,8 @@ import '../../../../core/widgets/common/section_header.dart';
 import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_button.dart';
 import '../../../../core/widgets/glass/liquid_glass_background.dart';
+import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../../../features/auth/presentation/cubit/auth_state.dart';
 import '../../domain/entities/guest.dart';
 import '../cubits/booking_cubit.dart';
 import '../widgets/booking_price_breakdown.dart';
@@ -28,11 +30,45 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage> {
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController(text: 'Alex');
-  final _lastNameController = TextEditingController(text: 'Mercer');
-  final _emailController = TextEditingController(text: 'employee@hotel.com');
-  final _phoneController = TextEditingController(text: '+91 9876543210');
+  late final TextEditingController _firstNameController;
+  late final TextEditingController _lastNameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _phoneController;
   final _specialRequestsController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    String first = 'Alex';
+    String last = 'Mercer';
+    String email = 'employee@hotel.com';
+    String phone = '+91 9876543210';
+
+    final authState = context.read<AuthCubit>().state;
+    if (authState is Authenticated) {
+      final user = authState.session.user;
+      final parts = user.name.trim().split(' ');
+      if (parts.isNotEmpty && parts.first.isNotEmpty) {
+        first = parts.first;
+        if (parts.length > 1) {
+          last = parts.sublist(1).join(' ');
+        } else {
+          last = '';
+        }
+      }
+      if (user.email.isNotEmpty) {
+        email = user.email;
+      }
+      if (user.phone != null && user.phone!.isNotEmpty) {
+        phone = user.phone!;
+      }
+    }
+
+    _firstNameController = TextEditingController(text: first);
+    _lastNameController = TextEditingController(text: last);
+    _emailController = TextEditingController(text: email);
+    _phoneController = TextEditingController(text: phone);
+  }
 
   @override
   void dispose() {

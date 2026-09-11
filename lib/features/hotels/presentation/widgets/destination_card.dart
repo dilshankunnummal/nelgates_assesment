@@ -1,78 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/theme/glass_tokens.dart';
 import '../../../../core/widgets/common/app_image.dart';
 import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_surface.dart';
-import '../../../../core/theme/glass_tokens.dart';
 import '../../domain/entities/destination.dart';
 
-class DestinationCard extends StatefulWidget {
+class DestinationCard extends StatelessWidget {
   final Destination destination;
   final VoidCallback? onTap;
 
   const DestinationCard({super.key, required this.destination, this.onTap});
 
   @override
-  State<DestinationCard> createState() => _DestinationCardState();
-}
-
-class _DestinationCardState extends State<DestinationCard> {
-  bool _isPressed = false;
-
-  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
     final primary = isDark ? AppColors.primaryLight : AppColors.primary;
 
-    return GestureDetector(
-      onTapDown: (_) {
-        setState(() => _isPressed = true);
-      },
-
-      onTapUp: (_) {
-        setState(() => _isPressed = false);
-
-        HapticFeedback.lightImpact();
-
-        widget.onTap?.call();
-      },
-
-      onTapCancel: () {
-        setState(() => _isPressed = false);
-      },
-
-      child: AnimatedScale(
-        scale: _isPressed ? 0.96 : 1.0,
-
-        duration: const Duration(milliseconds: 180),
-
-        curve: Curves.easeOutCubic,
-
-        child: AppGlassCard(
-          width: 190,
-
-          height: 240,
-
-          padding: EdgeInsets.zero,
-
-          borderRadius: AppRadius.brXl,
-
-          onTap: widget.onTap,
-
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(26),
-
-            child: Stack(
-              fit: StackFit.expand,
-
-              children: [
+    return AppGlassCard(
+      width: 190,
+      height: 240,
+      padding: EdgeInsets.zero,
+      borderRadius: AppRadius.brXl,
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(26),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
                 // Image
-                AppImage(imageUrl: widget.destination.image, fit: BoxFit.cover),
+                AppImage(imageUrl: destination.image, fit: BoxFit.cover),
 
                 // Dark overlay
                 if (isDark)
@@ -182,7 +142,7 @@ class _DestinationCardState extends State<DestinationCard> {
                             children: [
                               // Destination Name
                               Text(
-                                widget.destination.name,
+                                destination.name,
 
                                 style: AppTypography.titleMedium.copyWith(
                                   color: isDark
@@ -216,7 +176,7 @@ class _DestinationCardState extends State<DestinationCard> {
 
                                   Expanded(
                                     child: Text(
-                                      widget.destination.state,
+                                      destination.state,
 
                                       style: TextStyle(
                                         color: isDark
@@ -243,51 +203,40 @@ class _DestinationCardState extends State<DestinationCard> {
                               // Property Count Chip
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-
-                                  vertical: 3.5,
+                                  horizontal: 7,
+                                  vertical: 3,
                                 ),
-
                                 decoration: BoxDecoration(
                                   color: isDark
-                                      ? AppColors.primary.withValues(
-                                          alpha: 0.35,
-                                        )
-                                      : AppColors.primary.withValues(
-                                          alpha: 0.12,
-                                        ),
-
+                                      ? AppColors.primary.withValues(alpha: 0.35)
+                                      : AppColors.primary.withValues(alpha: 0.12),
                                   borderRadius: AppRadius.brFull,
-
                                   border: Border.all(
-                                    color: primary.withValues(
-                                      alpha: isDark ? 0.45 : 0.30,
-                                    ),
-
+                                    color: primary.withValues(alpha: isDark ? 0.45 : 0.30),
                                     width: 0.6,
                                   ),
                                 ),
-
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
-
                                   children: [
                                     Icon(
                                       Icons.hotel_rounded,
-
                                       size: 11,
-
                                       color: primary,
                                     ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      '${widget.destination.hotelCount} Properties',
-                                      style: TextStyle(
-                                        color: isDark
-                                            ? Colors.white
-                                            : AppColors.primary,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
+                                    const SizedBox(width: 3),
+                                    Flexible(
+                                      child: Text(
+                                        '${destination.hotelCount} properties',
+                                        style: TextStyle(
+                                          color: isDark
+                                              ? Colors.white
+                                              : AppColors.primary,
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ],
@@ -297,9 +246,9 @@ class _DestinationCardState extends State<DestinationCard> {
                           ),
                         ),
                         Container(
-                          width: 36,
-                          height: 36,
-                          margin: const EdgeInsets.only(left: 8),
+                          width: 34,
+                          height: 34,
+                          margin: const EdgeInsets.only(left: 6),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isDark
@@ -344,8 +293,6 @@ class _DestinationCardState extends State<DestinationCard> {
               ],
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }

@@ -9,8 +9,8 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/glass_tokens.dart';
 import '../../../../core/utils/date_utils.dart';
 import '../../../../core/widgets/common/app_error_view.dart';
-import '../../../../core/widgets/common/app_image.dart';
 import '../../../../core/widgets/common/section_header.dart';
+import '../../../../core/widgets/common/user_avatar.dart';
 import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_button.dart';
 import '../../../../core/widgets/glass/glass_date_picker.dart';
@@ -170,11 +170,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                AppImage(
+                                UserAvatar(
                                   imageUrl: avatar,
-                                  width: 44,
-                                  height: 44,
-                                  borderRadius: AppRadius.brFull,
+                                  name: userName,
+                                  size: 46,
                                 ),
                               ],
                             );

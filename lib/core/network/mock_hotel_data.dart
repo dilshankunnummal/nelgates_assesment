@@ -655,7 +655,7 @@ final List<Map<String, dynamic>> mockHotelsData = [
     'price_per_night': 6799.0,
     'original_price': 8500.0,
     'images': [
-      'https://images.unsplash.com/photo-1603287681836-e174ce71a8c8?w=800&q=80',
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
       'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80',
       'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
     ],

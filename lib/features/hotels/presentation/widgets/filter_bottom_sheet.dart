@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/utils/currency_utils.dart';
@@ -98,6 +99,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     _selectedAmenities.clear();
                   });
                   widget.onReset();
+                  Navigator.of(context).pop();
                 },
                 child: Text(
                   'Reset All',
@@ -250,11 +252,41 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   }
 
   Widget _buildRatingChip(double rating, String label) {
+    final isSelected = _minRating == rating;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primary = isDark ? AppColors.primaryLight : AppColors.primary;
+
     return Expanded(
-      child: GlassChip(
-        label: label,
-        isSelected: _minRating == rating,
+      child: GestureDetector(
         onTap: () => setState(() => _minRating = rating),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          padding: const EdgeInsets.symmetric(vertical: 9),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? primary.withValues(alpha: isDark ? 0.28 : 0.18)
+                : (isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.04)),
+            borderRadius: AppRadius.brFull,
+            border: Border.all(
+              color: isSelected
+                  ? primary
+                  : (isDark ? Colors.white.withValues(alpha: 0.12) : Colors.black.withValues(alpha: 0.08)),
+              width: isSelected ? 1.4 : 1.0,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: AppTypography.labelMedium.copyWith(
+                color: isSelected
+                    ? primary
+                    : (isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary),
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

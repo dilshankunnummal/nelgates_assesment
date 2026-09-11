@@ -178,10 +178,7 @@ class HotelSearchCubit extends Cubit<HotelSearchState> {
   }
 
   void clearFilters() {
-    final reset = HotelFilterCriteria(
-      query: state.criteria.query,
-      destination: state.criteria.destination,
-    );
+    const reset = HotelFilterCriteria();
     searchHotels(reset);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/glass_tokens.dart';
+import 'interactive_press_effect.dart';
 
 class GlassSurface extends StatefulWidget {
   final Widget child;
@@ -17,11 +18,13 @@ class GlassSurface extends StatefulWidget {
   final Color? borderColor;
   final double? borderWidth;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final List<BoxShadow>? shadows;
   final bool hasHighlight;
   final bool isSelected;
   final bool isFocused;
   final bool isDisabled;
+  final double minScale;
 
   const GlassSurface({
     super.key,
@@ -38,11 +41,13 @@ class GlassSurface extends StatefulWidget {
     this.borderColor,
     this.borderWidth,
     this.onTap,
+    this.onLongPress,
     this.shadows,
     this.hasHighlight = true,
     this.isSelected = false,
     this.isFocused = false,
     this.isDisabled = false,
+    this.minScale = 0.955,
   });
 
   @override
@@ -50,8 +55,6 @@ class GlassSurface extends StatefulWidget {
 }
 
 class _GlassSurfaceState extends State<GlassSurface> {
-  bool _isPressed = false;
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -63,11 +66,9 @@ class _GlassSurfaceState extends State<GlassSurface> {
     // Dynamic state modifiers
     final adjustedOpacity = widget.isDisabled
         ? baseOpacity * 0.5
-        : _isPressed
-            ? (baseOpacity + 0.08).clamp(0.0, 1.0)
-            : widget.isSelected
-                ? (baseOpacity + 0.12).clamp(0.0, 1.0)
-                : baseOpacity;
+        : widget.isSelected
+            ? (baseOpacity + 0.12).clamp(0.0, 1.0)
+            : baseOpacity;
 
     final defaultTint = isDark
         ? GlassTokens.darkSurfaceColor(widget.depthLevel, adjustedOpacity: adjustedOpacity)
@@ -84,83 +85,75 @@ class _GlassSurfaceState extends State<GlassSurface> {
     // Natural elevation shadow
     final effectiveShadows = widget.shadows ?? GlassTokens.elevation(widget.depthLevel, isDark: isDark);
 
-    // Micro-scale on press
-    final scale = _isPressed && widget.onTap != null ? 0.985 : 1.0;
-
-    Widget surface = AnimatedScale(
-      scale: scale,
+    Widget surface = AnimatedOpacity(
+      opacity: widget.isDisabled ? 0.6 : 1.0,
       duration: GlassTokens.durationFast,
-      curve: Curves.easeOutCubic,
-      child: AnimatedOpacity(
-        opacity: widget.isDisabled ? 0.6 : 1.0,
-        duration: GlassTokens.durationFast,
-        child: ClipRRect(
-          borderRadius: effectiveRadius,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: effectiveBlur, sigmaY: effectiveBlur),
-            child: Stack(
-              children: [
-                // Layer 2: Translucent neutral background tint
-                Container(
-                  width: widget.width,
-                  height: widget.height,
-                  padding: widget.padding,
-                  decoration: BoxDecoration(
-                    color: surfaceColor,
-                    borderRadius: effectiveRadius,
-                    border: Border.all(
-                      color: defaultBorderColor,
-                      width: effectiveBorderWidth,
-                    ),
+      child: ClipRRect(
+        borderRadius: effectiveRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: effectiveBlur, sigmaY: effectiveBlur),
+          child: Stack(
+            children: [
+              // Layer 2: Translucent neutral background tint
+              Container(
+                width: widget.width,
+                height: widget.height,
+                padding: widget.padding,
+                decoration: BoxDecoration(
+                  color: surfaceColor,
+                  borderRadius: effectiveRadius,
+                  border: Border.all(
+                    color: defaultBorderColor,
+                    width: effectiveBorderWidth,
                   ),
-                  child: widget.child,
                 ),
+                child: widget.child,
+              ),
 
-                // Layer 4: Soft inner top specular highlight & bottom bounce reflection (3D bubble edge)
-                if (widget.hasHighlight) ...[
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 1.6,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: GlassTokens.highlightColor(context),
-                        borderRadius: BorderRadius.vertical(
-                          top: effectiveRadius.topLeft,
-                        ),
+              // Layer 4: Soft inner top specular highlight & bottom bounce reflection (3D bubble edge)
+              if (widget.hasHighlight) ...[
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 1.6,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: GlassTokens.highlightColor(context),
+                      borderRadius: BorderRadius.vertical(
+                        top: effectiveRadius.topLeft,
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 1.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: isDark ? Colors.transparent : Colors.white.withValues(alpha: 0.18),
-                        borderRadius: BorderRadius.vertical(
-                          bottom: effectiveRadius.bottomLeft,
-                        ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: 1.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.transparent : Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.vertical(
+                        bottom: effectiveRadius.bottomLeft,
                       ),
                     ),
                   ),
-                ],
+                ),
               ],
-            ),
+            ],
           ),
         ),
       ),
     );
 
     if (widget.onTap != null && !widget.isDisabled) {
-      surface = GestureDetector(
-        onTapDown: (_) => setState(() => _isPressed = true),
-        onTapUp: (_) => setState(() => _isPressed = false),
-        onTapCancel: () => setState(() => _isPressed = false),
+      surface = InteractivePressEffect(
         onTap: widget.onTap,
-        behavior: HitTestBehavior.opaque,
+        onLongPress: widget.onLongPress,
+        borderRadius: effectiveRadius,
+        minScale: widget.minScale,
+        isDisabled: widget.isDisabled,
         child: surface,
       );
     }

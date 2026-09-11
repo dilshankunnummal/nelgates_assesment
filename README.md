@@ -1,273 +1,272 @@
-# 🏨 LuxStay — Premium Hotel Booking Application
+# 🏨 Booking.com by Dilshan
 
-A production-grade, commercial-quality Flutter mobile application built with **Clean Architecture**, **BLoC/Cubit state management**, a custom **Liquid Glass / Glassmorphism design system**, defensive JSON parsing, and full **Hive local persistence**.
+A production-grade, enterprise-ready Flutter mobile application built with **Clean Architecture**, **BLoC/Cubit state management**, live **Firebase Authentication & Cloud Firestore** backend integration, **Cloudinary Media Storage**, and robust **Hive local persistence**.
 
 ---
 
 ## 📖 Project Overview
 
-**LuxStay** is a hotel booking mobile application built for Android and iOS that delivers a refined booking experience. Designed from the ground up to reflect modern mobile software engineering standards, LuxStay integrates:
-- Liquid Glass visual hierarchy with backdrop blur, translucent cards, subtle gradients, and dark/light mode balance.
-- Clean Architecture strictly separating Presentation, Domain, and Data layers.
-- Robust state management with Flutter BLoC/Cubit.
-- Resilient, defensive data models that safeguard against malformed JSON or varying backend response shapes.
-- End-to-end local persistence for authentication sessions, saved bookings, and wishlists.
-- Reusable, test-covered calculation logic for room pricing, nights, GST taxes (12%), and service charges (5%).
+**Booking.com by Dilshan** is a comprehensive hotel discovery and booking application designed for high performance, smooth interactions, and seamless offline-first usability.
+
+### Core Architectural Pillars
+- **Clean Architecture**: Strict separation of concerns across **Presentation**, **Domain**, and **Data** layers.
+- **BLoC / Cubit State Management**: Predictable, immutable, unidirectional data flow with dedicated cubits for Auth, Hotels, Search, Bookings, Wishlist, and Theme.
+- **Direct Firebase Backend**: Standalone client SDK integration for live user authentication, real-time Firestore database queries, and reservation management.
+- **Offline-First Resilience**: Automatic local Hive caching for hotel catalogs, active bookings, wishlist items, and user sessions, paired with proactive offline error views and retry triggers.
+- **Cloudinary Media Pipeline**: Direct unsigned client-side image compression and upload for profile avatars.
+- **Interactive Micro-Animations**: Native haptic feedback, origin-based radial bloom tap effects, and smooth hold-to-compress scaling.
+- **Defensive Data Handling**: Safe parser utilities protecting against null values, type mismatches, and malformed network payloads.
 
 ---
 
 ## 🌟 Key Features
 
-1. **Authentication & Session Management**
-   - Mock REST authentication supporting Employee and HR accounts.
-   - Form validation with reactive error states and password toggles.
-   - Persistent session across application restarts with full logout workflow.
+### 1. Authentication & Session Management
+- **Firebase Auth Integration**: Real-time sign-in, registration, and session restore.
+- **Demo Quick-Fill Access**: One-tap demo accounts for quick testing (**Employee** & **HR Admin**).
+- **Form Validation**: Strict email format, secure password rules, and interactive visibility toggles.
+- **Session Persistence**: Encrypted local session storage via Hive, automatically restored on app launch.
 
-2. **Home & Discovery**
-   - Personalized greeting and interactive search triggers.
-   - Destination discovery cards with instant query pre-filtering (Goa, Mumbai, Manali, Jaipur, Bengaluru, Kerala).
-   - "Recommended Stays" carousel with real-time wishlist toggling and rating badges.
+### 2. Hotel Discovery & Destinations
+- **Curated Travel Destinations**: Destination cards with dynamic hotel count counters and pre-filtered discovery routes (e.g., Goa, Mumbai, Manali, Jaipur, Bengaluru, Mysuru, Coorg).
+- **Featured Stays**: High-definition image galleries, star rating badges, pricing tags, and real-time wishlist toggling.
 
-3. **Hotel Search, Filters & Sorting**
-   - Free-text search by hotel name and destination city.
-   - Multi-criteria filter modal:
-     - Interactive price range slider (₹1,000 to ₹30,000+).
-     - Star rating selection (3★, 4★, 5★).
-     - Amenities filtering (Free WiFi, Swimming Pool, Spa, Ocean View, Breakfast Included, Gym, Airport Shuttle, Valet Parking, Rooftop Bar).
-   - Sorting options: Price (Low to High / High to Low) and Rating (Highest first).
-   - Complete support for Loading, Success, Empty, and Error states.
+### 3. Advanced Search, Filter & Sort
+- **Free-Text Search**: Instant search across hotel names, cities, states, and descriptions.
+- **Interactive Filter Bottom Sheet**:
+  - **Sort Options**: Popularity, Price (Low to High), Price (High to Low), and Highest Rating.
+  - **Price Per Night Slider**: Real-time dual-thumb range slider from ₹0 to ₹80,000.
+  - **Minimum Rating Selector**: Single-layer animated pills (`All`, `3.5+ ★`, `4.0+ ★`, `4.5+ ★`).
+- **Empty & Loading States**: Clean animated skeletons during fetch and clear empty search indicators with reset actions.
 
-4. **Hotel Details & Room Selection**
-   - High-definition swipeable image gallery with index counter.
-   - Detailed property descriptions, full amenity tags, and policies.
-   - Dynamic room cards displaying bed types, capacities, prices, and amenities.
-   - Check-in / Check-out date pickers with validation (Check-out must be after Check-in).
-   - Steppers for Room Count, Adult Guests, and Children.
+### 4. Hotel Details & Dynamic Room Selection
+- **Interactive Image Carousel**: Full-bleed gallery with page indicators.
+- **Property Highlights**: Full address, comprehensive amenity tags, property descriptions, and cancellation policies.
+- **Room Selection & Guest Steppers**:
+  - Detailed room tiers (King beds, Heritage Suites, Executive rooms).
+  - Check-in and Check-out calendar date pickers with range validation.
+  - Interactive stepper controls for Room Count, Adults, and Children.
 
-5. **Dynamic Price Calculation**
-   - Automatic night calculation based on selected dates.
-   - Reusable formula:
-     $$\text{Subtotal} = \text{Room Price} \times \text{Nights} \times \text{Rooms}$$
-     $$\text{GST (12\%)} = \text{Subtotal} \times 0.12$$
-     $$\text{Service Charge (5\%)} = \text{Subtotal} \times 0.05$$
-     $$\text{Final Total} = \text{Subtotal} + \text{Taxes} + \text{Service Charge}$$
-   - Formatted in Indian Rupee (INR - e.g., ₹12,000) using the `intl` package.
+### 5. Transparent Price Calculator
+- **Mathematical Formula**:
+  $$\text{Subtotal} = \text{Room Price Per Night} \times \text{Nights} \times \text{Rooms}$$
+  $$\text{GST (12\%)} = \text{Subtotal} \times 0.12$$
+  $$\text{Service Charge (5\%)} = \text{Subtotal} \times 0.05$$
+  $$\text{Final Total} = \text{Subtotal} + \text{Taxes} + \text{Service Charge}$$
+- Formatted in Indian Rupee (`₹`) using `intl` currency formatting.
 
-6. **Booking Summary & Confirmation**
-   - Detailed review screen with full stay breakdown and primary guest contact form.
-   - Mock reservation engine creating a unique booking reference (`HTL-2026-XXXXXX`).
-   - Confirmation receipt with options to navigate directly to My Bookings or return Home.
+### 6. Booking Engine & Management
+- **Reservation Confirmation**: Generates a standardized reservation code (e.g., `HTL-2026-XXXXXX`) synced live to Cloud Firestore.
+- **Status Tabs**: Categorized tabs for **Upcoming**, **Completed**, and **Cancelled** bookings.
+- **In-App Cancellation**: Real-time cancellation modal with loading dialog and status update in Firestore.
 
-7. **My Bookings & Cancellation**
-   - Tabbed management for **Upcoming**, **Completed**, and **Cancelled** stays.
-   - Detailed booking receipt view.
-   - Safe cancellation dialog for upcoming reservations (persists status change in Hive without deleting historical records).
+### 7. Persistent Wishlist
+- One-tap hotel bookmarking from home cards, search results, and detail views.
+- Optimistic UI updates backed by persistent Hive storage.
 
-8. **Persistent Wishlist**
-   - Instant add/remove toggles on cards and detail screens.
-   - Optimistic UI updates with rollback handling on persistence failure.
-   - Dedicated Wishlist screen with direct navigation to hotel details.
-
-9. **Liquid Glass Design System (Light & Dark Theme)**
-   - Custom `AppGlassCard`, `GlassButton`, `GlassChip`, `GlassSearchBar`, and `GlassBottomNav`.
-   - Tuned blur radii, border opacities, and contrast ratios compliant with both dark and light modes.
-   - Theme persistence via Hive with live switching in the Settings screen.
+### 8. User Profile & Settings
+- **Cloudinary Avatar Upload**: Take a photo or select from gallery with automatic client-side compression (1024x1024 max dimensions, 82% JPEG quality) and direct upload.
+- **Theme Switching**: Instant toggle between Light Mode and Dark Mode with system default option.
+- **Secure Sign Out**: Confirmation modal with clean session teardown.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer / Concern | Technology |
-|---|---|
-| **Framework** | Flutter 3.44.8 / Dart 3.12.2 (Null Safety) |
-| **State Management** | `flutter_bloc` / `bloc` |
-| **Dependency Injection** | `get_it` |
-| **Routing** | `go_router` (declarative routing with redirects) |
-| **Networking** | `dio` with mock REST interceptor |
-| **Local Persistence** | `hive` / `hive_flutter` |
-| **Value Equality** | `equatable` |
-| **Formatting** | `intl` (INR Currency, DateTime formatting) |
-| **Testing** | `flutter_test`, `bloc_test`, `mocktail` |
+| Layer / Concern | Technology | Purpose |
+|---|---|---|
+| **Framework** | Flutter (Dart 3.x, Null Safety) | Cross-platform mobile development |
+| **State Management** | `flutter_bloc` & `bloc` | Reactive, decoupled state handling |
+| **Backend & Auth** | `firebase_core`, `firebase_auth`, `cloud_firestore` | Live cloud database and user management |
+| **Media Hosting** | `cloudinary` via `dio` multipart | Cloud profile image upload and CDN delivery |
+| **Dependency Injection** | `get_it` | Service locator and modular decoupling |
+| **Routing** | `go_router` | Declarative, deep-link ready navigation |
+| **Local Persistence** | `hive` & `hive_flutter` | Fast, lightweight key-value offline storage |
+| **Network Client** | `dio` | HTTP networking client |
+| **Image Caching** | `cached_network_image` | Smooth image loading with memory/disk caching |
+| **Formatting** | `intl` | Currency and date formatting |
+| **Testing** | `flutter_test`, `bloc_test`, `mocktail` | Unit, cubit, and widget testing |
 
 ---
 
-## 🏛️ Clean Architecture
-
-The codebase strictly adheres to Clean Architecture principles:
+## 🏛️ Clean Architecture Structure
 
 ```
-                  ┌────────────────────────┐
-                  │   Presentation Layer   │
-                  │ (Pages, Cubits, Glass) │
-                  └───────────┬────────────┘
-                              │
-                              ▼
-                  ┌────────────────────────┐
-                  │      Domain Layer      │
-                  │ (Entities, Use Cases)  │
-                  └───────────┬────────────┘
-                              │
-                              ▼
-                  ┌────────────────────────┐
-                  │       Data Layer       │
-                  │(Models, Repos, Sources)│
-                  └────────────────────────┘
+                  ┌─────────────────────────────────────────┐
+                  │           Presentation Layer            │
+                  │   (Pages, Widgets, Cubits & States)     │
+                  └───────────────────┬─────────────────────┘
+                                      │
+                                      ▼
+                  ┌─────────────────────────────────────────┐
+                  │              Domain Layer               │
+                  │   (Entities, Use Cases, Repositories)   │
+                  └───────────────────┬─────────────────────┘
+                                      │
+                                      ▼
+                  ┌─────────────────────────────────────────┐
+                  │               Data Layer                │
+                  │ (Models, Data Sources, Firestore, Hive) │
+                  └─────────────────────────────────────────┘
 ```
 
-- **Presentation Layer**: Contains UI screens, reusable Liquid Glass widgets, and BLoC/Cubit state handlers. UI widgets never directly interact with repositories, Dio, or Hive.
-- **Domain Layer**: Contains business entities, repository contracts (interfaces), and single-purpose Use Cases (`LoginUseCase`, `GetHotelsUseCase`, `CreateBookingUseCase`, `ToggleWishlistUseCase`, etc.).
-- **Data Layer**: Contains API DataSources (remote/local), Hive storage implementations, and concrete repositories mapping raw JSON to defensive data models.
+- **Domain Layer**: Completely framework-agnostic. Defines business entities, repository contracts, and single-responsibility Use Cases.
+- **Data Layer**: Implements repository contracts, maps raw network data into defensive models, and manages Firestore and Hive data sources.
+- **Presentation Layer**: Subscribes to Cubit states and renders UI components. Contains no direct database or network dependencies.
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Organization
 
 ```
 lib/
 ├── app/
-│   └── app.dart                         # MaterialApp, ThemeBuilder, BlocProviders
+│   └── app.dart                         # MaterialApp.router, Global BlocProviders, Theme setup
 ├── core/
+│   ├── config/
+│   │   └── app_environment.dart         # Cloudinary, Firebase, and environment configurations
 │   ├── constants/
-│   │   ├── app_constants.dart
-│   │   └── storage_constants.dart
+│   │   ├── app_constants.dart           # App name, tax rates, demo accounts
+│   │   └── storage_constants.dart       # Hive box identifiers
 │   ├── di/
-│   │   └── injection.dart               # Service locator setup with get_it
+│   │   └── injection.dart               # Service locator initialization (get_it)
 │   ├── error/
-│   │   ├── exceptions.dart
-│   │   └── failures.dart
+│   │   ├── exceptions.dart              # Data layer exceptions
+│   │   └── failures.dart                # Domain layer failure objects
 │   ├── network/
-│   │   ├── api_client.dart              # Reusable Dio client
-│   │   ├── mock_hotel_data.dart         # 11+ realistic hotels & 6 destinations
-│   │   └── mock_interceptor.dart        # Interceptor simulating REST endpoints
+│   │   ├── api_client.dart              # Dio HTTP client wrapper
+│   │   └── mock_hotel_data.dart         # Seed dataset with 11+ hotels and destinations
 │   ├── routing/
-│   │   ├── app_router.dart              # go_router configuration & redirect logic
-│   │   └── route_names.dart             # Type-safe route identifiers
+│   │   ├── app_router.dart              # go_router declarative routes and subroutes
+│   │   └── route_names.dart             # Route constants
+│   ├── services/
+│   │   ├── cloudinary_service.dart      # Image compression and upload service
+│   │   └── firestore_seeder.dart        # Firestore collection initialization & self-healing
 │   ├── theme/
-│   │   ├── app_colors.dart              # Curated light and dark palettes
-│   │   ├── app_radius.dart
-│   │   ├── app_shadows.dart
-│   │   ├── app_spacing.dart
+│   │   ├── app_colors.dart              # Cohesive light and dark palettes
+│   │   ├── app_radius.dart              # Border radius tokens
+│   │   ├── app_spacing.dart             # Spacing constants
 │   │   ├── app_theme.dart               # Material ThemeData definitions
-│   │   ├── app_typography.dart
-│   │   ├── glass_theme.dart             # Centralized Glassmorphic design tokens
-│   │   └── theme_cubit.dart             # Dark/Light theme mode state
+│   │   ├── app_typography.dart          # Font scale and typography rules
+│   │   └── theme_cubit.dart             # ThemeMode state management
 │   ├── utils/
+│   │   ├── app_logger.dart              # Structured console logging
 │   │   ├── booking_id_generator.dart    # Format: HTL-2026-XXXXXX
-│   │   ├── currency_utils.dart          # INR formatting
-│   │   ├── date_utils.dart              # Safe date operations & night math
-│   │   ├── price_calculator.dart        # Subtotal, tax, service charge, and total
+│   │   ├── currency_utils.dart          # Currency formatter
+│   │   ├── date_utils.dart              # Night math and date formatting
+│   │   ├── price_calculator.dart        # Subtotal, GST (12%), Service Charge (5%) calculator
 │   │   ├── safe_parser.dart             # Defensive type conversions
-│   │   └── validators.dart              # Email, password, phone, guest checks
+│   │   └── validators.dart              # Form validation utilities
 │   └── widgets/
-│       ├── common/                      # Reusable UI widgets (buttons, cards, loaders)
-│       └── glass/                       # Liquid Glass widgets (cards, buttons, chips, search)
+│       ├── common/                      # Buttons, image handlers, error views, rating widgets
+│       └── skeleton/                    # Shimmer skeleton loaders for all screens
 ├── features/
-│   ├── auth/                            # Login, credentials, session management
-│   ├── booking/                         # Stay configuration, summary, confirmation, history
-│   ├── hotels/                          # Hotel listings, discovery, search, details
-│   ├── settings/                        # Theme toggling, profile info, logout
-│   ├── shell/                           # Persistent bottom navigation shell
-│   └── wishlist/                        # Saved hotels with optimistic updates
-└── main.dart                            # App entry point, Hive & DI initialization
+│   ├── auth/                            # Login, registration, splash, auth cubit, user models
+│   ├── booking/                         # Booking configuration, review, confirmation, my bookings
+│   ├── hotels/                          # Hotel listings, destination cards, search, filters, details
+│   ├── profile/                         # User profile view, avatar picker
+│   ├── settings/                        # Settings screen, dark mode toggle, logout
+│   ├── shell/                           # Bottom navigation shell scaffold
+│   └── wishlist/                        # Wishlist management and optimistic toggling
+└── main.dart                            # Application entry point, Hive & Firebase init
 ```
 
 ---
 
-## 🔒 Assessment Credentials
+## 🔒 Demo Credentials
 
-The mock authentication datasource verifies against the following credentials:
+For quick evaluation, pre-configured accounts are available with one-tap quick-fill buttons on the login screen:
 
 | Role | Email | Password |
 |---|---|---|
-| **Employee (Default)** | `employee@hotel.com` | `Employee@123` |
-| **HR Admin** | `hr@hotel.com` | `HR@123` |
+| **Employee** | `employee@hotel.com` | `Employee@123` |
+| **HR Manager** | `hr@hotel.com` | `HR@123` |
+
+*New accounts can also be created directly via the in-app registration flow.*
 
 ---
 
-## 🌐 Mock REST Endpoints
+## 💾 Local Persistence (Hive Boxes)
 
-Simulated via Dio interceptor with simulated network latency:
-
-- `POST /api/auth/login` — Verifies email/password and returns user profile & auth token.
-- `GET /api/hotels` — Returns all hotels or filters by query, destination, price, rating, or amenities.
-- `GET /api/hotels/{id}` — Returns single hotel details.
-- `GET /api/destinations` — Returns curated travel destinations with image assets.
-- `GET /api/bookings` — Returns user bookings.
-- `POST /api/bookings` — Creates a new hotel reservation.
-- `PATCH /api/bookings/{id}/cancel` — Cancels an existing reservation.
+| Box Name | Stored Data |
+|---|---|
+| `auth_box` | Active user profile, login status, and session token |
+| `theme_box` | Selected theme mode (`light`, `dark`, or `system`) |
+| `wishlist_box` | Set of bookmarked hotel IDs for instant offline access |
+| `bookings_box` | Cached user reservations and historical bookings |
+| `hotels_cache_box` | Cached hotel catalog and destinations for offline browsing |
 
 ---
 
-## 💾 Local Storage (Hive)
+## 🧪 Automated Testing Suite
 
-Persistent data boxes managed independently from the UI:
-- `authBox`: Current authentication token and active user profile.
-- `themeBox`: Active brightness preference (light vs dark).
-- `wishlistBox`: Array of saved hotel IDs.
-- `bookingsBox`: Array of completed and cancelled reservations.
-- `hotelCacheBox`: Offline cached hotel catalog.
+The project includes an extensive test suite covering core business logic, utility math, defensive parsers, and UI components:
 
----
+### Test Breakdown
+- **Unit Tests**:
+  - `price_calculator_test.dart`: Validates room pricing, multi-night/multi-room math, zero values, negative protection, and tax calculations.
+  - `safe_parser_test.dart`: Tests type conversion resilience for ints, doubles, strings, booleans, and image URLs.
+  - `validators_test.dart`: Validates email formats, password strength, phone numbers, guest counts, and dates.
+  - `date_utils_test.dart`: Tests date range validations and night difference math.
+  - `currency_utils_test.dart`: Tests INR formatting and night suffixes.
+  - `hotel_model_test.dart` & `user_model_test.dart`: Validates JSON serialization and deserialization.
+  - `hotel_repository_impl_test.dart`: Verifies remote-to-cache fallback mechanisms.
+  - `hotel_usecases_test.dart`: Tests domain use case execution.
+- **Widget Tests**:
+  - `login_page_test.dart`: Form rendering, input validation, and demo button interactions.
+  - `hotel_card_test.dart`: Card rendering, pricing, rating display, and wishlist triggers.
+  - `rating_widget_test.dart`: Rating stars and review count display.
+  - `skeleton_test.dart`: Shimmer loader rendering across cards, lists, and detail views.
+  - `widget_test.dart`: Smoke tests and constants validation.
 
-## 🧪 Testing Suite
-
-Automated tests cover all critical layers:
-1. **Unit Tests**:
-   - `price_calculator_test.dart`: Price formulas, multi-night/multi-room math, zero values, edge cases.
-   - `safe_parser_test.dart`: Resilient parsing of ints, doubles, strings, and multi-format image JSON.
-   - `validators_test.dart`: Email, password, date checks, room and guest bounds.
-   - `date_utils_test.dart`: Night calculations, string representations.
-2. **Cubit Tests**:
-   - `auth_cubit_test.dart`: Initial → Loading → Success / Failure transitions.
-   - `hotel_search_cubit_test.dart`: Querying, filtering, sorting, empty states.
-   - `booking_cubit_test.dart`: Room selection, guest counters, calculations, confirmation.
-   - `bookings_cubit_test.dart`: Loading reservations, cancellation, state persistence.
-   - `wishlist_cubit_test.dart`: Add/remove items with optimistic state updates.
-3. **Widget Tests**:
-   - `login_page_test.dart`: Form validation triggers, button states.
-   - `hotel_card_test.dart`: Content rendering, price and rating formatting, wishlist taps.
-
-To run the complete test suite:
+### Run All Tests
 ```bash
 flutter test
 ```
 
+### Static Analysis
+```bash
+flutter analyze
+```
+
 ---
 
-## 🚀 Setup & Execution Instructions
+## 🚀 Getting Started
 
 ### Prerequisites
-- Flutter SDK (v3.20.0 or higher recommended, tested on Flutter 3.44.8)
-- Dart SDK (v3.3.0 or higher)
-- Android Studio / Xcode / VS Code with Flutter extension
+- **Flutter SDK**: 3.20.0 or higher
+- **Dart SDK**: 3.3.0 or higher
+- **Android Studio** / **VS Code** / **Xcode**
+- Active Android device or emulator (API 24+)
 
-### Installation
-1. Clone or open the repository root:
+### Installation & Run
+1. **Clone the repository**:
    ```bash
+   git clone <repository_url>
    cd nelegate_assessment
    ```
-2. Fetch dependencies:
+
+2. **Install dependencies**:
    ```bash
    flutter pub get
    ```
-3. Run static analyzer:
+
+3. **Verify code quality**:
    ```bash
    flutter analyze
-   ```
-4. Run all unit and widget tests:
-   ```bash
    flutter test
    ```
-5. Run the application:
+
+4. **Run the application**:
    ```bash
    flutter run
    ```
 
 ---
 
-## 📦 Release APK Build Instructions
+## 📦 Building Standalone APK
 
-To generate a standalone release Android APK:
+To generate a standalone universal release Android APK:
 ```bash
 flutter build apk --release
 ```
@@ -276,10 +275,8 @@ The output file will be generated at:
 
 ---
 
-## ⚠️ Known Limitations
+## ⚠️ Notes & Assumptions
 
-- **Payment Gateway**: As per the assessment specification, a mock confirmation mechanism is used rather than integrating real Stripe/Razorpay SDKs.
-- **External Maps**: Location coordinates and amenities are rendered natively with a stylized Glassmorphic map placeholder rather than requiring live Google Maps API keys.
-- **Backend API**: The REST API layer uses local in-memory/interceptor mock responses designed to be swapped with a live REST base URL seamlessly by replacing `mock_interceptor.dart`.
-#   n e l g a t e s _ a s s e s m e n t  
- 
+- **Payment Processing**: A mock confirmation engine generates unique transaction and booking references for assessment verification.
+- **Interactive Stays**: Hotel listings, images, rooms, and descriptions are dynamically pulled from live Cloud Firestore with automatic local Hive fallback.
+- **Profile Media**: Powered directly by Cloudinary CDN unsigned presets with native client-side compression.

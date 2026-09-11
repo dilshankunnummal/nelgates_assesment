@@ -1,5 +1,7 @@
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/booking/domain/entities/booking.dart';
 import '../../features/booking/presentation/pages/booking_confirmation_page.dart';
 import '../../features/booking/presentation/pages/booking_details_page.dart';
@@ -13,12 +15,22 @@ import 'route_names.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: RouteNames.home,
+    initialLocation: RouteNames.splash,
     routes: [
+      GoRoute(
+        path: RouteNames.splash,
+        name: 'splash',
+        builder: (context, state) => const SplashPage(),
+      ),
       GoRoute(
         path: RouteNames.login,
         name: 'login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: RouteNames.register,
+        name: 'register',
+        builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
         path: RouteNames.home,

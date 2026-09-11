@@ -8,7 +8,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/theme_cubit.dart';
-import '../../../../core/widgets/common/app_image.dart';
+import '../../../../core/widgets/common/user_avatar.dart';
 import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_alert_dialog.dart';
 import '../../../../core/widgets/glass/glass_button.dart';
@@ -70,11 +70,10 @@ class SettingsPage extends StatelessWidget {
                   borderRadius: AppRadius.brXl,
                   child: Row(
                     children: [
-                      AppImage(
+                      UserAvatar(
                         imageUrl: avatarUrl,
-                        width: 58,
-                        height: 58,
-                        borderRadius: AppRadius.brFull,
+                        name: userName,
+                        size: 58,
                       ),
                       AppSpacing.gapW16,
                       Expanded(
@@ -219,24 +218,6 @@ class SettingsPage extends StatelessWidget {
                     ),
                     trailing: Text(
                       AppConstants.appVersion,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
-                      ),
-                    ),
-                  ),
-                  const Divider(height: 1),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.design_services_rounded, color: primary),
-                    title: Text(
-                      'Design System',
-                      style: AppTypography.bodyMedium.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
-                      ),
-                    ),
-                    trailing: Text(
-                      'Liquid Glass v1',
                       style: AppTypography.bodyMedium.copyWith(
                         color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
                       ),

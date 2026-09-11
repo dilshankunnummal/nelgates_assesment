@@ -22,6 +22,10 @@ class AppErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isNetworkError = _isNetworkError(message) || _isNetworkError(title ?? '');
+    final displayIcon = isNetworkError ? Icons.wifi_off_rounded : icon;
+    final displayTitle = title ?? (isNetworkError ? 'No Internet Connection' : 'Something Went Wrong');
+    final accentColor = isNetworkError ? AppColors.warning : AppColors.error;
 
     return Center(
       child: Padding(
@@ -32,22 +36,22 @@ class AppErrorView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.12),
+                color: accentColor.withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                icon,
+                displayIcon,
                 size: 44,
-                color: AppColors.error,
+                color: accentColor,
               ),
             ),
             const SizedBox(height: 20),
             Text(
-              title ?? 'Something Went Wrong',
+              displayTitle,
               textAlign: TextAlign.center,
               style: AppTypography.titleMedium.copyWith(
                 color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 8),
@@ -61,11 +65,11 @@ class AppErrorView extends StatelessWidget {
             if (onRetry != null) ...[
               const SizedBox(height: 24),
               SizedBox(
-                width: 160,
+                width: 170,
                 child: AppButton(
                   onPressed: onRetry,
                   text: retryText,
-                  height: 44,
+                  height: 46,
                   icon: const Icon(Icons.refresh_rounded, size: 18),
                 ),
               ),
@@ -74,5 +78,14 @@ class AppErrorView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool _isNetworkError(String text) {
+    final lower = text.toLowerCase();
+    return lower.contains('internet') ||
+        lower.contains('network') ||
+        lower.contains('connect') ||
+        lower.contains('offline') ||
+        lower.contains('unavailable');
   }
 }

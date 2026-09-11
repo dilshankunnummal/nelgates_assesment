@@ -9,11 +9,15 @@ import 'package:nelegate_assessment/features/auth/presentation/cubit/auth_cubit.
 import 'package:nelegate_assessment/features/auth/presentation/cubit/auth_state.dart';
 
 class MockLoginUseCase extends Mock implements LoginUseCase {}
+class MockRegisterUseCase extends Mock implements RegisterUseCase {}
+class MockForgotPasswordUseCase extends Mock implements ForgotPasswordUseCase {}
 class MockGetSessionUseCase extends Mock implements GetSessionUseCase {}
 class MockLogoutUseCase extends Mock implements LogoutUseCase {}
 
 void main() {
   late MockLoginUseCase mockLoginUseCase;
+  late MockRegisterUseCase mockRegisterUseCase;
+  late MockForgotPasswordUseCase mockForgotPasswordUseCase;
   late MockGetSessionUseCase mockGetSessionUseCase;
   late MockLogoutUseCase mockLogoutUseCase;
   late AuthCubit authCubit;
@@ -33,14 +37,19 @@ void main() {
 
   setUp(() {
     mockLoginUseCase = MockLoginUseCase();
+    mockRegisterUseCase = MockRegisterUseCase();
+    mockForgotPasswordUseCase = MockForgotPasswordUseCase();
     mockGetSessionUseCase = MockGetSessionUseCase();
     mockLogoutUseCase = MockLogoutUseCase();
     authCubit = AuthCubit(
       loginUseCase: mockLoginUseCase,
+      registerUseCase: mockRegisterUseCase,
+      forgotPasswordUseCase: mockForgotPasswordUseCase,
       getSessionUseCase: mockGetSessionUseCase,
       logoutUseCase: mockLogoutUseCase,
     );
   });
+
 
   tearDown(() {
     authCubit.close();

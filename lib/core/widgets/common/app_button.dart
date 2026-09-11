@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_radius.dart';
 import '../../theme/app_typography.dart';
+import '../glass/interactive_press_effect.dart';
 
 class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -13,6 +14,7 @@ class AppButton extends StatelessWidget {
   final double height;
   final Color? backgroundColor;
   final Color? textColor;
+  final double minScale;
 
   final String? loadingText;
 
@@ -28,6 +30,7 @@ class AppButton extends StatelessWidget {
     this.backgroundColor,
     this.textColor,
     this.loadingText,
+    this.minScale = 0.955,
   });
 
   @override
@@ -37,37 +40,51 @@ class AppButton extends StatelessWidget {
     final defaultBg = isDark ? AppColors.primaryLight : AppColors.primary;
     final defaultFg = isDark ? AppColors.darkBackground : Colors.white;
 
+    Widget button;
+
     if (isOutlined) {
-      return SizedBox(
+      button = Container(
         width: width ?? double.infinity,
         height: height,
-        child: OutlinedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(
-              color: backgroundColor ?? primary,
-              width: 1.5,
-            ),
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.brMd),
+        decoration: BoxDecoration(
+          borderRadius: AppRadius.brMd,
+          border: Border.all(
+            color: backgroundColor ?? primary,
+            width: 1.5,
           ),
+        ),
+        child: Center(
           child: _buildChild(textColor ?? (isDark ? AppColors.primaryLight : AppColors.primary)),
+        ),
+      );
+    } else {
+      button = Container(
+        width: width ?? double.infinity,
+        height: height,
+        decoration: BoxDecoration(
+          color: backgroundColor ?? defaultBg,
+          borderRadius: AppRadius.brMd,
+          boxShadow: [
+            BoxShadow(
+              color: (backgroundColor ?? defaultBg).withValues(alpha: 0.28),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Center(
+          child: _buildChild(textColor ?? defaultFg),
         ),
       );
     }
 
-    return SizedBox(
-      width: width ?? double.infinity,
-      height: height,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? defaultBg,
-          foregroundColor: textColor ?? defaultFg,
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.brMd),
-        ),
-        child: _buildChild(textColor ?? defaultFg),
-      ),
+    return InteractivePressEffect(
+      onTap: isLoading ? null : onPressed,
+      borderRadius: AppRadius.brMd,
+      minScale: minScale,
+      isDisabled: isLoading || onPressed == null,
+      rippleColor: Colors.white.withValues(alpha: 0.28),
+      child: button,
     );
   }
 

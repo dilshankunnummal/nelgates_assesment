@@ -6,6 +6,7 @@ import 'guest_model.dart';
 class BookingModel extends Booking {
   const BookingModel({
     required super.id,
+    super.userId,
     required super.hotelId,
     required super.hotelName,
     required super.hotelImage,
@@ -45,6 +46,9 @@ class BookingModel extends Booking {
 
     return BookingModel(
       id: SafeParser.toStr(json['id'], fallback: 'HTL-2026-MOCK01'),
+      userId: json['user_id'] != null || json['userId'] != null
+          ? SafeParser.toStr(json['user_id'] ?? json['userId'])
+          : null,
       hotelId: SafeParser.toStr(json['hotel_id'] ?? json['hotelId'], fallback: 'HTL-001'),
       hotelName: SafeParser.toStr(json['hotel_name'] ?? json['hotelName'], fallback: 'Grand Palace'),
       hotelImage: SafeParser.toImageUrl(
@@ -85,6 +89,7 @@ class BookingModel extends Booking {
 
     return {
       'id': id,
+      'user_id': userId,
       'hotel_id': hotelId,
       'hotel_name': hotelName,
       'hotel_image': hotelImage,
@@ -111,6 +116,7 @@ class BookingModel extends Booking {
   factory BookingModel.fromEntity(Booking entity) {
     return BookingModel(
       id: entity.id,
+      userId: entity.userId,
       hotelId: entity.hotelId,
       hotelName: entity.hotelName,
       hotelImage: entity.hotelImage,

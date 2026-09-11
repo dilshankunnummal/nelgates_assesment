@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "274482428373",
+    "project_id": "story-nest-8e84c",
+    "storage_bucket": "story-nest-8e84c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274482428373:android:c833200e611e2a9e35255c",
+        "android_client_info": {
+          "package_name": "com.example.nelegate_assessment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv3Szq1YT35AMTNvip_mo9WABdh6aZWVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274482428373:android:740cef206aa1dbe535255c",
+        "android_client_info": {
+          "package_name": "com.reubro.storynest_main"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv3Szq1YT35AMTNvip_mo9WABdh6aZWVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

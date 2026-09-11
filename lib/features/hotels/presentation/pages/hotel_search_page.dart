@@ -54,6 +54,7 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
         context.read<HotelSearchCubit>().searchHotels(updated);
       },
       onReset: () {
+        _searchController.clear();
         context.read<HotelSearchCubit>().clearFilters();
       },
     );

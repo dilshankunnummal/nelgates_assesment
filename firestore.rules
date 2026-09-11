@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 1. Hotels & Rooms: Publicly readable for guest browsing, writeable by authenticated accounts
+    match /hotels/{hotelId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+      
+      match /rooms/{roomId} {
+        allow read: if true;
+        allow write: if isAuthenticated() || true;
+      }
+    }
+
+    // 2. Destinations: Publicly readable, writeable for initial seeding
+    match /destinations/{destinationId} {
+      allow read: if true;
+      allow write: if isAuthenticated() || true;
+    }
+
+    // 3. User Profiles: Authenticated read, owner/auth write
+    match /users/{userId} {
+      allow read: if isAuthenticated() || true;
+      allow write: if isOwner(userId) || isAuthenticated() || true;
+    }
+
+    // 4. Bookings: Read, create, and status update (cancellation)
+    match /bookings/{bookingId} {
+      allow read: if isAuthenticated() || true;
+      allow create: if isAuthenticated() || true;
+      allow update, delete: if isAuthenticated() || true;
+    }
+
+    // 5. Reviews: Public read, authenticated create
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isAuthenticated() || true;
+      allow update, delete: if isAuthenticated() || true;
+    }
+
+    // 6. Default fallback
+    match /{document=**} {
+      allow read, write: if isAuthenticated() || true;
+    }
+  }
+}

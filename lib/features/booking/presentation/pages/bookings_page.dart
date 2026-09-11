@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/common/app_empty_view.dart';
 import '../../../../core/widgets/common/app_error_view.dart';
 import '../../../../core/widgets/glass/glass_alert_dialog.dart';
+import '../../../../core/widgets/glass/glass_loading_dialog.dart';
 import '../../../../core/widgets/glass/glass_segmented_tabs.dart';
 import '../../../../core/widgets/glass/glass_snackbar.dart';
 import '../../../../core/widgets/glass/liquid_glass_background.dart';
@@ -57,8 +58,10 @@ class _BookingsPageState extends State<BookingsPage> with SingleTickerProviderSt
     );
 
     if (confirmed == true && context.mounted) {
+      showGlassLoadingDialog(context, message: 'Cancelling reservation...');
       final success = await context.read<BookingsCubit>().cancelBooking(booking.id);
       if (context.mounted) {
+        hideGlassLoadingDialog(context);
         showGlassSnackBar(
           context,
           message: success
