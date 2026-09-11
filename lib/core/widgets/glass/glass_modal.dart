@@ -4,7 +4,6 @@ import '../../theme/app_typography.dart';
 import 'glass_dialog.dart';
 import 'glass_icon_button.dart';
 
-/// Full featured Glass Modal with title header, close icon, and content slot.
 class GlassModal extends StatelessWidget {
   final String title;
   final Widget child;

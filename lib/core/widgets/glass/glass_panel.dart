@@ -5,7 +5,6 @@ import '../../theme/app_typography.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// Structured glass panel with title header, trailing action, and content body.
 class GlassPanel extends StatelessWidget {
   final String? title;
   final Widget? leading;

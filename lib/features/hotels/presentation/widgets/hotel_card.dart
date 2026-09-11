@@ -14,7 +14,6 @@ import '../../../wishlist/presentation/cubit/wishlist_cubit.dart';
 import '../../../wishlist/presentation/cubit/wishlist_state.dart';
 import '../../domain/entities/hotel.dart';
 
-/// True Liquid Glass Hotel Card with zero gradients.
 class HotelCard extends StatelessWidget {
   final Hotel hotel;
   final VoidCallback? onTap;
@@ -40,7 +39,7 @@ class HotelCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Image with Wishlist Button & Rating Tag
+
           Stack(
             children: [
               AppImage(
@@ -49,7 +48,7 @@ class HotelCard extends StatelessWidget {
                 width: double.infinity,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
               ),
-              // Wishlist Heart Glass Button
+
               Positioned(
                 top: 12,
                 right: 12,
@@ -70,7 +69,7 @@ class HotelCard extends StatelessWidget {
                   },
                 ),
               ),
-              // Floating Liquid Glass Rating badge on image
+
               Positioned(
                 bottom: 12,
                 left: 12,
@@ -97,13 +96,12 @@ class HotelCard extends StatelessWidget {
             ],
           ),
 
-          // Details Section
           Padding(
             padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Location row & Star Rating
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -141,7 +139,6 @@ class HotelCard extends StatelessWidget {
                 ),
                 AppSpacing.gapH4,
 
-                // Hotel Name
                 Text(
                   hotel.name,
                   style: AppTypography.titleMedium.copyWith(
@@ -153,7 +150,6 @@ class HotelCard extends StatelessWidget {
                 ),
                 AppSpacing.gapH8,
 
-                // Pricing and Reviews
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,

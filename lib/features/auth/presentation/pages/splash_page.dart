@@ -43,10 +43,9 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   }
 
   Future<void> _checkAuth() async {
-    // 1. Kick off checkAuthSession to load saved session from Hive / Firebase
+
     await context.read<AuthCubit>().checkAuthSession();
 
-    // 2. Allow splash animation to finish smoothly
     await Future.delayed(const Duration(milliseconds: 1400));
     if (!mounted) return;
 
@@ -92,7 +91,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Animated Glass Icon Container
+
                         Container(
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
@@ -122,7 +121,6 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                         ),
                         AppSpacing.gapH24,
 
-                        // App Title
                         Text(
                           AppConstants.appName,
                           style: AppTypography.displayLarge.copyWith(
@@ -133,7 +131,6 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                         ),
                         AppSpacing.gapH8,
 
-                        // Tagline
                         Text(
                           AppConstants.appTagline,
                           style: AppTypography.bodyMedium.copyWith(
@@ -143,7 +140,6 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                         ),
                         AppSpacing.gapH32,
 
-                        // Subtle Liquid Loading indicator
                         SizedBox(
                           width: 28,
                           height: 28,

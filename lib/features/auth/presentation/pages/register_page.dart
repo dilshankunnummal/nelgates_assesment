@@ -34,11 +34,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   String _selectedRole = 'employee';
-  
+
   XFile? _selectedImageFile;
   Uint8List? _webImageBytes;
   bool _isUploadingImage = false;
@@ -184,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Brand Icon & Title
+
                         Container(
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
@@ -221,7 +221,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         AppSpacing.gapH20,
 
-                        // Liquid Glass Registration Form Card
                         AppGlassCard(
                           padding: const EdgeInsets.all(22),
                           borderRadius: AppRadius.brXl,
@@ -230,7 +229,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Profile Image Picker
+
                                 Center(
                                   child: Stack(
                                     children: [
@@ -301,7 +300,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH16,
 
-                                // Full Name Field
                                 GlassTextField(
                                   controller: _nameController,
                                   labelText: 'Full Name',
@@ -312,7 +310,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH12,
 
-                                // Email Field
                                 GlassTextField(
                                   controller: _emailController,
                                   labelText: 'Email Address',
@@ -323,7 +320,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH12,
 
-                                // Phone Field
                                 GlassTextField(
                                   controller: _phoneController,
                                   labelText: 'Phone Number (Optional)',
@@ -333,7 +329,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH12,
 
-                                // Role Selector
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -374,7 +369,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH12,
 
-                                // Password Field
                                 GlassTextField(
                                   controller: _passwordController,
                                   labelText: 'Password',
@@ -398,7 +392,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH12,
 
-                                // Confirm Password Field
                                 GlassTextField(
                                   controller: _confirmPasswordController,
                                   labelText: 'Confirm Password',
@@ -430,7 +423,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH20,
 
-                                // Register Glass Button
                                 GlassButton(
                                   onPressed: isAuthLoading ? null : _submitRegistration,
                                   label: _isUploadingImage ? 'Uploading Avatar...' : 'Create Account',
@@ -441,7 +433,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH20,
 
-                                // Quick Demo Accounts (Same as Login Page)
                                 Center(
                                   child: Text(
                                     'Quick Demo Autofill:',
@@ -474,7 +465,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 AppSpacing.gapH16,
 
-                                // Back to Sign In Link
                                 Center(
                                   child: TextButton(
                                     onPressed: () => context.pop(),

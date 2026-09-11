@@ -12,7 +12,6 @@ enum GlassSnackBarType {
   error,
 }
 
-/// Shows a true iOS Liquid Glass SnackBar toast.
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showGlassSnackBar(
   BuildContext context, {
   required String message,
@@ -77,7 +76,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showGlassSnackBar(
         ],
         child: Row(
           children: [
-            // Status Icon with circular liquid glass badge
+
             Container(
               width: 36,
               height: 36,
@@ -96,7 +95,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showGlassSnackBar(
               ),
             ),
             const SizedBox(width: 12),
-            // Message text
+
             Expanded(
               child: Text(
                 message,
@@ -106,7 +105,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showGlassSnackBar(
                 ),
               ),
             ),
-            // Optional Action Button
+
             if (actionLabel != null && onAction != null) ...[
               const SizedBox(width: 8),
               GestureDetector(

@@ -5,7 +5,6 @@ class StorageConstants {
   static const String bookingsBox = 'bookings_box';
   static const String hotelsCacheBox = 'hotels_cache_box';
 
-  // Storage keys
   static const String authSessionKey = 'current_auth_session';
   static const String themeModeKey = 'app_theme_mode';
   static const String cachedHotelsKey = 'cached_hotels_list';

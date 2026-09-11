@@ -5,13 +5,6 @@ import '../../theme/app_typography.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Button.
-///
-/// Features:
-/// - Strictly ZERO [LinearGradient] or [RadialGradient]
-/// - Primary: Translucent solid primary tint with specular highlight and crisp border
-/// - Secondary / Default: Translucent neutral glass surface
-/// - Animated micro-scale & press feedback
 class GlassButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget? icon;
@@ -45,7 +38,6 @@ class GlassButton extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryBase = isDark ? AppColors.primaryLight : AppColors.primary;
 
-    // Zero gradients: Solid translucent tints
     final surfaceTint = customColor ??
         (isPrimary
             ? primaryBase.withValues(alpha: isDark ? 0.90 : 0.92)

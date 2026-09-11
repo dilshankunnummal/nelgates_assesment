@@ -8,7 +8,6 @@ import 'destination_card_skeleton.dart';
 import 'hotel_card_skeleton.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder precisely matching the [HomePage] layout.
 class HomeContentSkeleton extends StatelessWidget {
   const HomeContentSkeleton({super.key});
 
@@ -19,7 +18,7 @@ class HomeContentSkeleton extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Greeting & App Header Shimmer (matches HomePage line 135)
+
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
             child: Row(
@@ -50,7 +49,6 @@ class HomeContentSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Liquid Glass Search Card Shimmer (matches HomePage line 183)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: AppGlassCard(
@@ -59,7 +57,7 @@ class HomeContentSkeleton extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Destination Label Shimmer
+
                   ShimmerContainer(
                     width: 75,
                     height: 12,
@@ -67,7 +65,6 @@ class HomeContentSkeleton extends StatelessWidget {
                   ),
                   AppSpacing.gapH6,
 
-                  // Destination Glass Dropdown Shimmer Surface
                   GlassSurface(
                     depthLevel: GlassDepthLevel.control,
                     borderRadius: AppRadius.brMd,
@@ -97,10 +94,9 @@ class HomeContentSkeleton extends StatelessWidget {
                   ),
                   AppSpacing.gapH12,
 
-                  // Dates and Guests in 2 Columns Shimmer
                   Row(
                     children: [
-                      // Dates Glass Surface
+
                       Expanded(
                         child: GlassSurface(
                           depthLevel: GlassDepthLevel.control,
@@ -137,7 +133,6 @@ class HomeContentSkeleton extends StatelessWidget {
                       ),
                       AppSpacing.gapW12,
 
-                      // Guests & Rooms Glass Surface
                       Expanded(
                         child: GlassSurface(
                           depthLevel: GlassDepthLevel.control,
@@ -176,7 +171,6 @@ class HomeContentSkeleton extends StatelessWidget {
                   ),
                   AppSpacing.gapH16,
 
-                  // Search Glass Button Shimmer
                   ShimmerContainer(
                     width: double.infinity,
                     height: 50,
@@ -187,7 +181,6 @@ class HomeContentSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Popular Destinations Section Header Shimmer (matches SectionHeader)
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
             child: Row(
@@ -221,7 +214,6 @@ class HomeContentSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Destinations Horizontal Carousel Shimmer (height 272, matching home_page.dart)
           SizedBox(
             height: 272,
             child: ListView.separated(
@@ -234,7 +226,6 @@ class HomeContentSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Recommended Stays Header Shimmer (matches SectionHeader)
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
             child: Row(
@@ -268,7 +259,6 @@ class HomeContentSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Recommended Stays Hotel Cards List Shimmer (matches SliverPadding 20)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -285,7 +275,6 @@ class HomeContentSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Bottom Spacing for Floating Navigation Bar
           const SizedBox(height: 80),
         ],
       ),

@@ -1,4 +1,4 @@
-/// Barrel export for the True Liquid Glass Component System.
+
 library;
 
 export 'app_glass_card.dart';

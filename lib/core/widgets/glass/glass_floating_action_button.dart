@@ -3,7 +3,6 @@ import '../../theme/app_colors.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// Floating Liquid Glass Action Button (Level 5 floating control).
 class GlassFloatingActionButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback onPressed;

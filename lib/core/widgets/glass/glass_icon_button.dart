@@ -3,7 +3,6 @@ import '../../theme/app_colors.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// Floating circular or rounded liquid glass icon button.
 class GlassIconButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback? onPressed;

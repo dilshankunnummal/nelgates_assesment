@@ -12,7 +12,6 @@ import '../../../wishlist/presentation/cubit/wishlist_cubit.dart';
 import '../../../wishlist/presentation/cubit/wishlist_state.dart';
 import '../../domain/entities/hotel.dart';
 
-/// True Liquid Glass Hotel Image Gallery with zero gradients.
 class HotelImageGallery extends StatefulWidget {
   final Hotel hotel;
   final double height;
@@ -51,7 +50,7 @@ class _HotelImageGalleryState extends State<HotelImageGallery> {
       height: widget.height,
       child: Stack(
         children: [
-          // Swipable Images
+
           PageView.builder(
             controller: _pageController,
             onPageChanged: (idx) => setState(() => _currentPage = idx),
@@ -66,21 +65,19 @@ class _HotelImageGalleryState extends State<HotelImageGallery> {
             },
           ),
 
-          // Back button and Wishlist button (Floating Liquid Glass Controls)
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Back button
+
                   GlassIconButton(
                     size: 42,
                     icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 18),
                     onPressed: () => context.pop(),
                   ),
 
-                  // Wishlist button
                   BlocBuilder<WishlistCubit, WishlistState>(
                     builder: (context, state) {
                       final isWishlisted = state.isWishlisted(widget.hotel.id);
@@ -102,7 +99,6 @@ class _HotelImageGalleryState extends State<HotelImageGallery> {
             ),
           ),
 
-          // Floating Glass Photo Counter badge
           if (images.length > 1)
             Positioned(
               bottom: 16,
@@ -128,7 +124,6 @@ class _HotelImageGalleryState extends State<HotelImageGallery> {
               ),
             ),
 
-          // Page indicator dots
           if (images.length > 1)
             Positioned(
               bottom: 16,

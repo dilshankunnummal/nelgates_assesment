@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 
-/// Premium Liquid Glass User Avatar with automatic Initial / Person fallback
 class UserAvatar extends StatelessWidget {
   final String? imageUrl;
   final String? name;

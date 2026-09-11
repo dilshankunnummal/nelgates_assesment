@@ -2,10 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 
-/// Premium ambient background that gives True Liquid Glass components
-/// depth and optical refraction.
-///
-/// NOTE: Gradients are strictly allowed ONLY in this root background layer.
 class LiquidGlassBackground extends StatelessWidget {
   final Widget child;
   final bool showAmbientOrbs;
@@ -20,19 +16,17 @@ class LiquidGlassBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Neutral base colors
     final baseColor = isDark ? const Color(0xFF020408) : AppColors.lightBackground;
     final secondaryBase = isDark ? const Color(0xFF070B14) : const Color(0xFFF1F5F9);
 
-    // Ambient orb colors (subtle, non-neon, elegant neutral tones)
     final orb1Color = isDark
-        ? const Color(0xFF0D9488).withValues(alpha: 0.28) // Luxury emerald-teal
+        ? const Color(0xFF0D9488).withValues(alpha: 0.28)
         : const Color(0xFFCBD5E1).withValues(alpha: 0.40);
     final orb2Color = isDark
-        ? const Color(0xFF3B82F6).withValues(alpha: 0.24) // Royal sapphire
+        ? const Color(0xFF3B82F6).withValues(alpha: 0.24)
         : const Color(0xFFE2E8F0).withValues(alpha: 0.50);
     final orb3Color = isDark
-        ? const Color(0xFFD97706).withValues(alpha: 0.18) // Warm amber gold
+        ? const Color(0xFFD97706).withValues(alpha: 0.18)
         : const Color(0xFFF1F5F9).withValues(alpha: 0.30);
 
     return Container(
@@ -40,7 +34,7 @@ class LiquidGlassBackground extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // 1. Soft neutral background gradient (Allowed ONLY here)
+
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -51,9 +45,8 @@ class LiquidGlassBackground extends StatelessWidget {
             ),
           ),
 
-          // 2. Ambient blurred optical shapes for glass refraction
           if (showAmbientOrbs) ...[
-            // Top-right ambient orb
+
             Positioned(
               top: -60,
               right: -80,
@@ -66,7 +59,7 @@ class LiquidGlassBackground extends StatelessWidget {
                 ),
               ),
             ),
-            // Center-left ambient orb
+
             Positioned(
               top: 320,
               left: -120,
@@ -79,7 +72,7 @@ class LiquidGlassBackground extends StatelessWidget {
                 ),
               ),
             ),
-            // Bottom-right ambient orb
+
             Positioned(
               bottom: -40,
               right: -60,
@@ -92,14 +85,13 @@ class LiquidGlassBackground extends StatelessWidget {
                 ),
               ),
             ),
-            // Deep smooth diffusion blur for ambient orbs
+
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 75, sigmaY: 75),
               child: const SizedBox.expand(),
             ),
           ],
 
-          // 3. Child application content
           child,
         ],
       ),

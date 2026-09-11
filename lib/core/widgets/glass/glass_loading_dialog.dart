@@ -5,7 +5,6 @@ import '../../theme/app_radius.dart';
 import '../../theme/app_typography.dart';
 import '../../theme/glass_tokens.dart';
 
-/// Displays a frosted Liquid Glass loading overlay dialog
 Future<void> showGlassLoadingDialog(
   BuildContext context, {
   String message = 'Processing...',
@@ -26,7 +25,6 @@ Future<void> showGlassLoadingDialog(
   );
 }
 
-/// Helper to close the loading dialog safely
 void hideGlassLoadingDialog(BuildContext context) {
   if (Navigator.of(context, rootNavigator: true).canPop()) {
     Navigator.of(context, rootNavigator: true).pop();

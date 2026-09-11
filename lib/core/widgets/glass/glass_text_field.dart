@@ -5,7 +5,6 @@ import '../../theme/app_typography.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Text Field with focus highlight, validation support, and zero gradients.
 class GlassTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? labelText;

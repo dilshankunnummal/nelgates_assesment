@@ -10,7 +10,7 @@ class HotelFilterCriteria extends Equatable {
   final double maxPrice;
   final double minRating;
   final List<String> selectedAmenities;
-  final String sortBy; // 'popular', 'price_low_high', 'price_high_low', 'rating'
+  final String sortBy;
 
   const HotelFilterCriteria({
     this.query = '',
@@ -24,7 +24,7 @@ class HotelFilterCriteria extends Equatable {
 
   bool get hasActiveFilters =>
       query.isNotEmpty ||
-      (destination != null && destination != 'all') ||
+      (destination != null && destination!.isNotEmpty && destination!.toLowerCase() != 'all') ||
       minPrice > 0 ||
       maxPrice < 80000 ||
       minRating > 0 ||
@@ -41,9 +41,15 @@ class HotelFilterCriteria extends Equatable {
     String? sortBy,
     bool clearDestination = false,
   }) {
+    final effectiveDestination = clearDestination
+        ? null
+        : (destination != null
+            ? (destination.toLowerCase() == 'all' ? null : destination)
+            : this.destination);
+
     return HotelFilterCriteria(
       query: query ?? this.query,
-      destination: clearDestination ? null : (destination ?? this.destination),
+      destination: effectiveDestination,
       minPrice: minPrice ?? this.minPrice,
       maxPrice: maxPrice ?? this.maxPrice,
       minRating: minRating ?? this.minRating,
@@ -112,7 +118,9 @@ class HotelSearchCubit extends Cubit<HotelSearchState> {
 
     final result = await getHotelsUseCase(
       search: criteria.query,
-      destination: criteria.destination,
+      destination: (criteria.destination != null && criteria.destination!.toLowerCase() != 'all')
+          ? criteria.destination
+          : null,
       minPrice: criteria.minPrice > 0 ? criteria.minPrice : null,
       maxPrice: criteria.maxPrice < 80000 ? criteria.maxPrice : null,
       rating: criteria.minRating > 0 ? criteria.minRating : null,
@@ -126,7 +134,6 @@ class HotelSearchCubit extends Cubit<HotelSearchState> {
 
     var hotels = result.hotels ?? [];
 
-    // Filter by selected amenities if any
     if (criteria.selectedAmenities.isNotEmpty) {
       hotels = hotels.where((h) {
         final hotelAmenityNames = h.amenities.map((a) => a.name.toLowerCase()).toList();
@@ -148,9 +155,10 @@ class HotelSearchCubit extends Cubit<HotelSearchState> {
   }
 
   void updateDestination(String? destination) {
+    final isAll = destination == null || destination.trim().toLowerCase() == 'all';
     final updated = state.criteria.copyWith(
-      destination: destination,
-      clearDestination: destination == null || destination == 'all',
+      destination: isAll ? null : destination.trim(),
+      clearDestination: isAll,
     );
     searchHotels(updated);
   }

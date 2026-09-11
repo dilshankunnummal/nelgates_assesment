@@ -19,7 +19,6 @@ class GlassPopupMenuItem<T> {
   });
 }
 
-/// Floating Liquid Glass Popup Menu.
 class GlassPopupMenu<T> extends StatelessWidget {
   final Widget child;
   final List<GlassPopupMenuItem<T>> items;

@@ -40,7 +40,7 @@ import '../../features/wishlist/presentation/cubit/wishlist_cubit.dart';
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
-  // 1. Local Storage (Hive)
+
   await Hive.initFlutter();
   final authBox = await Hive.openBox(StorageConstants.authBox);
   final themeBox = await Hive.openBox(StorageConstants.themeBox);
@@ -54,14 +54,11 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<Box>(() => bookingsBox, instanceName: StorageConstants.bookingsBox);
   sl.registerLazySingleton<Box>(() => hotelsCacheBox, instanceName: StorageConstants.hotelsCacheBox);
 
-  // 2. Services (Cloudinary & Seeder)
   sl.registerLazySingleton<CloudinaryService>(() => CloudinaryService());
   sl.registerLazySingleton<FirestoreSeeder>(() => FirestoreSeeder());
 
-  // 3. Network Client
   sl.registerLazySingleton<ApiClient>(() => DioApiClient());
 
-  // 4. Data Sources - Auth
   sl.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(box: sl<Box>(instanceName: StorageConstants.authBox)),
   );
@@ -72,7 +69,6 @@ Future<void> initDependencies() async {
     () => FirebaseAuthDataSourceImpl(),
   );
 
-  // 5. Data Sources - Hotels
   sl.registerLazySingleton<HotelLocalDataSource>(
     () => HotelLocalDataSourceImpl(box: sl<Box>(instanceName: StorageConstants.hotelsCacheBox)),
   );
@@ -82,12 +78,10 @@ Future<void> initDependencies() async {
         : HotelRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
 
-  // 6. Data Sources - Wishlist (Preserved strictly in Local Hive Storage per user requirement)
   sl.registerLazySingleton<WishlistLocalDataSource>(
     () => WishlistLocalDataSourceImpl(box: sl<Box>(instanceName: StorageConstants.wishlistBox)),
   );
 
-  // 7. Data Sources - Bookings
   sl.registerLazySingleton<BookingLocalDataSource>(
     () => BookingLocalDataSourceImpl(box: sl<Box>(instanceName: StorageConstants.bookingsBox)),
   );
@@ -97,7 +91,6 @@ Future<void> initDependencies() async {
         : BookingRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
 
-  // 8. Repositories
   sl.registerLazySingleton<AuthRepository>(
     () => AppEnvironment.isFirebase
         ? FirebaseAuthRepositoryImpl(
@@ -130,30 +123,25 @@ Future<void> initDependencies() async {
     ),
   );
 
-  // 9. Use Cases - Auth
   sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton(() => RegisterUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton(() => ForgotPasswordUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton(() => GetSessionUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton(() => LogoutUseCase(sl<AuthRepository>()));
 
-  // 10. Use Cases - Hotels
   sl.registerLazySingleton(() => GetHotelsUseCase(sl<HotelRepository>()));
   sl.registerLazySingleton(() => GetHotelByIdUseCase(sl<HotelRepository>()));
   sl.registerLazySingleton(() => GetDestinationsUseCase(sl<HotelRepository>()));
 
-  // 11. Use Cases - Wishlist
   sl.registerLazySingleton(() => GetWishlistUseCase(sl<WishlistRepository>()));
   sl.registerLazySingleton(() => ToggleWishlistUseCase(sl<WishlistRepository>()));
   sl.registerLazySingleton(() => IsHotelWishlistedUseCase(sl<WishlistRepository>()));
 
-  // 12. Use Cases - Booking
   sl.registerLazySingleton(() => CreateBookingUseCase(sl<BookingRepository>()));
   sl.registerLazySingleton(() => GetBookingsUseCase(sl<BookingRepository>()));
   sl.registerLazySingleton(() => CancelBookingUseCase(sl<BookingRepository>()));
   sl.registerLazySingleton(() => GetBookingByIdUseCase(sl<BookingRepository>()));
 
-  // 13. Cubits
   sl.registerLazySingleton<ThemeCubit>(
     () => ThemeCubit(themeBox: sl<Box>(instanceName: StorageConstants.themeBox)),
   );
@@ -207,9 +195,7 @@ Future<void> initDependencies() async {
     ),
   );
 
-  // 14. Background Seed (non-blocking)
   if (AppEnvironment.isFirebase) {
     sl<FirestoreSeeder>().seedInitialData();
   }
 }
-

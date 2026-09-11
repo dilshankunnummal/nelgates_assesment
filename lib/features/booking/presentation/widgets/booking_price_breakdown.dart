@@ -38,7 +38,6 @@ class BookingPriceBreakdownWidget extends StatelessWidget {
           ),
           AppSpacing.gapH16,
 
-          // Room Price calculation row
           _buildRow(
             'Base Rate',
             '${CurrencyUtils.format(breakdown.baseRoomPrice)} × $nightText × $roomText',
@@ -47,7 +46,6 @@ class BookingPriceBreakdownWidget extends StatelessWidget {
           ),
           AppSpacing.gapH10,
 
-          // Taxes row
           _buildRow(
             'GST & Luxury Taxes',
             '${(breakdown.taxRate * 100).toInt()}%',
@@ -56,7 +54,6 @@ class BookingPriceBreakdownWidget extends StatelessWidget {
           ),
           AppSpacing.gapH10,
 
-          // Service charge row
           _buildRow(
             'Hospitality Service Fee',
             '${(breakdown.serviceChargeRate * 100).toInt()}%',
@@ -65,7 +62,6 @@ class BookingPriceBreakdownWidget extends StatelessWidget {
           ),
           const Divider(height: 24),
 
-          // Total row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

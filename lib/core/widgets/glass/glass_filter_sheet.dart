@@ -3,7 +3,6 @@ import '../../theme/app_colors.dart';
 import '../../theme/app_typography.dart';
 import 'glass_button.dart';
 
-/// Reusable generic glass filter sheet shell with header, scrollable filter body, and actions.
 class GlassFilterSheet extends StatelessWidget {
   final String title;
   final Widget content;

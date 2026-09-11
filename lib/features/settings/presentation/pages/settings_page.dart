@@ -50,7 +50,7 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // User Profile Card
+
               BlocBuilder<AuthCubit, AuthState>(
               builder: (context, authState) {
                 String userName = 'Guest User';
@@ -121,7 +121,6 @@ class SettingsPage extends StatelessWidget {
             ),
             AppSpacing.gapH24,
 
-            // Preferences Section
             Text(
               'Preferences',
               style: AppTypography.titleSmall.copyWith(
@@ -135,7 +134,7 @@ class SettingsPage extends StatelessWidget {
               borderRadius: AppRadius.brLg,
               child: Column(
                 children: [
-                  // Dark mode toggle
+
                   BlocBuilder<ThemeCubit, ThemeMode>(
                     builder: (context, themeMode) {
                       final isDarkActive = themeMode == ThemeMode.dark;
@@ -192,7 +191,6 @@ class SettingsPage extends StatelessWidget {
             ),
             AppSpacing.gapH24,
 
-            // App Information Section
             Text(
               'About Application',
               style: AppTypography.titleSmall.copyWith(
@@ -228,7 +226,6 @@ class SettingsPage extends StatelessWidget {
             ),
             AppSpacing.gapH32,
 
-            // Logout Action
             GlassButton(
               onPressed: () => _confirmLogout(context),
               label: 'Sign Out',

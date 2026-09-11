@@ -14,14 +14,13 @@ class CloudinaryService {
       : _dio = dio ?? Dio(),
         _picker = picker ?? ImagePicker();
 
-  /// Pick an image from gallery or camera with automatic compression
   Future<XFile?> pickImage({ImageSource source = ImageSource.gallery}) async {
     try {
       final XFile? image = await _picker.pickImage(
         source: source,
         maxWidth: 1024,
         maxHeight: 1024,
-        imageQuality: 82, // Native compression at capture/picker level
+        imageQuality: 82,
       );
       if (image != null) {
         AppLogger.cloudinary('Picked image: ${image.name} (${await image.length()} bytes)');
@@ -33,9 +32,8 @@ class CloudinaryService {
     }
   }
 
-  /// Upload an image to Cloudinary and return the CDN secure URL
   Future<String> uploadImage({
-    required dynamic imageFile, // XFile, File, or Uint8List
+    required dynamic imageFile,
     String folder = 'users/profile',
     String? userId,
   }) async {
@@ -54,14 +52,12 @@ class CloudinaryService {
         throw const ServerException(message: 'Unsupported image format');
       }
 
-      // 1. Prepare Cloudinary Upload Form Data with direct MultipartFile
       final formData = FormData.fromMap({
         'file': MultipartFile.fromBytes(imageBytes, filename: filename),
         'upload_preset': AppEnvironment.cloudinaryUploadPreset,
         'folder': '$folder/${userId ?? "guest"}',
       });
 
-      // 2. Perform upload to Cloudinary API
       final response = await _dio.post(
         AppEnvironment.cloudinaryBaseUrl,
         data: formData,
@@ -79,12 +75,11 @@ class CloudinaryService {
       }
 
       AppLogger.cloudinary('Cloudinary response status ${response.statusCode}: ${response.data}', error: response.statusMessage);
-      // Fallback: If unsigned preset is not configured on Cloudinary account yet,
-      // return a high-res default optimized avatar or placeholder so app never crashes
+
       return 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80';
     } catch (e) {
       AppLogger.cloudinary('Direct upload exception, using default avatar fallback', error: e);
-      // Graceful fallback to default avatar on network/Cloudinary error
+
       return 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80';
     }
   }

@@ -155,7 +155,7 @@ class _BookingPageState extends State<BookingPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Hotel & Room summary badge
+
                     AppGlassCard(
                       padding: const EdgeInsets.all(16),
                       borderRadius: AppRadius.brLg,
@@ -188,7 +188,6 @@ class _BookingPageState extends State<BookingPage> {
                     ),
                     AppSpacing.gapH20,
 
-                    // Dates Configuration
                     const SectionHeader(title: 'Stay Dates'),
                     AppSpacing.gapH8,
                     GestureDetector(
@@ -234,7 +233,6 @@ class _BookingPageState extends State<BookingPage> {
                     ),
                     AppSpacing.gapH20,
 
-                    // Guests & Rooms Configuration
                     const SectionHeader(title: 'Guests & Rooms'),
                     AppSpacing.gapH8,
                     AppGlassCard(
@@ -276,7 +274,6 @@ class _BookingPageState extends State<BookingPage> {
                     ),
                     AppSpacing.gapH20,
 
-                    // Guest Information Form
                     const SectionHeader(title: 'Primary Guest Information'),
                     AppSpacing.gapH8,
                     AppGlassCard(
@@ -332,13 +329,11 @@ class _BookingPageState extends State<BookingPage> {
                     ),
                     AppSpacing.gapH20,
 
-                    // Dynamic Live Pricing Breakdown
                     BookingPriceBreakdownWidget(breakdown: breakdown),
                   ],
                 ),
               ),
 
-              // Bottom Confirmation bar
               Positioned(
                 bottom: 0,
                 left: 0,

@@ -5,7 +5,7 @@ import 'room.dart';
 class Hotel extends Equatable {
   final String id;
   final String name;
-  final String destination; // e.g. "Goa"
+  final String destination;
   final String city;
   final String address;
   final double rating;
@@ -17,8 +17,8 @@ class Hotel extends Equatable {
   final List<Amenity> amenities;
   final List<Room> rooms;
   final String cancellationPolicy;
-  final String state; // e.g. "Kerala", "Karnataka", "Tamil Nadu"
-  final int starRating; // 3, 4, 5
+  final String state;
+  final int starRating;
   final double latitude;
   final double longitude;
   final bool isPopular;

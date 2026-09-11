@@ -10,7 +10,6 @@ class AppSpacing {
   static const double xxl = 32.0;
   static const double xxxl = 40.0;
 
-  // Reusable SizedBox spacers
   static const SizedBox gapW2 = SizedBox(width: 2);
   static const SizedBox gapW4 = SizedBox(width: xxs);
   static const SizedBox gapW6 = SizedBox(width: 6);
@@ -35,7 +34,6 @@ class AppSpacing {
   static const SizedBox gapH32 = SizedBox(height: xxl);
   static const SizedBox gapH40 = SizedBox(height: xxxl);
 
-  // Common edge insets
   static const EdgeInsets p4 = EdgeInsets.all(xxs);
   static const EdgeInsets p8 = EdgeInsets.all(xs);
   static const EdgeInsets p12 = EdgeInsets.all(sm);

@@ -33,10 +33,18 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
     super.initState();
     final searchCubit = context.read<HotelSearchCubit>();
     _searchController = TextEditingController(text: searchCubit.state.criteria.query);
-    if (widget.initialDestination != null) {
+    if (widget.initialDestination != null && widget.initialDestination!.isNotEmpty) {
       searchCubit.updateDestination(widget.initialDestination);
     } else {
       searchCubit.searchHotels();
+    }
+  }
+
+  @override
+  void didUpdateWidget(HotelSearchPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialDestination != oldWidget.initialDestination) {
+      context.read<HotelSearchCubit>().updateDestination(widget.initialDestination);
     }
   }
 
@@ -96,7 +104,7 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
 
             return Column(
               children: [
-                // Search & Filter bar
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: GlassSearchBar(
@@ -109,7 +117,6 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
                   ),
                 ),
 
-                // Active filter tags row (Destination, Sort, Rating, etc.)
                 if (criteria.hasActiveFilters)
                   Container(
                     height: 44,
@@ -117,7 +124,7 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        // Clear all glass chip
+
                         GlassChip(
                           icon: const Icon(Icons.close_rounded, size: 14),
                           label: 'Clear All',
@@ -174,7 +181,6 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
                     ),
                   ),
 
-                // Results count header
                 if (state is HotelSearchSuccess)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 6),
@@ -212,7 +218,6 @@ class _HotelSearchPageState extends State<HotelSearchPage> {
                     ),
                   ),
 
-                // Main List / States
                 Expanded(
                   child: _buildContent(context, state),
                 ),

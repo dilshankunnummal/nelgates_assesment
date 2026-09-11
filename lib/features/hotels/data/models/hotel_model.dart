@@ -28,21 +28,19 @@ class HotelModel extends Hotel {
   });
 
   factory HotelModel.fromJson(Map<String, dynamic> json) {
-    // Defensive images parsing (handles list of strings, list of maps, single map with 'large', etc.)
+
     final rawImages = json['images'] ?? json['image'] ?? json['image_url'];
     final imagesList = SafeParser.toImageList(
       rawImages,
       fallback: const ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80'],
     );
 
-    // Defensive amenities parsing
     final rawAmenities = json['amenities'];
     final amenitiesList = SafeParser.toList<AmenityModel>(
       rawAmenities,
       (item) => AmenityModel.fromJson(item),
     );
 
-    // Defensive rooms parsing
     final rawRooms = json['rooms'];
     final roomsList = SafeParser.toList<RoomModel>(
       rawRooms,

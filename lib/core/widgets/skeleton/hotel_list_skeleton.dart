@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../theme/app_spacing.dart';
 import 'hotel_card_skeleton.dart';
 
-/// Reusable list of HotelCard skeletons for listings, search results, and wishlist.
 class HotelListSkeleton extends StatelessWidget {
   final int itemCount;
   final EdgeInsets padding;

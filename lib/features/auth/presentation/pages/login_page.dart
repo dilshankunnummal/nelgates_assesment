@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Brand icon & title
+
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -122,7 +122,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         AppSpacing.gapH24,
 
-                        // True Liquid Glass Login Card (No gradients inside)
                         AppGlassCard(
                           padding: const EdgeInsets.all(24),
                           borderRadius: AppRadius.brXl,
@@ -147,7 +146,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 AppSpacing.gapH20,
 
-                                // Email Field
                                 GlassTextField(
                                   controller: _emailController,
                                   labelText: 'Email or Phone',
@@ -158,7 +156,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 AppSpacing.gapH16,
 
-                                // Password Field
                                 GlassTextField(
                                   controller: _passwordController,
                                   labelText: 'Password',
@@ -182,7 +179,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 AppSpacing.gapH24,
 
-                                // Submit Glass Button
                                 GlassButton(
                                   onPressed: isLoading ? null : _submit,
                                   label: 'Sign In',
@@ -193,7 +189,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 AppSpacing.gapH20,
 
-                                // Demo accounts banner
                                 Center(
                                   child: Text(
                                     'Quick Demo Accounts:',
@@ -226,7 +221,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 AppSpacing.gapH16,
 
-                                // Register link
                                 Center(
                                   child: TextButton(
                                     onPressed: () => context.push('/register'),

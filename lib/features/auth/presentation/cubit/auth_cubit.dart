@@ -82,4 +82,3 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const Unauthenticated());
   }
 }
-

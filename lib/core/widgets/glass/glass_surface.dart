@@ -63,7 +63,6 @@ class _GlassSurfaceState extends State<GlassSurface> {
     final effectiveBlur = widget.blur ?? GlassTokens.blurForLevel(widget.depthLevel);
     final baseOpacity = widget.opacity ?? GlassTokens.surfaceOpacity(context, level: widget.depthLevel);
 
-    // Dynamic state modifiers
     final adjustedOpacity = widget.isDisabled
         ? baseOpacity * 0.5
         : widget.isSelected
@@ -75,14 +74,12 @@ class _GlassSurfaceState extends State<GlassSurface> {
         : Colors.white.withValues(alpha: adjustedOpacity);
     final surfaceColor = widget.tintColor ?? defaultTint;
 
-    // Hairline border
     final defaultBorderColor = widget.isFocused
         ? (isDark ? AppColors.primaryLight.withValues(alpha: 0.6) : const Color(0xFF0F172A).withValues(alpha: 0.5))
         : widget.borderColor ?? GlassTokens.borderColor(context);
     final effectiveBorderWidth = widget.borderWidth ??
         (widget.isFocused ? GlassTokens.borderWidthFocused : GlassTokens.borderWidthHairline);
 
-    // Natural elevation shadow
     final effectiveShadows = widget.shadows ?? GlassTokens.elevation(widget.depthLevel, isDark: isDark);
 
     Widget surface = AnimatedOpacity(
@@ -94,7 +91,7 @@ class _GlassSurfaceState extends State<GlassSurface> {
           filter: ImageFilter.blur(sigmaX: effectiveBlur, sigmaY: effectiveBlur),
           child: Stack(
             children: [
-              // Layer 2: Translucent neutral background tint
+
               Container(
                 width: widget.width,
                 height: widget.height,
@@ -110,7 +107,6 @@ class _GlassSurfaceState extends State<GlassSurface> {
                 child: widget.child,
               ),
 
-              // Layer 4: Soft inner top specular highlight & bottom bounce reflection (3D bubble edge)
               if (widget.hasHighlight) ...[
                 Positioned(
                   top: 0,

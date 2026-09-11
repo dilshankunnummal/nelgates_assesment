@@ -110,7 +110,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           const Divider(height: 24),
 
-          // Sort By
           Text(
             'Sort By',
             style: AppTypography.titleSmall.copyWith(
@@ -131,7 +130,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           AppSpacing.gapH24,
 
-          // Price Range Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -166,7 +164,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           AppSpacing.gapH16,
 
-          // Minimum Rating
           Text(
             'Minimum Rating',
             style: AppTypography.titleSmall.copyWith(
@@ -188,7 +185,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           AppSpacing.gapH24,
 
-          // Amenities
           Text(
             'Amenities',
             style: AppTypography.titleSmall.copyWith(
@@ -219,7 +215,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           AppSpacing.gapH24,
 
-          // Action button
           GlassButton(
             onPressed: () {
               final updated = widget.initialCriteria.copyWith(

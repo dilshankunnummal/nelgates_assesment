@@ -48,7 +48,7 @@ class BookingConfirmationPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Success Animated Check Icon
+
                   Container(
                     width: 76,
                     height: 76,
@@ -81,14 +81,13 @@ class BookingConfirmationPage extends StatelessWidget {
                   ),
                   AppSpacing.gapH24,
 
-                  // Receipt Liquid Glass Card
                   AppGlassCard(
                     padding: const EdgeInsets.all(22),
                     borderRadius: AppRadius.brXl,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Booking ID banner
+
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                           decoration: BoxDecoration(
@@ -133,7 +132,6 @@ class BookingConfirmationPage extends StatelessWidget {
                         _buildInfoRow('Primary Guest', b.guest.fullName, isDark),
                         const Divider(height: 20),
 
-                        // Total amount row
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -158,7 +156,6 @@ class BookingConfirmationPage extends StatelessWidget {
                   ),
                   AppSpacing.gapH24,
 
-                  // Action Buttons
                   AppButton(
                     onPressed: () => context.go(RouteNames.bookings),
                     text: 'View My Bookings',

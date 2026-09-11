@@ -10,7 +10,6 @@ import '../../../../core/widgets/glass/glass_button.dart';
 import '../../../../core/widgets/glass/glass_chip.dart';
 import '../../domain/entities/room.dart';
 
-/// True Liquid Glass Room Card with zero gradients.
 class RoomCard extends StatelessWidget {
   final Room room;
   final bool isSelected;
@@ -40,7 +39,7 @@ class RoomCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Room Thumbnail
+
               AppImage(
                 imageUrl: room.mainImage,
                 width: 90,
@@ -49,7 +48,6 @@ class RoomCard extends StatelessWidget {
               ),
               AppSpacing.gapW16,
 
-              // Room Title & Quick Specs
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +73,6 @@ class RoomCard extends StatelessWidget {
                 ),
               ),
 
-              // Selection Radio Indicator
               Container(
                 width: 24,
                 height: 24,
@@ -99,7 +96,6 @@ class RoomCard extends StatelessWidget {
           ),
           AppSpacing.gapH12,
 
-          // Description
           Text(
             room.description,
             style: AppTypography.bodySmall.copyWith(
@@ -109,7 +105,6 @@ class RoomCard extends StatelessWidget {
           ),
           AppSpacing.gapH12,
 
-          // Amenities Tags using GlassChip
           if (room.amenities.isNotEmpty) ...[
             Wrap(
               spacing: 6,
@@ -124,7 +119,6 @@ class RoomCard extends StatelessWidget {
             AppSpacing.gapH12,
           ],
 
-          // Pricing & Select Button Row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

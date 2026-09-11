@@ -18,7 +18,6 @@ class GlassNavItem {
   });
 }
 
-/// Floating Liquid Glass Navigation Bar with slide-and-hold gesture selection.
 class GlassBottomNavigation extends StatefulWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -93,7 +92,7 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                   child: Stack(
                     alignment: Alignment.centerLeft,
                     children: [
-                      // Continuous flowing waterdrop indicator (realistic liquid dewdrop bead)
+
                       if (itemCount > 0)
                         AnimatedPositioned(
                           duration: const Duration(milliseconds: 270),
@@ -104,7 +103,7 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                           width: itemWidth - 4,
                           child: Stack(
                             children: [
-                              // Droplet body with optical water refraction & caustic light pool
+
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: AppRadius.brFull,
@@ -113,9 +112,9 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                                     end: Alignment.bottomRight,
                                     colors: isDark
                                         ? [
-                                            const Color(0xFF334E72).withValues(alpha: 0.50), // Top light meniscus
-                                            const Color(0xFF1C2C42).withValues(alpha: 0.30), // Clear water center
-                                            const Color(0xFF142233).withValues(alpha: 0.45), // Deep base meniscus
+                                            const Color(0xFF334E72).withValues(alpha: 0.50),
+                                            const Color(0xFF1C2C42).withValues(alpha: 0.30),
+                                            const Color(0xFF142233).withValues(alpha: 0.45),
                                           ]
                                         : [
                                             Colors.white.withValues(alpha: 0.70),
@@ -130,13 +129,13 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                                     width: 0.8,
                                   ),
                                   boxShadow: [
-                                    // Contact shadow where the waterdrop touches the glass surface
+
                                     BoxShadow(
                                       color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
                                       blurRadius: 9,
                                       offset: const Offset(0, 3),
                                     ),
-                                    // Focused caustic light refraction pool beneath droplet
+
                                     BoxShadow(
                                       color: primary.withValues(alpha: isDark ? 0.35 : 0.18),
                                       blurRadius: 18,
@@ -147,7 +146,6 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                                 ),
                               ),
 
-                              // Droplet surface specular glint (bright sunlight reflection on water bead)
                               Positioned(
                                 top: 4.5,
                                 left: 14,
@@ -161,7 +159,6 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                                 ),
                               ),
 
-                              // Bottom refraction glow inside droplet base
                               Positioned(
                                 bottom: 4,
                                 right: 14,
@@ -178,7 +175,6 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
                           ),
                         ),
 
-                      // Interactive tab icons & labels
                       Row(
                         children: List.generate(widget.items.length, (index) {
                           final item = widget.items[index];
@@ -235,5 +231,4 @@ class _GlassBottomNavigationState extends State<GlassBottomNavigation> {
   }
 }
 
-/// Alias for [GlassBottomNavigation] to satisfy GlassNavigationBar requirement.
 typedef GlassNavigationBar = GlassBottomNavigation;

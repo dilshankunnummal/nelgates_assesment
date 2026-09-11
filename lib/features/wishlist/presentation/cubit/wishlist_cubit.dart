@@ -33,7 +33,6 @@ class WishlistCubit extends Cubit<WishlistState> {
     final previousItems = List<Hotel>.from(state.items);
     final isAlreadyWishlisted = previousItems.any((h) => h.id == hotel.id);
 
-    // Optimistic UI update
     final optimisticItems = List<Hotel>.from(previousItems);
     if (isAlreadyWishlisted) {
       optimisticItems.removeWhere((h) => h.id == hotel.id);
@@ -47,10 +46,8 @@ class WishlistCubit extends Cubit<WishlistState> {
       emit(WishlistLoaded(items: optimisticItems));
     }
 
-    // Persist via repository
     final result = await toggleWishlistUseCase(hotel);
 
-    // If persistence fails, rollback optimistic update
     if (result.failure != null) {
       emit(WishlistError(
         message: 'Failed to update wishlist. Rolling back changes.',

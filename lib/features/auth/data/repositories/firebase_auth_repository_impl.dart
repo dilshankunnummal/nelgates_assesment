@@ -77,13 +77,12 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   @override
   Future<({Failure? failure, AuthSession? session})> getSession() async {
     try {
-      // 1. Check local Hive session first
+
       final localSession = await localDataSource.getSession();
       if (localSession != null && !localSession.isExpired) {
         return (failure: null, session: localSession);
       }
 
-      // 2. Check current Firebase session
       final firebaseSession = await firebaseAuthDataSource.getCurrentSession();
       if (firebaseSession != null) {
         await localDataSource.saveSession(firebaseSession);

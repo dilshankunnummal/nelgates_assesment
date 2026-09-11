@@ -17,7 +17,6 @@ class GlassDropdownItem<T> {
   });
 }
 
-/// Floating Liquid Glass Dropdown replacing flat Material menus.
 class GlassDropdown<T> extends StatefulWidget {
   final T? value;
   final List<GlassDropdownItem<T>> items;
@@ -76,7 +75,7 @@ class _GlassDropdownState<T> extends State<GlassDropdown<T>> {
 
         return Stack(
           children: [
-            // Dismiss barrier
+
             Positioned.fill(
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -84,7 +83,7 @@ class _GlassDropdownState<T> extends State<GlassDropdown<T>> {
                 child: const SizedBox.expand(),
               ),
             ),
-            // Floating Glass Menu
+
             Positioned(
               width: size.width,
               child: CompositedTransformFollower(

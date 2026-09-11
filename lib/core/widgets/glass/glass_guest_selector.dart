@@ -15,7 +15,6 @@ class GuestCount {
   const GuestCount({required this.adults, required this.children});
 }
 
-/// True Liquid Glass Guest Selector Sheet.
 class GlassGuestSelector extends StatefulWidget {
   final int initialAdults;
   final int initialChildren;

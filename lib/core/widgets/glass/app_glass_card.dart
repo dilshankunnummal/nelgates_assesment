@@ -3,14 +3,6 @@ import '../../theme/app_radius.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Card.
-///
-/// Replaces old gradient-filled cards with pure translucent optical glass:
-/// - Real [BackdropFilter] blur
-/// - Zero [LinearGradient] or [RadialGradient]
-/// - Hairline translucent border
-/// - Specular top highlight
-/// - Soft ambient drop shadow
 class AppGlassCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;

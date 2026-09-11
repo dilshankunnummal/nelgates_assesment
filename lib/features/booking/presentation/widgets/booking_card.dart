@@ -11,7 +11,6 @@ import '../../../../core/widgets/glass/app_glass_card.dart';
 import '../../../../core/widgets/glass/glass_button.dart';
 import '../../domain/entities/booking.dart';
 
-/// True Liquid Glass Booking Card with zero gradients.
 class BookingCard extends StatelessWidget {
   final Booking booking;
   final VoidCallback? onTap;
@@ -36,7 +35,7 @@ class BookingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header: Booking ID and Status
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -53,7 +52,6 @@ class BookingCard extends StatelessWidget {
           ),
           const Divider(height: 20),
 
-          // Hotel & Room Info
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -111,7 +109,6 @@ class BookingCard extends StatelessWidget {
           ),
           const Divider(height: 20),
 
-          // Footer: Total & Actions
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

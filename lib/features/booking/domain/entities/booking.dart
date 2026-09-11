@@ -3,7 +3,7 @@ import '../../../../features/hotels/domain/entities/room.dart';
 import 'guest.dart';
 
 class Booking extends Equatable {
-  final String id; // e.g. "HTL-2026-X8K1L9"
+  final String id;
   final String? userId;
   final String hotelId;
   final String hotelName;
@@ -22,7 +22,7 @@ class Booking extends Equatable {
   final double serviceChargeAmount;
   final double totalAmount;
   final Guest guest;
-  final String status; // 'upcoming', 'completed', 'cancelled'
+  final String status;
   final DateTime createdAt;
   final String? cancellationReason;
 

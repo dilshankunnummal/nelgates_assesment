@@ -4,7 +4,6 @@ import '../../theme/glass_tokens.dart';
 import '../glass/glass_surface.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder precisely matching the dimensions, glass styling, and layout of [DestinationCard].
 class DestinationCardSkeleton extends StatelessWidget {
   const DestinationCardSkeleton({super.key});
 
@@ -15,7 +14,7 @@ class DestinationCardSkeleton extends StatelessWidget {
       height: 240,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(26),
-        // Shadow only — no outer border (matches destination_card.dart)
+
         boxShadow: GlassTokens.elevation(GlassDepthLevel.card),
       ),
       child: ClipRRect(
@@ -23,14 +22,13 @@ class DestinationCardSkeleton extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Background Image Shimmer
+
             const ShimmerContainer(
               width: double.infinity,
               height: double.infinity,
               borderRadius: BorderRadius.zero,
             ),
 
-            // Top Floating Glass Pill Badge
             Positioned(
               top: 12,
               left: 12,
@@ -57,8 +55,6 @@ class DestinationCardSkeleton extends StatelessWidget {
               ),
             ),
 
-            // Integrated Liquid Frosted Glass Lower Deck
-            // Uses GlassDepthLevel.floating + blurDeep to match DestinationCard exactly
             Positioned(
               left: 0,
               right: 0,
@@ -73,7 +69,7 @@ class DestinationCardSkeleton extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    // Destination Info Column
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +97,7 @@ class DestinationCardSkeleton extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 8),
-                          // Property Count Glass Chip Placeholder
+
                           ShimmerContainer(
                             width: 86,
                             height: 20,
@@ -111,7 +107,6 @@ class DestinationCardSkeleton extends StatelessWidget {
                       ),
                     ),
 
-                    // Circular Liquid Glass Arrow Disc Placeholder
                     const ShimmerContainer(
                       width: 36,
                       height: 36,

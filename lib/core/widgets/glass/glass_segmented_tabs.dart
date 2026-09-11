@@ -20,8 +20,6 @@ class GlassTabItem {
   });
 }
 
-/// Liquid Glass Segmented Tab Bar matching the exact waterdrop dewdrop bead design
-/// from [GlassBottomNavigation].
 class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget {
   final TabController controller;
   final List<GlassTabItem> tabs;
@@ -72,7 +70,7 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                   return Stack(
                     alignment: Alignment.centerLeft,
                     children: [
-                      // Continuous flowing waterdrop indicator (realistic liquid dewdrop bead)
+
                       Positioned(
                         left: leftOffset,
                         top: 2,
@@ -80,7 +78,7 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                         width: tabWidth - 4,
                         child: Stack(
                           children: [
-                            // Droplet body with optical water refraction & caustic light pool
+
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: AppRadius.brFull,
@@ -89,9 +87,9 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                                   end: Alignment.bottomRight,
                                   colors: isDark
                                       ? [
-                                          const Color(0xFF334E72).withValues(alpha: 0.50), // Top light meniscus
-                                          const Color(0xFF1C2C42).withValues(alpha: 0.30), // Clear water center
-                                          const Color(0xFF142233).withValues(alpha: 0.45), // Deep base meniscus
+                                          const Color(0xFF334E72).withValues(alpha: 0.50),
+                                          const Color(0xFF1C2C42).withValues(alpha: 0.30),
+                                          const Color(0xFF142233).withValues(alpha: 0.45),
                                         ]
                                       : [
                                           Colors.white.withValues(alpha: 0.70),
@@ -106,13 +104,13 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                                   width: 0.8,
                                 ),
                                 boxShadow: [
-                                  // Contact shadow where the waterdrop touches the glass surface
+
                                   BoxShadow(
                                     color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
                                     blurRadius: 9,
                                     offset: const Offset(0, 3),
                                   ),
-                                  // Focused caustic light refraction pool beneath droplet
+
                                   BoxShadow(
                                     color: primary.withValues(alpha: isDark ? 0.35 : 0.18),
                                     blurRadius: 18,
@@ -123,7 +121,6 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                               ),
                             ),
 
-                            // Droplet surface specular glint (bright sunlight reflection on water bead)
                             Positioned(
                               top: 4,
                               left: 12,
@@ -137,7 +134,6 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                               ),
                             ),
 
-                            // Bottom refraction glow inside droplet base
                             Positioned(
                               bottom: 3.5,
                               right: 12,
@@ -154,7 +150,6 @@ class GlassSegmentedTabs extends StatelessWidget implements PreferredSizeWidget 
                         ),
                       ),
 
-                      // Interactive tab items
                       Row(
                         children: List.generate(tabs.length, (index) {
                           final tab = tabs[index];

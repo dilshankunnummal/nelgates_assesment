@@ -7,7 +7,6 @@ class Validators {
     r'^\+?[0-9]{10,14}$',
   );
 
-  /// Validates email address.
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Email is required';
@@ -19,7 +18,6 @@ class Validators {
     return null;
   }
 
-  /// Validates password.
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required';
@@ -30,7 +28,6 @@ class Validators {
     return null;
   }
 
-  /// Validates phone number.
   static String? validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Phone number is required';
@@ -42,7 +39,6 @@ class Validators {
     return null;
   }
 
-  /// Validates guest full name.
   static String? validateName(String? value, [String fieldName = 'Full name']) {
     if (value == null || value.trim().isEmpty) {
       return '$fieldName is required';
@@ -53,7 +49,6 @@ class Validators {
     return null;
   }
 
-  /// Validates date range.
   static String? validateDates(DateTime? checkIn, DateTime? checkOut) {
     if (checkIn == null) return 'Check-in date is required';
     if (checkOut == null) return 'Check-out date is required';
@@ -63,7 +58,6 @@ class Validators {
     return null;
   }
 
-  /// Validates adult count.
   static String? validateAdults(int adults) {
     if (adults < 1) {
       return 'At least 1 adult is required';
@@ -71,7 +65,6 @@ class Validators {
     return null;
   }
 
-  /// Validates room count.
   static String? validateRooms(int rooms) {
     if (rooms < 1) {
       return 'At least 1 room is required';

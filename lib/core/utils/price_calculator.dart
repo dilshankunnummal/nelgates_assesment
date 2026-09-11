@@ -24,7 +24,6 @@ class PriceBreakdown extends Equatable {
     required this.grandTotal,
   });
 
-  /// Alias for grandTotal
   double get totalAmount => grandTotal;
 
   @override
@@ -42,11 +41,7 @@ class PriceBreakdown extends Equatable {
 }
 
 class PriceCalculator {
-  /// Calculates comprehensive price breakdown:
-  /// Subtotal = baseRoomPrice * nights * rooms
-  /// Tax = subtotal * taxRate
-  /// Service Charge = subtotal * serviceChargeRate
-  /// Grand Total = Subtotal + Tax + Service Charge
+
   static PriceBreakdown calculate({
     required double baseRoomPrice,
     required int nights,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/routing/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -66,6 +67,14 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
           : 'Failed to cancel reservation. Please try again.',
       type: success ? GlassSnackBarType.success : GlassSnackBarType.error,
     );
+
+    if (success && mounted) {
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        context.go(RouteNames.bookings);
+      }
+    }
   }
 
   @override
@@ -84,7 +93,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
       body: LiquidGlassBackground(
         child: BlocBuilder<BookingsCubit, BookingsState>(
           builder: (context, state) {
-            // Find matching booking from cubit state if available, or use initialBooking / fallback
+
             final Booking booking = state.allBookings
                     .where((b) => b.id == widget.bookingId)
                     .firstOrNull ??
@@ -96,7 +105,7 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Top Status & Reference Banner
+
                   AppGlassCard(
                     padding: const EdgeInsets.all(18),
                     borderRadius: AppRadius.brXl,
@@ -129,7 +138,6 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                   ),
                   AppSpacing.gapH16,
 
-                  // Hotel Image and Title Card
                   AppGlassCard(
                     padding: const EdgeInsets.all(16),
                     borderRadius: AppRadius.brXl,
@@ -177,7 +185,6 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                   ),
                   AppSpacing.gapH16,
 
-                  // Dates and Guests
                   AppGlassCard(
                     padding: const EdgeInsets.all(18),
                     borderRadius: AppRadius.brXl,
@@ -211,7 +218,6 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                   ),
                   AppSpacing.gapH16,
 
-                  // Payment Breakdown
                   AppGlassCard(
                     padding: const EdgeInsets.all(18),
                     borderRadius: AppRadius.brXl,
@@ -247,7 +253,6 @@ class _BookingDetailsPageState extends State<BookingDetailsPage> {
                   ),
                   AppSpacing.gapH24,
 
-                  // Cancel Button if upcoming
                   if (booking.isUpcoming)
                     GlassButton(
                       onPressed: _isCancelling ? null : () => _handleCancelReservation(booking),

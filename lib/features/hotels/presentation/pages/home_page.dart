@@ -47,12 +47,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSearch() {
-    final searchCubit = context.read<HotelSearchCubit>();
-    searchCubit.applyFilters(
-      sortBy: 'popular',
-    );
-    searchCubit.updateDestination(_selectedDestination == 'All' ? null : _selectedDestination);
-    context.push(RouteNames.hotels);
+    final dest = _selectedDestination == 'All' ? null : _selectedDestination;
+    if (dest != null && dest.isNotEmpty) {
+      context.push('${RouteNames.hotels}?destination=${Uri.encodeComponent(dest)}');
+    } else {
+      context.read<HotelSearchCubit>().clearFilters();
+      context.push(RouteNames.hotels);
+    }
   }
 
   Future<void> _pickDates() async {
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage> {
               color: primary,
               child: CustomScrollView(
                 slivers: [
-                  // Top Greeting & App Header
+
                   SliverToBoxAdapter(
                     child: SafeArea(
                       bottom: false,
@@ -183,7 +184,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // True Liquid Glass Search Card
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -193,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Destination Glass Dropdown
+
                             Text(
                               'Destination',
                               style: AppTypography.labelSmall.copyWith(
@@ -212,10 +212,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             AppSpacing.gapH12,
 
-                            // Dates and Guests in 2 Columns (GlassSurface items)
                             Row(
                               children: [
-                                // Dates
+
                                 Expanded(
                                   child: GlassSurface(
                                     depthLevel: GlassDepthLevel.control,
@@ -255,7 +254,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 AppSpacing.gapW12,
 
-                                // Guests & Rooms
                                 Expanded(
                                   child: GlassSurface(
                                     depthLevel: GlassDepthLevel.control,
@@ -297,7 +295,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                             AppSpacing.gapH16,
 
-                            // Search Glass Button
                             GlassButton(
                               onPressed: _onSearch,
                               label: 'Search Hotels',
@@ -312,7 +309,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // Popular Destinations Section
                   if (homeData.destinations.isNotEmpty) ...[
                     SliverToBoxAdapter(
                       child: Padding(
@@ -330,7 +326,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(
-                        // 240 card + 4 top padding + 12 bottom padding + 16 shadow clearance
+
                         height: 272,
                         child: ListView.separated(
                           padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
@@ -344,8 +340,7 @@ class _HomePageState extends State<HomePage> {
                             return DestinationCard(
                               destination: dest,
                               onTap: () {
-                                context.read<HotelSearchCubit>().updateDestination(dest.name);
-                                context.push(RouteNames.hotels);
+                                context.push('${RouteNames.hotels}?destination=${Uri.encodeComponent(dest.name)}');
                               },
                             );
                           },
@@ -354,7 +349,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
 
-                  // Recommended Stays Section
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
@@ -390,7 +384,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // Bottom Padding for Floating Navigation Bar
                   const SliverToBoxAdapter(
                     child: SizedBox(height: 80),
                   ),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/mock_hotel_data.dart';
 import '../../../../core/utils/app_logger.dart';
+import '../../../../core/utils/destination_utils.dart';
 import '../models/destination_model.dart';
 import '../models/hotel_model.dart';
 import 'hotel_remote_data_source.dart';
@@ -27,48 +28,65 @@ class FirebaseHotelDataSourceImpl implements HotelRemoteDataSource {
       try {
         AppLogger.firebase('Querying hotels collection from Firestore...');
         var snapshot = await _db.collection('hotels').get(const GetOptions(source: Source.serverAndCache));
-        
-        if (snapshot.docs.isEmpty) {
-          AppLogger.firebase('Firestore hotels collection is empty. Populating initial seed to Firestore...');
-          for (final hotel in mockHotelsData) {
-            await _db.collection('hotels').doc(hotel['id'].toString()).set({
-              ...hotel,
-              'created_at': FieldValue.serverTimestamp(),
-            }, SetOptions(merge: true));
-          }
-          snapshot = await _db.collection('hotels').get();
-        }
 
         if (snapshot.docs.isNotEmpty) {
           hotels = snapshot.docs.map((doc) => HotelModel.fromJson(_sanitizeHotelData(doc.data()))).toList();
           AppLogger.firebase('Loaded ${hotels.length} hotels live from Cloud Firestore.', isSuccess: true);
         }
+
+        final existingHotelIds = hotels.map((h) => h.id).toSet();
+        final missingMockHotels = mockHotelsData
+            .where((m) => !existingHotelIds.contains(m['id']))
+            .toList();
+
+        if (missingMockHotels.isNotEmpty) {
+          AppLogger.firebase('Merging ${missingMockHotels.length} missing hotel properties from catalog...');
+          final parsedMissing = missingMockHotels
+              .map((m) => HotelModel.fromJson(_sanitizeHotelData(m)))
+              .toList();
+          hotels.addAll(parsedMissing);
+
+          for (final m in missingMockHotels) {
+            _db.collection('hotels').doc(m['id'].toString()).set({
+              ...m,
+              'created_at': FieldValue.serverTimestamp(),
+            }, SetOptions(merge: true)).catchError((e) {
+              AppLogger.warning('Background sync hotel error: $e');
+            });
+          }
+        }
       } catch (firestoreError, stack) {
         AppLogger.firebase('Firestore query error (check network or security rules)', error: firestoreError, stackTrace: stack);
-        // Throw NetworkException so repository can serve offline cache or display No Internet error view
-        throw NetworkException(
-          message: 'Unable to connect to hotel services. Please check your internet connection and try again.',
-        );
+
+        hotels = mockHotelsData.map((m) => HotelModel.fromJson(_sanitizeHotelData(m))).toList();
       }
 
-      // In-memory advanced query filtering
       if (search != null && search.trim().isNotEmpty) {
         final q = search.toLowerCase().trim();
+        final searchAliases = DestinationUtils.getAliases(q);
         hotels = hotels.where((h) {
-          return h.name.toLowerCase().contains(q) ||
-              h.destination.toLowerCase().contains(q) ||
-              h.city.toLowerCase().contains(q) ||
-              h.state.toLowerCase().contains(q) ||
-              h.description.toLowerCase().contains(q);
+          final name = h.name.toLowerCase();
+          final dest = h.destination.toLowerCase();
+          final city = h.city.toLowerCase();
+          final state = h.state.toLowerCase();
+          final desc = h.description.toLowerCase();
+
+          return searchAliases.any((alias) =>
+              name.contains(alias) ||
+              dest.contains(alias) ||
+              city.contains(alias) ||
+              state.contains(alias) ||
+              desc.contains(alias));
         }).toList();
       }
 
       if (destination != null && destination.isNotEmpty && destination.toLowerCase() != 'all') {
-        final d = destination.toLowerCase().trim();
-        hotels = hotels.where((h) =>
-            h.destination.toLowerCase().contains(d) ||
-            h.city.toLowerCase().contains(d) ||
-            h.state.toLowerCase().contains(d)).toList();
+        hotels = hotels.where((h) => DestinationUtils.matchesDestination(
+          hotelDestination: h.destination,
+          hotelCity: h.city,
+          hotelState: h.state,
+          targetDestination: destination,
+        )).toList();
       }
 
       if (minPrice != null) {
@@ -97,7 +115,7 @@ class FirebaseHotelDataSourceImpl implements HotelRemoteDataSource {
     } catch (e, stack) {
       AppLogger.firebase('Failed to query hotels', error: e, stackTrace: stack);
       if (e is NetworkException || e is ServerException) rethrow;
-      throw ServerException(message: 'Failed to fetch hotels from Firebase: $e');
+      throw ServerException(message: 'Failed to fetch hotels: $e');
     }
   }
 
@@ -115,7 +133,6 @@ class FirebaseHotelDataSourceImpl implements HotelRemoteDataSource {
         AppLogger.warning('Firestore single hotel query error ($id), checking fallback: $err', tag: 'HOTELS 🏨');
       }
 
-      // Check fallback data
       final fallback = mockHotelsData.firstWhere(
         (h) => h['id'] == id,
         orElse: () => throw ServerException(message: 'Hotel not found with ID: $id'),
@@ -145,38 +162,46 @@ class FirebaseHotelDataSourceImpl implements HotelRemoteDataSource {
   @override
   Future<List<DestinationModel>> getDestinations() async {
     try {
+      List<DestinationModel> destinations = [];
       try {
         AppLogger.firebase('Fetching destinations from Firestore...');
         var snapshot = await _db.collection('destinations').get(const GetOptions(source: Source.serverAndCache));
-        
-        if (snapshot.docs.isEmpty) {
-          AppLogger.firebase('Firestore destinations empty. Seeding to Firestore...');
-          final batch = _db.batch();
-          for (final d in mockDestinationsData) {
-            batch.set(_db.collection('destinations').doc(d['id'].toString()), {
-              ...d,
-              'created_at': FieldValue.serverTimestamp(),
-            });
-          }
-          await batch.commit();
-          snapshot = await _db.collection('destinations').get();
-        }
 
         if (snapshot.docs.isNotEmpty) {
-          final destinations = snapshot.docs.map((doc) => DestinationModel.fromJson(doc.data())).toList();
+          destinations = snapshot.docs.map((doc) => DestinationModel.fromJson(doc.data())).toList();
           AppLogger.firebase('Loaded ${destinations.length} destinations live from Cloud Firestore.', isSuccess: true);
-          return destinations;
         }
 
-        return [];
+        final existingDestIds = destinations.map((d) => d.id).toSet();
+        final missingDestinations = mockDestinationsData
+            .where((m) => !existingDestIds.contains(m['id']))
+            .map((m) => DestinationModel.fromJson(m))
+            .toList();
+        if (missingDestinations.isNotEmpty) {
+          destinations.addAll(missingDestinations);
+        }
+
+        final mockCountMap = {
+          for (final d in mockDestinationsData) d['id'].toString(): (d['hotel_count'] as int? ?? 1)
+        };
+        destinations = destinations.map((d) {
+          if (mockCountMap.containsKey(d.id)) {
+            final expected = mockCountMap[d.id]!;
+            if (d.hotelCount < expected) {
+              return DestinationModel.fromEntity(d.copyWith(hotelCount: expected));
+            }
+          }
+          return d;
+        }).toList();
+
+        return destinations;
       } catch (err) {
-        AppLogger.warning('Firestore destinations query error: $err', tag: 'DESTINATIONS 🌴');
-        throw NetworkException(message: 'Unable to load destinations. Please check your internet connection and try again.');
+        AppLogger.warning('Firestore destinations query error: $err, serving local catalog', tag: 'DESTINATIONS 🌴');
+        return mockDestinationsData.map((d) => DestinationModel.fromJson(d)).toList();
       }
     } catch (e) {
       AppLogger.error('Failed to fetch destinations', tag: 'DESTINATIONS 🌴', error: e);
-      if (e is NetworkException || e is ServerException) rethrow;
-      throw ServerException(message: 'Failed to fetch destinations from Firebase: $e');
+      return mockDestinationsData.map((d) => DestinationModel.fromJson(d)).toList();
     }
   }
 }

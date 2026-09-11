@@ -1,9 +1,8 @@
 import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 
-/// Centralized, structured console logging utility for debug and production.
 class AppLogger {
-  // ANSI Color codes for clean console readability
+
   static const String _reset = '\x1B[0m';
   static const String _red = '\x1B[31m';
   static const String _green = '\x1B[32m';
@@ -43,7 +42,7 @@ class AppLogger {
     if (stackTrace != null && kDebugMode) {
       debugPrint('$_red  ➜ StackTrace:\n$stackTrace$_reset');
     }
-    // Also send to developer log for DevTools inspection
+
     developer.log(
       message,
       name: tag,

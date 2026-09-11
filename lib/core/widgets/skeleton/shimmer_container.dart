@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 
-/// Reusable Shimmer container providing subtle, high-performance shimmer sweep
-/// consistent with the Liquid Glass design language in both Light and Dark modes.
 class ShimmerContainer extends StatefulWidget {
   final double? width;
   final double? height;

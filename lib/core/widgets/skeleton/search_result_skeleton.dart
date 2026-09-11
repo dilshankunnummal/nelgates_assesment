@@ -4,7 +4,6 @@ import '../../theme/app_spacing.dart';
 import 'hotel_card_skeleton.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder for [HotelSearchPage] search results.
 class SearchResultSkeleton extends StatelessWidget {
   const SearchResultSkeleton({super.key});
 
@@ -15,7 +14,7 @@ class SearchResultSkeleton extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Results count and sort button header
+
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 6),
             child: Row(
@@ -35,7 +34,6 @@ class SearchResultSkeleton extends StatelessWidget {
             ),
           ),
 
-          // Hotel Card Skeletons List
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             child: Column(

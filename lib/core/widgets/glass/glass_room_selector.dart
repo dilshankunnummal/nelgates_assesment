@@ -8,7 +8,6 @@ import 'glass_button.dart';
 import 'glass_icon_button.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Room Count Selector Sheet.
 class GlassRoomSelector extends StatefulWidget {
   final int initialRooms;
   final ValueChanged<int> onSelected;

@@ -4,7 +4,6 @@ import '../../theme/app_radius.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// Shows a true liquid glass modal bottom sheet with blurred background.
 Future<T?> showGlassBottomSheet<T>({
   required BuildContext context,
   required Widget child,
@@ -23,7 +22,7 @@ Future<T?> showGlassBottomSheet<T>({
     builder: (context) {
       return Stack(
         children: [
-          // Blurred background barrier
+
           Positioned.fill(
             child: GestureDetector(
               onTap: () => Navigator.of(context).pop(),
@@ -40,7 +39,6 @@ Future<T?> showGlassBottomSheet<T>({
   );
 }
 
-/// Floating Liquid Glass Bottom Sheet container with glass drag handle.
 class GlassBottomSheet extends StatelessWidget {
   final Widget child;
   final bool showDragHandle;

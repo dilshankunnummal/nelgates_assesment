@@ -65,4 +65,3 @@ class ForgotPasswordUseCase {
     return _repository.forgotPassword(email: email);
   }
 }
-

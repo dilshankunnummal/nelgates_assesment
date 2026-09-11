@@ -60,14 +60,14 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
     try {
       AppLogger.auth('Attempting sign in for: $email...');
       fb_auth.UserCredential credential;
-      
+
       try {
         credential = await _auth.signInWithEmailAndPassword(
           email: email.trim(),
           password: password.trim(),
         );
       } on fb_auth.FirebaseAuthException catch (signInErr) {
-        // If it's a built-in demo credential and account doesn't exist in Firebase yet, auto-provision it
+
         final cleanEmail = email.trim().toLowerCase();
         final isEmployeeDemo = cleanEmail == 'employee@hotel.com';
         final isHrDemo = cleanEmail == 'hr@hotel.com';
@@ -104,7 +104,6 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
 
       AppLogger.auth('FirebaseAuth successful for UID: ${fbUser.uid}. Fetching Firestore profile...');
 
-      // Fetch user profile from Firestore
       UserModel userModel;
       const defaultAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80';
       try {
@@ -123,7 +122,7 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
             phone: data['phone']?.toString() ?? fbUser.phoneNumber,
           );
         } else {
-          // Fallback if doc is still creating
+
           userModel = UserModel(
             id: fbUser.uid,
             email: fbUser.email ?? email,
@@ -182,13 +181,11 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
         throw const AuthenticationException(message: 'Registration failed: Unable to create account.');
       }
 
-      // Update Auth Profile
       await fbUser.updateDisplayName(name);
       if (profileImageUrl != null && profileImageUrl.isNotEmpty) {
         await fbUser.updatePhotoURL(profileImageUrl);
       }
 
-      // Store in Firestore users collection
       final userDoc = {
         'id': fbUser.uid,
         'name': name,
@@ -294,7 +291,6 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
       await _auth.signOut();
     } catch (_) {}
   }
-
 
   String _mapFirebaseAuthError(fb_auth.FirebaseAuthException e) {
     switch (e.code) {

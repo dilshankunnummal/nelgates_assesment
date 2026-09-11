@@ -7,7 +7,6 @@ import '../../theme/glass_tokens.dart';
 import 'room_card_skeleton.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder precisely matching [HotelDetailsPage].
 class HotelDetailsSkeleton extends StatelessWidget {
   const HotelDetailsSkeleton({super.key});
 
@@ -20,7 +19,7 @@ class HotelDetailsSkeleton extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Hero Image Gallery Shimmer (height 340)
+
               Stack(
                 children: [
                   const ShimmerContainer(
@@ -28,7 +27,7 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     height: 340,
                     borderRadius: BorderRadius.zero,
                   ),
-                  // Bottom gallery dots indicator placeholder
+
                   Positioned(
                     bottom: 16,
                     left: 0,
@@ -51,13 +50,12 @@ class HotelDetailsSkeleton extends StatelessWidget {
                 ],
               ),
 
-              // Hotel Info Header & Content
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Rating & Star Row Shimmer
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -85,7 +83,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     AppSpacing.gapH8,
 
-                    // Hotel Name Display
                     ShimmerContainer(
                       width: double.infinity,
                       height: 28,
@@ -93,7 +90,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     AppSpacing.gapH8,
 
-                    // City & State Location Row
                     Row(
                       children: [
                         ShimmerContainer(
@@ -111,7 +107,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     AppSpacing.gapH4,
 
-                    // Full Address Line
                     ShimmerContainer(
                       width: 240,
                       height: 12,
@@ -119,7 +114,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     const Divider(height: 32),
 
-                    // "About the Property" Section
                     ShimmerContainer(
                       width: 140,
                       height: 18,
@@ -151,7 +145,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     const Divider(height: 32),
 
-                    // "Amenities & Facilities" Section
                     ShimmerContainer(
                       width: 170,
                       height: 18,
@@ -194,7 +187,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     const Divider(height: 32),
 
-                    // "Select Room" Section Header
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -218,7 +210,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     AppSpacing.gapH12,
 
-                    // Available Room Cards
                     const Padding(
                       padding: EdgeInsets.only(bottom: 12),
                       child: RoomCardSkeleton(),
@@ -229,7 +220,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
                     ),
                     const Divider(height: 24),
 
-                    // Cancellation Policy Card Shimmer
                     AppGlassCard(
                       padding: const EdgeInsets.all(16),
                       borderRadius: AppRadius.brLg,
@@ -269,7 +259,6 @@ class HotelDetailsSkeleton extends StatelessWidget {
           ),
         ),
 
-        // Sticky Bottom Liquid Glass Bar
         Positioned(
           bottom: 0,
           left: 0,

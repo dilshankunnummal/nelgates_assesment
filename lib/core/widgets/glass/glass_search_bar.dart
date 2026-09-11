@@ -5,7 +5,6 @@ import '../../theme/app_typography.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Search Bar with focused glow highlight and filter trigger.
 class GlassSearchBar extends StatefulWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;

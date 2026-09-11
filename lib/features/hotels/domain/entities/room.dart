@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 class Room extends Equatable {
   final String id;
   final String hotelId;
-  final String name; // e.g. "Deluxe Ocean Suite"
+  final String name;
   final String description;
   final double pricePerNight;
-  final int capacity; // max adults
-  final String bedType; // e.g. "King Bed"
+  final int capacity;
+  final String bedType;
   final int sizeSqFt;
   final List<String> amenities;
   final bool isAvailable;

@@ -12,7 +12,6 @@ import 'core/utils/app_logger.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Setup Global Console Error Handlers
   FlutterError.onError = (FlutterErrorDetails details) {
     AppLogger.error(
       'Flutter Framework Error: ${details.exceptionAsString()}',
@@ -29,10 +28,9 @@ void main() async {
       error: error,
       stackTrace: stack,
     );
-    return true; // Handled
+    return true;
   };
 
-  // 1. Initialize Firebase & Firestore Offline Cache safely
   bool firebaseReady = false;
   try {
     AppLogger.info('Initializing Firebase...', tag: 'STARTUP 🚀');
@@ -52,14 +50,11 @@ void main() async {
   AppEnvironment.dataSourceMode = firebaseReady ? AppDataSourceMode.firebase : AppDataSourceMode.mock;
   AppLogger.info('Active Data Mode: ${AppEnvironment.dataSourceMode.name.toUpperCase()}', tag: 'STARTUP 🚀');
 
-
-  // 2. Set preferred orientations
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  // 3. Set system UI overlay and Recents app switcher description
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -75,9 +70,7 @@ void main() async {
     ),
   );
 
-  // 4. Initialize dependencies (Hive, Repositories, UseCases, Cubits)
   await initDependencies();
 
   runApp(const BookingApp());
 }
-

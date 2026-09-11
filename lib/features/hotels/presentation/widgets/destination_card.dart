@@ -31,10 +31,9 @@ class DestinationCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-                // Image
+
                 AppImage(imageUrl: destination.image, fit: BoxFit.cover),
 
-                // Dark overlay
                 if (isDark)
                   Positioned.fill(
                     child: DecoratedBox(
@@ -58,7 +57,6 @@ class DestinationCard extends StatelessWidget {
                     ),
                   ),
 
-                // Explore Badge
                 Positioned(
                   top: 12,
 
@@ -107,7 +105,7 @@ class DestinationCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                ), // Bottom Glass Information Panel
+                ),
 
                 Positioned(
                   left: 0,
@@ -140,7 +138,7 @@ class DestinationCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
 
                             children: [
-                              // Destination Name
+
                               Text(
                                 destination.name,
 
@@ -161,7 +159,6 @@ class DestinationCard extends StatelessWidget {
 
                               const SizedBox(height: 2),
 
-                              // Location
                               Row(
                                 children: [
                                   Icon(
@@ -200,7 +197,6 @@ class DestinationCard extends StatelessWidget {
 
                               const SizedBox(height: 8),
 
-                              // Property Count Chip
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 7,

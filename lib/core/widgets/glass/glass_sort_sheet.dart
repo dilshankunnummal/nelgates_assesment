@@ -15,7 +15,6 @@ class GlassSortOption {
   });
 }
 
-/// Floating Liquid Glass Sort Sheet.
 class GlassSortSheet extends StatelessWidget {
   final String currentSort;
   final List<GlassSortOption> options;

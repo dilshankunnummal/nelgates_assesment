@@ -4,7 +4,6 @@ import '../../theme/app_spacing.dart';
 import '../glass/app_glass_card.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder for [RoomCard] on the hotel details and room selection screens.
 class RoomCardSkeleton extends StatelessWidget {
   const RoomCardSkeleton({super.key});
 
@@ -16,11 +15,11 @@ class RoomCardSkeleton extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image and specs row
+
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Room Thumbnail Shimmer
+
               ClipRRect(
                 borderRadius: AppRadius.brMd,
                 child: const ShimmerContainer(
@@ -30,7 +29,6 @@ class RoomCardSkeleton extends StatelessWidget {
               ),
               AppSpacing.gapW16,
 
-              // Room Title & Specs Shimmer
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +64,6 @@ class RoomCardSkeleton extends StatelessWidget {
                 ),
               ),
 
-              // Selection Radio Indicator Placeholder
               const ShimmerContainer(
                 width: 24,
                 height: 24,
@@ -76,7 +73,6 @@ class RoomCardSkeleton extends StatelessWidget {
           ),
           AppSpacing.gapH12,
 
-          // Room Description Shimmer (2 lines)
           const ShimmerContainer(
             width: double.infinity,
             height: 12,
@@ -90,7 +86,6 @@ class RoomCardSkeleton extends StatelessWidget {
           ),
           AppSpacing.gapH12,
 
-          // Amenities Glass Chips Shimmer
           Row(
             children: [
               ShimmerContainer(
@@ -114,7 +109,6 @@ class RoomCardSkeleton extends StatelessWidget {
           ),
           AppSpacing.gapH12,
 
-          // Pricing & Select Button Row Shimmer
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

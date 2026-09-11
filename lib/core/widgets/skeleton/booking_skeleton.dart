@@ -4,7 +4,6 @@ import '../../theme/app_spacing.dart';
 import '../glass/app_glass_card.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder for individual booking cards on [BookingsPage].
 class BookingSkeleton extends StatelessWidget {
   const BookingSkeleton({super.key});
 
@@ -16,7 +15,7 @@ class BookingSkeleton extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header: Booking ID and Status Badge Shimmer
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -34,7 +33,6 @@ class BookingSkeleton extends StatelessWidget {
           ),
           const Divider(height: 20),
 
-          // Hotel & Room Info Row Shimmer
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -84,7 +82,6 @@ class BookingSkeleton extends StatelessWidget {
           ),
           const Divider(height: 20),
 
-          // Footer: Total & Actions Shimmer
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -117,7 +114,6 @@ class BookingSkeleton extends StatelessWidget {
   }
 }
 
-/// List of booking skeletons matching the list layout on [BookingsPage].
 class BookingListSkeleton extends StatelessWidget {
   final int itemCount;
 

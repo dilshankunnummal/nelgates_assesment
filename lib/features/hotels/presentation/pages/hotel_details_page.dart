@@ -84,22 +84,21 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
 
             return Stack(
               children: [
-                // Scrollable content
+
                 CustomScrollView(
                   slivers: [
-                    // Hero Image Gallery
+
                     SliverToBoxAdapter(
                       child: HotelImageGallery(hotel: hotel, height: 340),
                     ),
 
-                    // Hotel Info Header
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // State & Rating & Star rating
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -127,7 +126,6 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                             ),
                             AppSpacing.gapH8,
 
-                            // Hotel Name
                             Text(
                               hotel.name,
                               style: AppTypography.displayMedium.copyWith(
@@ -137,7 +135,6 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                             ),
                             AppSpacing.gapH8,
 
-                            // City & State
                             Row(
                               children: [
                                 const Icon(
@@ -157,7 +154,6 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                             ),
                             AppSpacing.gapH4,
 
-                            // Full Address
                             Text(
                               hotel.address,
                               style: AppTypography.bodySmall.copyWith(
@@ -166,7 +162,6 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                             ),
                             const Divider(height: 32),
 
-                            // Description
                             const SectionHeader(title: 'About the Property'),
                             AppSpacing.gapH8,
                             Text(
@@ -195,13 +190,11 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                             ),
                             const Divider(height: 32),
 
-                            // Amenities Section
                             const SectionHeader(title: 'Amenities & Facilities'),
                             AppSpacing.gapH12,
                             _buildAmenitiesGrid(hotel.amenities, isDark),
                             const Divider(height: 32),
 
-                            // Rooms Section
                             if (hotel.rooms.isNotEmpty) ...[
                               SectionHeader(
                                 title: 'Select Room',
@@ -224,7 +217,6 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                               const Divider(height: 24),
                             ],
 
-                            // Cancellation Policy Card
                             AppGlassCard(
                               padding: const EdgeInsets.all(16),
                               borderRadius: AppRadius.brLg,
@@ -266,7 +258,6 @@ class _HotelDetailsPageState extends State<HotelDetailsPage> {
                   ],
                 ),
 
-                // Sticky Bottom True Liquid Glass Bar
                 Positioned(
                   bottom: 0,
                     left: 0,

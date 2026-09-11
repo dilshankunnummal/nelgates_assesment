@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// Premium Interactive Press & Point-Expand Tap Effect Wrapper
-///
-/// Features:
-/// - **Hold to Reduce Size**: Smoothly scales down content to [minScale] (e.g. 0.955) when held.
-/// - **Point Expand Tap Wave**: Spawns an expanding radial light bloom starting exactly at the tap point (x, y).
-/// - **Haptic Feedback**: Crisp tactile response on press.
-/// - **Fluid Spring Physics**: Smooth easing curves for natural physical response.
 class InteractivePressEffect extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
@@ -184,7 +177,6 @@ class _PointExpandPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (opacity <= 0.001) return;
 
-    // Maximum reach to cover furthest corner from tap point
     final maxRadius = (size.width + size.height) * 0.95;
     final currentRadius = maxRadius * progress;
 

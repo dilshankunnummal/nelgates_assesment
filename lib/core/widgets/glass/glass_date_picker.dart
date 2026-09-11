@@ -8,7 +8,6 @@ import 'glass_bottom_sheet.dart';
 import 'glass_button.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Date Range Picker Modal.
 class GlassDatePicker extends StatefulWidget {
   final DateTime initialCheckIn;
   final DateTime initialCheckOut;
@@ -143,7 +142,7 @@ class _GlassDatePickerState extends State<GlassDatePicker> {
           ],
         ),
         const SizedBox(height: 20),
-        // Quick preset buttons
+
         Row(
           children: [
             _buildPresetChip('Weekend', 2),

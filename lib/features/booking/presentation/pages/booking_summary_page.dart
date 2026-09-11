@@ -65,7 +65,7 @@ class BookingSummaryPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Hotel Overview Card
+
                       AppGlassCard(
                         padding: const EdgeInsets.all(16),
                         borderRadius: AppRadius.brXl,
@@ -114,7 +114,6 @@ class BookingSummaryPage extends StatelessWidget {
                       ),
                       AppSpacing.gapH20,
 
-                      // Reservation Details
                       const SectionHeader(title: 'Stay & Guest Details'),
                       AppSpacing.gapH8,
                       AppGlassCard(
@@ -146,11 +145,9 @@ class BookingSummaryPage extends StatelessWidget {
                       ),
                       AppSpacing.gapH20,
 
-                      // Price Breakdown
                       BookingPriceBreakdownWidget(breakdown: breakdown),
                       AppSpacing.gapH20,
 
-                      // Cancellation Policy
                       AppGlassCard(
                         padding: const EdgeInsets.all(16),
                         borderRadius: AppRadius.brLg,
@@ -191,7 +188,6 @@ class BookingSummaryPage extends StatelessWidget {
                   ),
                 ),
 
-                // Sticky Bottom Confirm Bar
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -252,7 +248,6 @@ class BookingSummaryPage extends StatelessWidget {
                   ),
                 ),
 
-                // Centered Confirmation Loading Overlay
                 if (isLoading)
                   Container(
                     color: Colors.black.withValues(alpha: 0.55),

@@ -24,7 +24,7 @@ class BookingLocalDataSourceImpl implements BookingLocalDataSource {
           list.add(BookingModel.fromJson(Map<String, dynamic>.from(val)));
         }
       }
-      // Sort newest first
+
       list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       return list;
     } catch (e) {

@@ -1,5 +1,5 @@
 class SafeParser {
-  /// Safely parses an integer from any dynamic value (int, double, numeric String, etc.).
+
   static int toInt(dynamic value, {int fallback = 0}) {
     if (value == null) return fallback;
     if (value is int) return value;
@@ -15,7 +15,6 @@ class SafeParser {
     return fallback;
   }
 
-  /// Safely parses a double from any dynamic value (double, int, numeric String, etc.).
   static double toDouble(dynamic value, {double fallback = 0.0}) {
     if (value == null) return fallback;
     if (value is double) return value;
@@ -29,14 +28,12 @@ class SafeParser {
     return fallback;
   }
 
-  /// Safely parses a String from any dynamic value.
   static String toStr(dynamic value, {String fallback = ''}) {
     if (value == null) return fallback;
     if (value is String) return value;
     return value.toString();
   }
 
-  /// Safely parses a boolean from any dynamic value.
   static bool toBool(dynamic value, {bool fallback = false}) {
     if (value == null) return fallback;
     if (value is bool) return value;
@@ -49,10 +46,6 @@ class SafeParser {
     return fallback;
   }
 
-  /// Safely parses an image URL from multiple possible schemas:
-  /// - String URL
-  /// - Map with 'large', 'small', 'thumb', 'icon', 'image_url', 'url', 'image'
-  /// - List of strings or maps (picks first valid)
   static String toImageUrl(dynamic value, {String fallback = ''}) {
     if (value == null) return fallback;
     if (value is String) {
@@ -60,7 +53,7 @@ class SafeParser {
       return trimmed.isNotEmpty ? trimmed : fallback;
     }
     if (value is Map) {
-      // Check priority keys
+
       final candidateKeys = [
         'large',
         'image_url',
@@ -85,7 +78,6 @@ class SafeParser {
     return fallback;
   }
 
-  /// Safely parses a List of images from a dynamic value (String, List of Strings, List of Maps, Map).
   static List<String> toImageList(dynamic value, {List<String> fallback = const []}) {
     if (value == null) return fallback;
     if (value is List) {
@@ -100,7 +92,6 @@ class SafeParser {
     return single.isNotEmpty ? [single] : fallback;
   }
 
-  /// Safely parses a List of items using a mapper function.
   static List<T> toList<T>(dynamic value, T Function(dynamic item) mapper) {
     if (value == null || value is! List) return [];
     return value.map((e) {
@@ -112,7 +103,6 @@ class SafeParser {
     }).whereType<T>().toList();
   }
 
-  /// Safely parses a `Map<String, dynamic>` from any dynamic value.
   static Map<String, dynamic> toMap(dynamic value) {
     if (value is Map<String, dynamic>) return value;
     if (value is Map) {
@@ -121,7 +111,6 @@ class SafeParser {
     return {};
   }
 
-  /// Safely parses a DateTime from dynamic (DateTime, int timestamp, String ISO, Firestore Timestamp).
   static DateTime? toDateTime(dynamic value) {
     if (value == null) return null;
     if (value is DateTime) return value;
@@ -135,7 +124,7 @@ class SafeParser {
         return null;
       }
     }
-    // Handle Firestore Timestamp or objects with .toDate()
+
     try {
       final dyn = value as dynamic;
       if (dyn.toDate != null) {

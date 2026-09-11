@@ -3,7 +3,6 @@ import '../../theme/app_radius.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// Level 2 depth glass container for page sections, hero panels, and background groupings.
 class AppGlassContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;

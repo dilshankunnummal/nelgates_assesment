@@ -6,7 +6,6 @@ import '../glass/app_glass_card.dart';
 import '../glass/glass_surface.dart';
 import 'shimmer_container.dart';
 
-/// Skeleton placeholder precisely matching the dimensions, glass card, and layout of [HotelCard].
 class HotelCardSkeleton extends StatelessWidget {
   final double? width;
   final double imageHeight;
@@ -27,7 +26,7 @@ class HotelCardSkeleton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Image Shimmer with Wishlist & Rating Placeholders
+
           Stack(
             children: [
               ClipRRect(
@@ -38,7 +37,6 @@ class HotelCardSkeleton extends StatelessWidget {
                 ),
               ),
 
-              // Wishlist Heart Glass Button Placeholder
               const Positioned(
                 top: 12,
                 right: 12,
@@ -49,7 +47,6 @@ class HotelCardSkeleton extends StatelessWidget {
                 ),
               ),
 
-              // Floating Rating Badge Placeholder
               Positioned(
                 bottom: 12,
                 left: 12,
@@ -78,13 +75,12 @@ class HotelCardSkeleton extends StatelessWidget {
             ],
           ),
 
-          // Details Section
           Padding(
             padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Location row & Star Rating Shimmer
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -112,7 +108,6 @@ class HotelCardSkeleton extends StatelessWidget {
                 ),
                 AppSpacing.gapH4,
 
-                // Hotel Name Shimmer
                 ShimmerContainer(
                   width: 200,
                   height: 18,
@@ -120,7 +115,6 @@ class HotelCardSkeleton extends StatelessWidget {
                 ),
                 AppSpacing.gapH8,
 
-                // Pricing and Reviews Row Shimmer
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,

@@ -6,7 +6,6 @@ import '../../utils/currency_utils.dart';
 import 'glass_surface.dart';
 import '../../theme/glass_tokens.dart';
 
-/// Structured True Liquid Glass Booking Summary card with zero gradients.
 class GlassBookingSummary extends StatelessWidget {
   final String hotelName;
   final String roomName;
@@ -60,7 +59,7 @@ class GlassBookingSummary extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          // Info chips row
+
           Row(
             children: [
               _buildBadge(context, Icons.calendar_today_rounded, datesText),

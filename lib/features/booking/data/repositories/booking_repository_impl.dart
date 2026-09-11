@@ -20,7 +20,7 @@ class BookingRepositoryImpl implements BookingRepository {
   Future<({Failure? failure, List<Booking>? bookings})> getBookings() async {
     try {
       try {
-        // 1. Fetch live bookings from Firestore
+
         final remoteBookings = await remoteDataSource.getBookings();
         if (remoteBookings.isNotEmpty) {
           for (final b in remoteBookings) {
@@ -29,7 +29,7 @@ class BookingRepositoryImpl implements BookingRepository {
           return (failure: null, bookings: remoteBookings);
         }
       } catch (e) {
-        // Fallback to local cache if network/Firestore error
+
       }
 
       final localBookings = await localDataSource.getBookings();
@@ -46,7 +46,6 @@ class BookingRepositoryImpl implements BookingRepository {
     try {
       final bookingModel = booking is BookingModel ? booking : BookingModel.fromEntity(booking);
 
-      // 1. Save directly to Cloud Firestore
       if (AppEnvironment.isFirebase) {
         try {
           await remoteDataSource.createBooking(bookingModel);
@@ -57,7 +56,6 @@ class BookingRepositoryImpl implements BookingRepository {
         }
       }
 
-      // 2. Save locally for instant offline access and cache
       await localDataSource.saveBooking(bookingModel);
 
       return (failure: null, booking: bookingModel);
@@ -74,7 +72,7 @@ class BookingRepositoryImpl implements BookingRepository {
     required String reason,
   }) async {
     try {
-      // 1. Cancel in Cloud Firestore
+
       if (AppEnvironment.isFirebase) {
         try {
           await remoteDataSource.cancelBooking(bookingId, reason);
@@ -85,7 +83,6 @@ class BookingRepositoryImpl implements BookingRepository {
         }
       }
 
-      // 2. Update in local cache
       final existing = await localDataSource.getBookingById(bookingId);
       if (existing != null) {
         final updated = existing.copyWith(

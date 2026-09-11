@@ -24,4 +24,3 @@ abstract class AuthRepository {
 
   Future<({Failure? failure, bool success})> logout();
 }
-

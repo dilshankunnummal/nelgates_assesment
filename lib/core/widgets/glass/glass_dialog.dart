@@ -4,7 +4,6 @@ import '../../theme/app_radius.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// Shows a true liquid glass dialog with blurred backdrop barrier and scale + fade transition.
 Future<T?> showGlassDialog<T>({
   required BuildContext context,
   required Widget child,
@@ -19,7 +18,7 @@ Future<T?> showGlassDialog<T>({
     pageBuilder: (context, animation, secondaryAnimation) {
       return Stack(
         children: [
-          // Full-screen backdrop blur
+
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
@@ -45,7 +44,6 @@ Future<T?> showGlassDialog<T>({
   );
 }
 
-/// Floating Liquid Glass Dialog container.
 class GlassDialog extends StatelessWidget {
   final Widget child;
   final double? maxWidth;

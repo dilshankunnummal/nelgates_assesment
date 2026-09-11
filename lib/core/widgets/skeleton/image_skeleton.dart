@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import 'shimmer_container.dart';
 
-/// Shimmer placeholder specifically tailored for image loading to prevent layout shifts.
 class ImageSkeleton extends StatelessWidget {
   final double? width;
   final double? height;

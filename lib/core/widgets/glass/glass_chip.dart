@@ -5,7 +5,6 @@ import '../../theme/app_typography.dart';
 import '../../theme/glass_tokens.dart';
 import 'glass_surface.dart';
 
-/// True Liquid Glass Chip for filters, tags, and amenity pills.
 class GlassChip extends StatelessWidget {
   final String label;
   final Widget? icon;

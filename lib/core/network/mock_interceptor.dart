@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../constants/app_constants.dart';
+import '../utils/destination_utils.dart';
 import 'mock_hotel_data.dart';
 
 class MockInterceptor extends Interceptor {
-  // In-memory state for mock API bookings & wishlist during app execution
+
   static final List<Map<String, dynamic>> _bookings = [];
   static final List<String> _wishlistHotelIds = ['HTL-001', 'HTL-003'];
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    // Simulate realistic mobile network delay
+
     await Future.delayed(const Duration(milliseconds: 250));
 
     final path = options.path;
     final method = options.method.toUpperCase();
 
-    // 1. POST /auth/login
     if (path.endsWith('/auth/login') && method == 'POST') {
       final data = options.data is Map ? options.data as Map : jsonDecode(options.data.toString()) as Map;
       final email = (data['email'] ?? '').toString().trim().toLowerCase();
@@ -28,16 +28,14 @@ class MockInterceptor extends Interceptor {
             requestOptions: options,
             statusCode: 200,
             data: {
+              'token': 'mock_jwt_token_nelegate_assessment_auth_success',
               'user': {
                 'id': 'USR-HR-001',
-                'email': AppConstants.hrEmail,
                 'name': AppConstants.hrName,
-                'role': 'hr',
-                'avatar': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80',
-                'phone': '+91 9811223344',
-              },
-              'token': 'mock_jwt_token_hr_secure',
-              'expires_at': DateTime.now().add(const Duration(days: 30)).toIso8601String(),
+                'email': AppConstants.hrEmail,
+                'avatar': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80',
+                'phone': '+91 98765 43210',
+              }
             },
           ),
         );
@@ -47,16 +45,14 @@ class MockInterceptor extends Interceptor {
             requestOptions: options,
             statusCode: 200,
             data: {
+              'token': 'mock_jwt_token_employee_secure',
               'user': {
                 'id': 'USR-EMP-002',
-                'email': AppConstants.employeeEmail,
                 'name': AppConstants.employeeName,
-                'role': 'employee',
-                'avatar': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80',
-                'phone': '+91 9876543210',
-              },
-              'token': 'mock_jwt_token_employee_secure',
-              'expires_at': DateTime.now().add(const Duration(days: 30)).toIso8601String(),
+                'email': AppConstants.employeeEmail,
+                'avatar': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80',
+                'phone': '+91 98765 43210',
+              }
             },
           ),
         );
@@ -67,16 +63,14 @@ class MockInterceptor extends Interceptor {
             response: Response(
               requestOptions: options,
               statusCode: 401,
-              data: {'message': 'Invalid email or password. Please verify credentials.'},
+              data: {'message': 'Invalid email or password. Please check your credentials.'},
             ),
             type: DioExceptionType.badResponse,
-            message: 'Invalid credentials',
           ),
         );
       }
     }
 
-    // 2. GET /destinations
     if (path.endsWith('/destinations') && method == 'GET') {
       return handler.resolve(
         Response(
@@ -87,14 +81,14 @@ class MockInterceptor extends Interceptor {
       );
     }
 
-    // 3. GET /hotels/{id}
-    final hotelDetailMatch = RegExp(r'/hotels/([^/?]+)$').firstMatch(path);
-    if (hotelDetailMatch != null && method == 'GET' && !path.endsWith('/hotels')) {
-      final id = hotelDetailMatch.group(1);
+    final hotelIdMatch = RegExp(r'/hotels/([^/?]+)$').firstMatch(path);
+    if (hotelIdMatch != null && method == 'GET') {
+      final id = hotelIdMatch.group(1);
       final hotel = mockHotelsData.firstWhere(
         (h) => h['id'] == id,
-        orElse: () => {},
+        orElse: () => <String, dynamic>{},
       );
+
       if (hotel.isNotEmpty) {
         return handler.resolve(
           Response(
@@ -118,7 +112,6 @@ class MockInterceptor extends Interceptor {
       }
     }
 
-    // 4. GET /hotels
     if (path.endsWith('/hotels') && method == 'GET') {
       var filtered = List<Map<String, dynamic>>.from(mockHotelsData);
       final queryParams = options.queryParameters;
@@ -131,20 +124,7 @@ class MockInterceptor extends Interceptor {
       final sort = queryParams['sort']?.toString();
 
       if (search != null && search.isNotEmpty) {
-        // Expand common Indian city aliases
-        final searchAliases = <String>{search};
-        if (search.contains('bangalore')) searchAliases.add('bengaluru');
-        if (search.contains('bengaluru')) searchAliases.add('bangalore');
-        if (search.contains('coorg')) searchAliases.add('madikeri');
-        if (search.contains('madikeri')) searchAliases.add('coorg');
-        if (search.contains('calicut')) searchAliases.add('kozhikode');
-        if (search.contains('kozhikode')) searchAliases.add('calicut');
-        if (search.contains('trivandrum')) searchAliases.add('thiruvananthapuram');
-        if (search.contains('thiruvananthapuram')) searchAliases.add('trivandrum');
-        if (search.contains('pondicherry')) searchAliases.add('puducherry');
-        if (search.contains('puducherry')) searchAliases.add('pondicherry');
-        if (search.contains('alleppey')) searchAliases.add('alappuzha');
-        if (search.contains('alappuzha')) searchAliases.add('alleppey');
+        final searchAliases = DestinationUtils.getAliases(search);
 
         filtered = filtered.where((h) {
           final name = h['name'].toString().toLowerCase();
@@ -163,30 +143,17 @@ class MockInterceptor extends Interceptor {
       }
 
       if (destination != null && destination.isNotEmpty && destination != 'all') {
-        final destQuery = destination.toLowerCase();
-        final destAliases = <String>{destQuery};
-        if (destQuery == 'bangalore') destAliases.add('bengaluru');
-        if (destQuery == 'bengaluru') destAliases.add('bangalore');
-        if (destQuery == 'coorg') destAliases.add('madikeri');
-        if (destQuery == 'madikeri') destAliases.add('coorg');
-        if (destQuery == 'calicut') destAliases.add('kozhikode');
-        if (destQuery == 'kozhikode') destAliases.add('calicut');
-        if (destQuery == 'trivandrum') destAliases.add('thiruvananthapuram');
-        if (destQuery == 'thiruvananthapuram') destAliases.add('trivandrum');
-        if (destQuery == 'pondicherry') destAliases.add('puducherry');
-        if (destQuery == 'puducherry') destAliases.add('pondicherry');
-        if (destQuery == 'alleppey') destAliases.add('alappuzha');
-        if (destQuery == 'alappuzha') destAliases.add('alleppey');
-
         filtered = filtered.where((h) {
-          final dest = h['destination'].toString().toLowerCase();
-          final city = h['city'].toString().toLowerCase();
-          final state = (h['state'] ?? '').toString().toLowerCase();
+          final dest = h['destination'].toString();
+          final city = h['city'].toString();
+          final state = (h['state'] ?? '').toString();
 
-          return destAliases.contains(dest) ||
-              destAliases.contains(city) ||
-              destAliases.contains(state) ||
-              destAliases.any((a) => dest.contains(a) || city.contains(a) || state.contains(a));
+          return DestinationUtils.matchesDestination(
+            hotelDestination: dest,
+            hotelCity: city,
+            hotelState: state,
+            targetDestination: destination,
+          );
         }).toList();
       }
 
@@ -221,7 +188,6 @@ class MockInterceptor extends Interceptor {
       );
     }
 
-    // 5. GET /bookings
     if (path.endsWith('/bookings') && method == 'GET') {
       return handler.resolve(
         Response(
@@ -232,7 +198,6 @@ class MockInterceptor extends Interceptor {
       );
     }
 
-    // 6. POST /bookings
     if (path.endsWith('/bookings') && method == 'POST') {
       final data = options.data is Map ? Map<String, dynamic>.from(options.data as Map) : jsonDecode(options.data.toString()) as Map<String, dynamic>;
       _bookings.insert(0, data);
@@ -245,7 +210,6 @@ class MockInterceptor extends Interceptor {
       );
     }
 
-    // 7. PATCH /bookings/{id}/cancel
     final cancelMatch = RegExp(r'/bookings/([^/?]+)/cancel$').firstMatch(path);
     if (cancelMatch != null && method == 'PATCH') {
       final id = cancelMatch.group(1);
@@ -270,7 +234,6 @@ class MockInterceptor extends Interceptor {
       );
     }
 
-    // 8. Wishlist
     if (path.endsWith('/wishlist') && method == 'GET') {
       final wishlistHotels = mockHotelsData.where((h) => _wishlistHotelIds.contains(h['id'])).toList();
       return handler.resolve(

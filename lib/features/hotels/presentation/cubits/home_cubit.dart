@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/destination_utils.dart';
 import '../../domain/entities/destination.dart';
 import '../../domain/entities/hotel.dart';
 import '../../domain/usecases/hotel_usecases.dart';
@@ -71,8 +72,24 @@ class HomeCubit extends Cubit<HomeState> {
     final popular = hotels.where((h) => h.isPopular).toList();
     final recommended = hotels.where((h) => h.isFeatured).toList();
 
+    final rawDestinations = destResult.destinations ?? [];
+    final syncedDestinations = rawDestinations.map((dest) {
+      if (hotels.isNotEmpty) {
+        final count = hotels.where((h) => DestinationUtils.matchesDestination(
+          hotelDestination: h.destination,
+          hotelCity: h.city,
+          hotelState: h.state,
+          targetDestination: dest.name,
+        )).length;
+        if (count > 0) {
+          return dest.copyWith(hotelCount: count);
+        }
+      }
+      return dest;
+    }).toList();
+
     emit(HomeLoaded(
-      destinations: destResult.destinations ?? [],
+      destinations: syncedDestinations,
       recommendedHotels: recommended.isNotEmpty ? recommended : hotels.take(5).toList(),
       popularHotels: popular.isNotEmpty ? popular : hotels.reversed.take(5).toList(),
     ));

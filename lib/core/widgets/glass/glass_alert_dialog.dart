@@ -4,7 +4,6 @@ import '../../theme/app_typography.dart';
 import 'glass_button.dart';
 import 'glass_dialog.dart';
 
-/// Shows a standardized true liquid glass alert dialog with custom actions.
 Future<bool?> showGlassAlertDialog({
   required BuildContext context,
   required String title,
@@ -29,7 +28,6 @@ Future<bool?> showGlassAlertDialog({
   );
 }
 
-/// Standardized True Liquid Glass Alert Dialog content.
 class GlassAlertDialog extends StatelessWidget {
   final String title;
   final String message;
